@@ -306,6 +306,52 @@ export interface AcceleratorHero {
   updatedAt: Date;
 }
 
+export interface ProgramPhase {
+  id: string;
+  title: string; // "ISRAEL", "Mentorship Phase (6 Weeks)", "MIAMI"
+  subtitle: string; // "Your journey starts and ends with two 10-day bootcamps on two continents."
+  description: string; // Main description text
+  duration: string; // "10 days", "6 weeks", "2 weeks"
+  image?: string; // Main image URL
+  graphics: ProgramGraphic[]; // Array of graphics/content blocks
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ProgramGraphic {
+  id: string;
+  title: string; // "Workshops in Storytelling, Networking Training..."
+  description: string; // Content description
+  image?: string; // Optional image URL
+  order: number;
+}
+
+export interface ProgramSnapshot {
+  id: string;
+  stage: string; // "Pre-Seed or Pre-Incorporation"
+  duration: string; // "10 weeks"
+  format: string; // "Hybrid (online + two 10-day bootcamps in Israel and Florida)"
+  cohortSize: string; // "16–20 startups"
+  demoDay: string; // "The LAB Miami"
+  isVisible: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ProgramBenefit {
+  id: string;
+  title: string; // "Integrated Funding Path"
+  description: string; // Benefit description
+  icon: string; // Font Awesome icon class
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;

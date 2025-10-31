@@ -23,7 +23,10 @@ import {
   WhyChooseVettedBullet,
   EcosystemSection,
   EcosystemCard,
-  AcceleratorHero
+  AcceleratorHero,
+  ProgramPhase,
+  ProgramSnapshot,
+  ProgramBenefit
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -324,6 +327,29 @@ export class AcceleratorHeroService extends BaseFirestoreService<AcceleratorHero
   }
 }
 
+export class ProgramPhaseService extends BaseFirestoreService<ProgramPhase> {
+  constructor() {
+    super('program-phases');
+  }
+}
+
+export class ProgramSnapshotService extends BaseFirestoreService<ProgramSnapshot> {
+  constructor() {
+    super('program-snapshots');
+  }
+
+  async getActiveSnapshot(): Promise<ProgramSnapshot | null> {
+    const snapshots = await this.getVisible(1);
+    return snapshots.length > 0 ? snapshots[0] : null;
+  }
+}
+
+export class ProgramBenefitService extends BaseFirestoreService<ProgramBenefit> {
+  constructor() {
+    super('program-benefits');
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -508,5 +534,26 @@ export class CMSServiceFactory {
       this.instances.set('acceleratorHero', new AcceleratorHeroService());
     }
     return this.instances.get('acceleratorHero');
+  }
+
+  static getProgramPhaseService(): ProgramPhaseService {
+    if (!this.instances.has('programPhase')) {
+      this.instances.set('programPhase', new ProgramPhaseService());
+    }
+    return this.instances.get('programPhase');
+  }
+
+  static getProgramSnapshotService(): ProgramSnapshotService {
+    if (!this.instances.has('programSnapshot')) {
+      this.instances.set('programSnapshot', new ProgramSnapshotService());
+    }
+    return this.instances.get('programSnapshot');
+  }
+
+  static getProgramBenefitService(): ProgramBenefitService {
+    if (!this.instances.has('programBenefit')) {
+      this.instances.set('programBenefit', new ProgramBenefitService());
+    }
+    return this.instances.get('programBenefit');
   }
 }

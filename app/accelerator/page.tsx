@@ -9,6 +9,8 @@ import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
 import SimpleAdminToggle from '@/components/admin/simple-admin-toggle';
 import Image from 'next/image';
+import Link from 'next/link';
+import { EXTERNAL_URLS } from '@/lib/config/urls';
 
 export default function AcceleratorPage() {
   const { isAdminMode } = useAdmin();
@@ -223,6 +225,68 @@ This is not a theoretical program. Vetted was designed to help launch your compa
           <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
             {displayHero.secondaryContent}
           </p>
+        </div>
+      </section>
+
+      {/* Bottom Navigation Section */}
+      <section className="py-16 px-4 bg-gradient-to-br from-white via-white to-gray-200">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">Ready for the Next Step?</h2>
+            <p className="text-gray-800 max-w-2xl mx-auto">Continue exploring the Alpha-Bet program to see how we can help transform your military experience into entrepreneurial success.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <Link
+              href="/program"
+              className="group block relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-105 bg-white text-gray-900 border-white shadow-2xl"
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gray-900 text-white">
+                    <i className="fas fa-graduation-cap text-lg"></i>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold leading-tight text-gray-900">Program Details</h3>
+                  </div>
+                  <div className="text-gray-900">
+                    <i className="fas fa-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
+                  </div>
+                </div>
+                <p className="leading-relaxed text-gray-700">Explore the complete Alpha-Bet program structure and curriculum details.</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/team"
+              className="group block relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-105 bg-white/10 text-white border-blue-200 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-blue-300"
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-blue-100 text-blue-600 border border-blue-200 shadow-md group-hover:bg-blue-200 group-hover:shadow-lg">
+                    <i className="fas fa-users text-lg"></i>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold leading-tight text-blue-600">Meet Our Team</h3>
+                  </div>
+                  <div className="text-blue-500">
+                    <i className="fas fa-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
+                  </div>
+                </div>
+                <p className="leading-relaxed text-blue-700">Get to know the experienced veterans and entrepreneurs leading the program.</p>
+              </div>
+            </Link>
+          </div>
+          
+          <div className="text-center mt-12">
+            <a 
+              href={EXTERNAL_URLS.APPLY_FORM}
+              className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-xl"
+            >
+              <i className="fas fa-rocket"></i>
+              <span>Apply to Alpha-Bet</span>
+            </a>
+          </div>
         </div>
       </section>
 
