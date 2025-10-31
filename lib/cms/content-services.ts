@@ -20,7 +20,9 @@ import {
   MissionSection,
   LiveQAEvent,
   PreRecordedSession,
-  WhyChooseVettedBullet
+  WhyChooseVettedBullet,
+  EcosystemSection,
+  EcosystemCard
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -293,6 +295,23 @@ export class WhyChooseVettedBulletService extends BaseFirestoreService<WhyChoose
   }
 }
 
+export class EcosystemSectionService extends BaseFirestoreService<EcosystemSection> {
+  constructor() {
+    super('ecosystem-sections');
+  }
+
+  async getActiveEcosystem(): Promise<EcosystemSection | null> {
+    const sections = await this.getVisible(1);
+    return sections.length > 0 ? sections[0] : null;
+  }
+}
+
+export class EcosystemCardService extends BaseFirestoreService<EcosystemCard> {
+  constructor() {
+    super('ecosystem-cards');
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -456,5 +475,19 @@ export class CMSServiceFactory {
       this.instances.set('whyChooseVettedBullet', new WhyChooseVettedBulletService());
     }
     return this.instances.get('whyChooseVettedBullet');
+  }
+
+  static getEcosystemSectionService(): EcosystemSectionService {
+    if (!this.instances.has('ecosystemSection')) {
+      this.instances.set('ecosystemSection', new EcosystemSectionService());
+    }
+    return this.instances.get('ecosystemSection');
+  }
+
+  static getEcosystemCardService(): EcosystemCardService {
+    if (!this.instances.has('ecosystemCard')) {
+      this.instances.set('ecosystemCard', new EcosystemCardService());
+    }
+    return this.instances.get('ecosystemCard');
   }
 }

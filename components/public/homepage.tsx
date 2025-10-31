@@ -5,6 +5,7 @@ import HeroSection from './hero-section';
 import ContentSection from './content-section';
 import MissionSection from './mission-section';
 import FAQSection from './faq-section';
+import EcosystemSectionComponent from './ecosystem-section';
 import BottomNavigation from './bottom-navigation';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
 import EditableSection from '@/components/admin/editable-section';
@@ -23,7 +24,9 @@ import {
   ContentSection as ContentType,
   FAQ,
   MissionSection as MissionSectionType,
-  WhyChooseVettedBullet
+  WhyChooseVettedBullet,
+  EcosystemSection,
+  EcosystemCard
 } from '@/lib/types/cms';
 import MissionEditModal from '@/components/admin/mission-edit-modal';
 
@@ -34,6 +37,8 @@ function AlphaBetHomepageContent() {
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [missionSection, setMissionSection] = useState<MissionSectionType | null>(null);
   const [whyChooseBullets, setWhyChooseBullets] = useState<WhyChooseVettedBullet[]>([]);
+  const [ecosystemSection, setEcosystemSection] = useState<EcosystemSection | null>(null);
+  const [ecosystemCards, setEcosystemCards] = useState<EcosystemCard[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
   const [dividerWidth, setDividerWidth] = useState(200);
@@ -155,13 +160,17 @@ function AlphaBetHomepageContent() {
         contentData,
         faqData,
         missionData,
-        bulletsData
+        bulletsData,
+        ecosystemSectionData,
+        ecosystemCardsData
       ] = await Promise.all([
         CMSServiceFactory.getHeroService().getActiveHero(),
         CMSServiceFactory.getContentSectionService().getVisible(),
         CMSServiceFactory.getFAQService().getVisible(),
         CMSServiceFactory.getMissionSectionService().getActiveMission(),
-        CMSServiceFactory.getWhyChooseVettedBulletService().getVisible()
+        CMSServiceFactory.getWhyChooseVettedBulletService().getVisible(),
+        CMSServiceFactory.getEcosystemSectionService().getActiveEcosystem(),
+        CMSServiceFactory.getEcosystemCardService().getVisible()
       ]);
 
       console.log('Loaded hero data:', heroData);
@@ -214,6 +223,10 @@ function AlphaBetHomepageContent() {
       } else {
         setWhyChooseBullets(bulletsData);
       }
+      
+      // Set ecosystem data
+      setEcosystemSection(ecosystemSectionData);
+      setEcosystemCards(ecosystemCardsData);
       
       // Load CMS content into local state for sections that exist
       setSectionContent(prev => {
@@ -330,6 +343,43 @@ function AlphaBetHomepageContent() {
       } catch (error) {
         console.error('Error deleting bullet:', error);
         alert('Failed to delete bullet. Please try again.');
+      }
+    }
+  }, [loadContent]);
+
+  // Ecosystem handlers
+  const handleEditEcosystemSection = useCallback((section: EcosystemSection) => {
+    setEditingType('ecosystem-section');
+    setEditingItem(section);
+    setEditModalOpen(true);
+  }, []);
+
+  const handleEditEcosystemCard = useCallback((card: EcosystemCard) => {
+    setEditingType('ecosystem-card');
+    setEditingItem(card);
+    setEditModalOpen(true);
+  }, []);
+
+  const handleAddEcosystemCard = useCallback(() => {
+    setEditingType('ecosystem-card');
+    setEditingItem({
+      title: '',
+      description: '',
+      icon: 'fas fa-star',
+      order: ecosystemCards.length + 1,
+      isVisible: true
+    });
+    setEditModalOpen(true);
+  }, [ecosystemCards.length]);
+
+  const handleDeleteEcosystemCard = useCallback(async (card: EcosystemCard) => {
+    if (confirm(`Are you sure you want to delete "${card.title}"?`)) {
+      try {
+        await CMSServiceFactory.getEcosystemCardService().delete(card.id);
+        await loadContent();
+      } catch (error) {
+        console.error('Error deleting card:', error);
+        alert('Failed to delete card. Please try again.');
       }
     }
   }, [loadContent]);
@@ -501,6 +551,28 @@ function AlphaBetHomepageContent() {
           };
           await CMSServiceFactory.getWhyChooseVettedBulletService().create(bulletData);
         }
+      } else if (editingType === 'ecosystem-section') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getEcosystemSectionService().update(editingItem.id, data);
+        } else {
+          const sectionData = {
+            ...data,
+            isVisible: true,
+            order: 1
+          };
+          await CMSServiceFactory.getEcosystemSectionService().create(sectionData);
+        }
+      } else if (editingType === 'ecosystem-card') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getEcosystemCardService().update(editingItem.id, data);
+        } else {
+          const cardData = {
+            ...data,
+            isVisible: true,
+            order: data.order || ecosystemCards.length + 1
+          };
+          await CMSServiceFactory.getEcosystemCardService().create(cardData);
+        }
       }
       
       await loadContent();
@@ -550,6 +622,19 @@ function AlphaBetHomepageContent() {
         return [
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Elite Founders. Global Network. Proven Platform' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the detailed description...' },
+          { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
+        ];
+      case 'ecosystem-section':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Ecosystem' },
+          { key: 'subtitle', label: 'Subtitle', type: 'text' as const, required: true, placeholder: 'e.g., Education. Acceleration. Investment.' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the section description...' }
+        ];
+      case 'ecosystem-card':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Alpha-Bet' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the card description...' },
+          { key: 'icon', label: 'Icon (Font Awesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-graduation-cap' },
           { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
         ];
       default:
@@ -1057,6 +1142,16 @@ function AlphaBetHomepageContent() {
           </button>
         </div>
       </div>
+
+      {/* Ecosystem Section */}
+      <EcosystemSectionComponent
+        ecosystemSection={ecosystemSection}
+        ecosystemCards={ecosystemCards}
+        onEditSection={handleEditEcosystemSection}
+        onEditCard={handleEditEcosystemCard}
+        onAddCard={handleAddEcosystemCard}
+        onDeleteCard={handleDeleteEcosystemCard}
+      />
 
       {/* FAQ Section */}
       <EditableSection

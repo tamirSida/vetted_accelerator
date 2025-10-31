@@ -271,6 +271,28 @@ export interface WhyChooseVettedBullet {
   updatedAt: Date;
 }
 
+export interface EcosystemSection {
+  id: string;
+  title: string; // "Ecosystem"
+  subtitle: string; // "Education. Acceleration. Investment."
+  description: string; // Main description text
+  isVisible: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface EcosystemCard {
+  id: string;
+  title: string; // "Alpha-Bet", "Vetted Accelerator + Fund", "Alumni Network"
+  description: string; // Card description
+  icon: string; // Font Awesome icon class (e.g., "fas fa-graduation-cap")
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;
