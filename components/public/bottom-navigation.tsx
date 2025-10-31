@@ -11,10 +11,10 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
       case 'home':
         return [
           {
-            title: 'Meet Our Team',
-            description: 'Get to know the experienced veterans and entrepreneurs leading the program.',
-            href: '/team',
-            icon: 'fas fa-users',
+            title: 'Accelerator Program',
+            description: 'Discover our 10-week venture program and fund for veteran-founded startups.',
+            href: '/accelerator',
+            icon: 'fas fa-rocket',
             primary: true
           },
           {

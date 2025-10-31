@@ -13,6 +13,7 @@ export default function Navigation() {
 
   const navigationItems = [
     { name: 'Home', href: '/' },
+    { name: 'Accelerator', href: '/accelerator' },
     { name: 'Team', href: '/team' },
     { name: 'Curriculum', href: '/curriculum' },
     { name: 'Qualifications', href: '/qualifications' },

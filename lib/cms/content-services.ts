@@ -22,7 +22,8 @@ import {
   PreRecordedSession,
   WhyChooseVettedBullet,
   EcosystemSection,
-  EcosystemCard
+  EcosystemCard,
+  AcceleratorHero
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -312,6 +313,17 @@ export class EcosystemCardService extends BaseFirestoreService<EcosystemCard> {
   }
 }
 
+export class AcceleratorHeroService extends BaseFirestoreService<AcceleratorHero> {
+  constructor() {
+    super('accelerator-heroes');
+  }
+
+  async getActiveHero(): Promise<AcceleratorHero | null> {
+    const heroes = await this.getVisible(1);
+    return heroes.length > 0 ? heroes[0] : null;
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -489,5 +501,12 @@ export class CMSServiceFactory {
       this.instances.set('ecosystemCard', new EcosystemCardService());
     }
     return this.instances.get('ecosystemCard');
+  }
+
+  static getAcceleratorHeroService(): AcceleratorHeroService {
+    if (!this.instances.has('acceleratorHero')) {
+      this.instances.set('acceleratorHero', new AcceleratorHeroService());
+    }
+    return this.instances.get('acceleratorHero');
   }
 }

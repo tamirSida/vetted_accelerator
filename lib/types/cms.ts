@@ -293,6 +293,16 @@ export interface EcosystemCard {
   updatedAt: Date;
 }
 
+export interface AcceleratorHero {
+  id: string;
+  title: string; // "Where veteran grit meets venture growth."
+  content: string; // Main content paragraphs
+  isVisible: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;
