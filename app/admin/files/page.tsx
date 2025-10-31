@@ -166,11 +166,22 @@ export default function AdminFilesPage() {
     }
   };
 
+  // Get clean URL without query parameters
+  const getCleanUrl = (url: string): string => {
+    try {
+      const urlObj = new URL(url);
+      return `${urlObj.origin}${urlObj.pathname}`;
+    } catch {
+      return url; // Fallback to original if URL parsing fails
+    }
+  };
+
   // Copy URL to clipboard
   const copyUrl = async (url: string) => {
     try {
-      await navigator.clipboard.writeText(url);
-      setCopiedUrl(url);
+      const cleanUrl = getCleanUrl(url);
+      await navigator.clipboard.writeText(cleanUrl);
+      setCopiedUrl(cleanUrl);
       setTimeout(() => setCopiedUrl(null), 2000);
     } catch (error) {
       console.error('Failed to copy URL:', error);
@@ -437,14 +448,14 @@ export default function AdminFilesPage() {
                       <td className="p-4">
                         <div className="flex items-center gap-2">
                           <code className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded max-w-xs truncate">
-                            {file.secure_url}
+                            {getCleanUrl(file.secure_url)}
                           </code>
                           <button
                             onClick={() => copyUrl(file.secure_url)}
                             className="w-8 h-8 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center justify-center transition-colors"
-                            title="Copy URL"
+                            title="Copy clean URL"
                           >
-                            <i className={`fas ${copiedUrl === file.secure_url ? 'fa-check' : 'fa-copy'} text-xs`}></i>
+                            <i className={`fas ${copiedUrl === getCleanUrl(file.secure_url) ? 'fa-check' : 'fa-copy'} text-xs`}></i>
                           </button>
                         </div>
                       </td>

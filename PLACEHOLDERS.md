@@ -8,7 +8,7 @@ This document tracks all placeholder content in the Alpha-Bet website that needs
 
 | Type | Current Value | Location | Status | Priority |
 |------|---------------|----------|--------|----------|
-| Email | `info@vbv.vc` | `components/public/footer.tsx` (line ~79) | ❌ Needs Real Email | HIGH |
+| Email | `info@thevetted.vc` | `components/public/footer.tsx` (line ~79) | ❌ Needs Real Email | HIGH |
 | Phone | `+1 (555) 123-4567` | `components/public/footer.tsx` (line ~83) | ❌ Needs Real Phone | HIGH |
 
 ### 🔗 Social Media Links
@@ -78,7 +78,7 @@ This document tracks all placeholder content in the Alpha-Bet website that needs
 ## 📋 **COMPLETION CHECKLIST**
 
 ### Phase 1: Critical Contact Information
-- [ ] Replace `info@vbv.vc` with real email address (footer)
+- [ ] Replace `info@thevetted.vc` with real email address (footer)
 - [ ] Replace `+1 (555) 123-4567` with real phone number (footer)
 - [x] ✅ LinkedIn URL updated to real VBV school page
 - [x] ✅ Twitter references removed from website

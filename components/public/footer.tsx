@@ -142,7 +142,7 @@ export default function Footer() {
             <div className="space-y-2 text-sm text-gray-300">
               <p>
                 <i className="fas fa-envelope mr-2"></i>
-                info@vbv.vc
+                info@thevetted.vc
               </p>
             </div>
             
@@ -221,7 +221,7 @@ export default function Footer() {
         <div className="mt-8 pt-8 border-t border-blue-800">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {currentYear} Alpha-Bet Program. All rights reserved.
+              © {currentYear} Vetted Program. All rights reserved.
             </p>
             <p className="text-gray-400 text-sm mt-2 sm:mt-0">
               Empowering veterans to become entrepreneurs.

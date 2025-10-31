@@ -83,7 +83,7 @@ export default function SEOHead({
         "contactPoint": {
           "@type": "ContactPoint",
           "contactType": "customer service",
-          "email": "info@vbv.vc"
+          "email": "info@thevetted.vc"
         }
       },
       {

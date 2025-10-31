@@ -500,8 +500,8 @@ export default function ProgramPage() {
                 </button>
               )}
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="text-center">
+              <div className="flex flex-wrap justify-center gap-6">
+                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className="fas fa-seedling text-blue-600 text-xl"></i>
                   </div>
@@ -509,7 +509,7 @@ export default function ProgramPage() {
                   <p className="text-gray-600">{programSnapshot.stage}</p>
                 </div>
                 
-                <div className="text-center">
+                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className="fas fa-clock text-blue-600 text-xl"></i>
                   </div>
@@ -517,7 +517,7 @@ export default function ProgramPage() {
                   <p className="text-gray-600">{programSnapshot.duration}</p>
                 </div>
                 
-                <div className="text-center">
+                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className="fas fa-laptop text-blue-600 text-xl"></i>
                   </div>
@@ -525,7 +525,7 @@ export default function ProgramPage() {
                   <p className="text-gray-600">{programSnapshot.format}</p>
                 </div>
                 
-                <div className="text-center">
+                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className="fas fa-users text-blue-600 text-xl"></i>
                   </div>
@@ -533,7 +533,7 @@ export default function ProgramPage() {
                   <p className="text-gray-600">{programSnapshot.cohortSize}</p>
                 </div>
                 
-                <div className="text-center md:col-span-2 lg:col-span-1">
+                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className="fas fa-trophy text-blue-600 text-xl"></i>
                   </div>
@@ -584,9 +584,9 @@ export default function ProgramPage() {
             )}
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="flex flex-wrap justify-center gap-6">
             {programBenefits.map((benefit) => (
-              <div key={benefit.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow relative">
+              <div key={benefit.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow relative w-full sm:w-auto sm:min-w-[280px] sm:max-w-[350px]">
                 {isAdminMode && (
                   <button
                     onClick={() => {

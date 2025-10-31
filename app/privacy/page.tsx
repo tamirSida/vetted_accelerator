@@ -120,7 +120,7 @@ export default function PrivacyPolicyPage() {
             </ul>
 
             <h3>To Exercise Your Rights:</h3>
-            <p>Contact us at <span className="text-blue-600">info@vbv.vc</span> with your request. We'll respond within 30 days.</p>
+            <p>Contact us at <span className="text-blue-600">info@thevetted.vc</span> with your request. We'll respond within 30 days.</p>
 
             <h2>6. Data Retention</h2>
             
@@ -159,7 +159,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-gray-50 p-6 rounded-lg">
               <p className="mb-4">For privacy-related questions or requests:</p>
               <ul className="space-y-2">
-                <li><strong>Email:</strong> <span className="text-blue-600">info@vbv.vc</span></li>
+                <li><strong>Email:</strong> <span className="text-blue-600">info@thevetted.vc</span></li>
               </ul>
             </div>
 

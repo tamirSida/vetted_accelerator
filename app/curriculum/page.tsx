@@ -200,7 +200,10 @@ export default function CurriculumPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-black"></div>
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-black mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading Vetted Accelerator curriculum...</p>
+        </div>
       </div>
     );
   }

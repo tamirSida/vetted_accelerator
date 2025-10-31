@@ -9,7 +9,7 @@ export const EXTERNAL_URLS = {
   LINKEDIN: 'https://www.linkedin.com/school/versionbravo/posts/?feedView=all',
   
   // Contact email
-  CONTACT_EMAIL: 'info@vbv.vc',
+  CONTACT_EMAIL: 'info@thevetted.vc',
 } as const;
 
 // Type for external URLs

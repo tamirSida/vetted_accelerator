@@ -482,10 +482,6 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
             </button>
           )}
           
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 mb-4">
-            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-            <span className="text-blue-600 bg-gray-100 px-3 py-1 rounded-full text-xs font-medium tracking-wide">{activeHeader.badge}</span>
-          </div>
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-3 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
             {activeHeader.title}
@@ -525,7 +521,7 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
                     />
                   </div>
                   <div className="text-left">
-                    <div className="text-white font-bold text-lg tracking-wider font-mono">ALPHA-BET</div>
+                    <div className="text-white font-bold text-lg tracking-wider font-mono">VETTED ACCELERATOR</div>
                     <div className="text-gray-400 text-xs font-mono tracking-widest">PROGRAM INITIALIZE</div>
                   </div>
                 </div>
@@ -610,13 +606,10 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
                 }`}
                 onClick={() => handleWeekClick(item.weekNumber)}>
                   <div className="text-center">
-                    <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide">Week</div>
+                    <div className="text-xs sm:text-sm font-semibold text-gray-600 uppercase tracking-wide"></div>
                     <div className="text-xl sm:text-2xl font-bold text-gray-900">{item.weekNumber}</div>
                   </div>
                 </div>
-                <div className={`absolute -inset-3 rounded-full blur-xl transition-all duration-500 ${
-                  hoveredWeek === item.weekNumber ? 'bg-blue-200/40' : 'bg-white/20'
-                }`}></div>
                 
                 {/* Progress indicator */}
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
@@ -677,9 +670,6 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
                         <i className={`${item.icon} text-xl text-blue-600`}></i>
                       </div>
                       <div className="flex-1">
-                        <div className="text-xs text-gray-700 font-medium uppercase tracking-wider mb-1">
-                          Week {item.weekNumber} of 16
-                        </div>
                         <h3 className="text-xl sm:text-2xl font-bold text-black leading-tight group-hover:text-gray-800 transition-colors">
                           {item.title}
                         </h3>
