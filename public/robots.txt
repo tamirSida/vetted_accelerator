@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Important pages for search engines
+Allow: /
+Allow: /home
+Allow: /team
+Allow: /curriculum  
+Allow: /qualifications
+Allow: /service-requirements
+Allow: /privacy
+Allow: /terms
+
+# Block admin access and API routes
+Disallow: /*?admin=true
+Disallow: /api/
+Disallow: /_next/
+
+# Sitemap location
+Sitemap: https://alpha-bet.org/sitemap.xml
