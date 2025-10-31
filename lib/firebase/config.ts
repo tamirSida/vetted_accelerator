@@ -3,12 +3,12 @@ import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDDYUjnO58n1w1NQjE7694ZkPOlWJnI_L4",
-  authDomain: "alphabet-e9433.firebaseapp.com",
-  projectId: "alphabet-e9433",
-  storageBucket: "alphabet-e9433.firebasestorage.app",
-  messagingSenderId: "421416400597",
-  appId: "1:421416400597:web:b7acb6d94a47acbe53545c"
+  apiKey: "AIzaSyBNIq_GENFLFe5iJ8kKU0FutoD5eVyOrEw",
+  authDomain: "vetted-accelerator.firebaseapp.com",
+  projectId: "vetted-accelerator",
+  storageBucket: "vetted-accelerator.firebasestorage.app",
+  messagingSenderId: "1039236686703",
+  appId: "1:1039236686703:web:1150be6de7c690ba663e9a"
 };
 
 const app = initializeApp(firebaseConfig);
