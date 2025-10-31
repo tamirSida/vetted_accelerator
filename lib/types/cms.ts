@@ -297,6 +297,9 @@ export interface AcceleratorHero {
   id: string;
   title: string; // "Where veteran grit meets venture growth."
   content: string; // Main content paragraphs
+  image?: string; // Image URL
+  secondaryTitle: string; // "Built for Combat Veteran Entrepreneurs..."
+  secondaryContent: string; // Secondary content section
   isVisible: boolean;
   order: number;
   createdAt: Date;

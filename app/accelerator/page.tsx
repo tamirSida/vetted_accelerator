@@ -8,6 +8,7 @@ import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
 import SimpleAdminToggle from '@/components/admin/simple-admin-toggle';
+import Image from 'next/image';
 
 export default function AcceleratorPage() {
   const { isAdminMode } = useAdmin();
@@ -38,6 +39,8 @@ The Vetted Accelerator is a 10-week venture program and fund investing exclusive
 Our #1 Principle: Provide Value to our Founders
 
 This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.`,
+          secondaryTitle: 'Built for Combat Veteran Entrepreneurs, by Combat Veteran Entrepreneurs',
+          secondaryContent: 'We believe in immersive experiences mixed with culture, education, mentorship and most importantly direct application of lessons learned to your businesses.',
           isVisible: true,
           order: 1
         };
@@ -100,7 +103,10 @@ This is not a theoretical program. Vetted was designed to help launch your compa
       case 'accelerator-hero':
         return [
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Where veteran grit meets venture growth.' },
-          { key: 'content', label: 'Content', type: 'textarea' as const, required: true, placeholder: 'Enter the main content...' }
+          { key: 'content', label: 'Content', type: 'textarea' as const, required: true, placeholder: 'Enter the main content...' },
+          { key: 'image', label: 'Image URL', type: 'text' as const, required: false, placeholder: 'https://example.com/image.jpg' },
+          { key: 'secondaryTitle', label: 'Secondary Title', type: 'text' as const, required: false, placeholder: 'e.g., Built for Combat Veteran Entrepreneurs...' },
+          { key: 'secondaryContent', label: 'Secondary Content', type: 'textarea' as const, required: true, placeholder: 'Enter the secondary content...' }
         ];
       default:
         return [];
@@ -118,7 +124,9 @@ The Vetted Accelerator is a 10-week venture program and fund investing exclusive
 
 Our #1 Principle: Provide Value to our Founders
 
-This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.`
+This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.`,
+    secondaryTitle: 'Built for Combat Veteran Entrepreneurs, by Combat Veteran Entrepreneurs',
+    secondaryContent: 'We believe in immersive experiences mixed with culture, education, mentorship and most importantly direct application of lessons learned to your businesses.'
   };
 
   const displayHero = acceleratorHero || defaultHero;
@@ -146,7 +154,7 @@ This is not a theoretical program. Vetted was designed to help launch your compa
         sectionName="Accelerator Hero"
         onEdit={handleEditHero}
       >
-        <section className="py-16 sm:py-24 px-4 bg-gradient-to-br from-white via-white to-gray-200 relative overflow-hidden">
+        <section className="py-8 sm:py-12 px-4 bg-gradient-to-br from-white via-white to-gray-200 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.15),transparent_50%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]"></div>
           <div className="max-w-7xl mx-auto relative z-10">
@@ -187,6 +195,36 @@ This is not a theoretical program. Vetted was designed to help launch your compa
           </div>
         </section>
       </EditableSection>
+
+      {/* Image Section */}
+      {displayHero.image && (
+        <section className="py-4 px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="relative">
+              <Image
+                src={displayHero.image}
+                alt="Accelerator Program"
+                width={800}
+                height={500}
+                className="w-full h-auto rounded-2xl shadow-xl object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Secondary Text Section */}
+      <section className="py-8 sm:py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-6 leading-tight tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+            {displayHero.secondaryTitle}
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+            {displayHero.secondaryContent}
+          </p>
+        </div>
+      </section>
 
       {/* Edit Modal */}
       <EditModal
