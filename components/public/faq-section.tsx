@@ -18,55 +18,145 @@ export default function FAQSection({ faqs, onEdit, onDelete }: FAQSectionProps) 
   // Default FAQ data
   const defaultFAQs: FAQ[] = [
     {
-      id: 'faq-3',
-      question: 'What time commitment is required?',
-      answer: 'The program requires approximately 8-10 hours per week over 10 weeks. This includes live workshops, self-paced learning modules, peer collaboration sessions, and practical assignments to develop your business concept.',
+      id: 'faq-1',
+      question: 'Do I need a company already?',
+      answer: 'Idea, yes. Company, not necessarily. You don\'t need to have incorporated yet but you do need to be all in. Vetted is for founders who are fully committed to building and executing on their idea. If you\'re still exploring what to build or don\'t yet have a defined concept, start with our Alpha-Bet program. It\'s designed to help you develop and validate your first venture.',
       order: 1,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      id: 'faq-4',
-      question: 'Is the program conducted online or in-person?',
-      answer: 'The Alpha-Bet program is conducted entirely online, making it accessible to veterans regardless of location. All workshops, mentorship sessions, and networking events are held virtually using modern collaboration platforms.',
+      id: 'faq-2',
+      question: 'What kind of companies do you fund?',
+      answer: 'We\'re generalists focused on ambitious, high-trust founders.',
       order: 2,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      id: 'faq-eligibility',
-      question: 'Who is eligible for the Alpha-Bet program?',
-      answer: 'The program is designed for US and Israeli combat veterans who have completed their military service in good standing (or active reservists) and are ready to start a career in entrepreneurship. <a href="/qualifications" class="text-blue-600 hover:text-blue-800 underline font-medium">See full qualifications here</a>',
+      id: 'faq-3',
+      question: 'Where is the program held?',
+      answer: 'There are three phases of the Accelerator program. Phase 1: 10-day bootcamp in Israel. Phase 2: Virtual Mentorship. Phase 3: 10-day bootcamp in Miami, Florida.',
       order: 3,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      id: 'faq-program-dates',
-      question: 'When does the program run?',
-      answer: '<a href="#hero" class="text-blue-600 hover:text-blue-800 underline font-medium">See current program schedule</a>',
+      id: 'faq-4',
+      question: 'What are the dates of the Accelerator?',
+      answer: 'Phase 1: xx, Phase 2: xx, Phase 3: xx',
+      order: 4,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-5',
+      question: 'What is the time commitment for each phase?',
+      answer: 'Phase 1: 8AM - 6PM daily with several evening activities/events.<br>Phase 2: 2-4 hours per week<br>Phase 3: 8AM - 6PM daily with several evening activities/events.<br><br><strong>If accepted into the Accelerator, 100% participation is required.</strong><br><br>Ultimately, this program is designed to help you accelerate your business. Every minute of content, workshops or mentorship is advancing your startup. Our curriculum is built to make sure you not only are making progress but are able to manage your business in parallel.',
       order: 5,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-6',
+      question: 'Is the Accelerator conducted in Hebrew or in English?',
+      answer: 'The entire program is conducted in English exclusively. You must be proficient in English to participate in the program.',
+      order: 6,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
       id: 'faq-7',
-      question: 'For the Alpha-Bet program, What service types qualify as a Combat Veteran?',
-      answer: '<a href="/service-requirements" class="text-blue-600 hover:text-blue-800 underline font-medium">Click here to see service requirements.</a>',
-      order: 5,
+      question: 'Why does Vetted focus on Combat Veterans?',
+      answer: 'At Vetted, we hold the deepest respect for every individual who has served. Our program is deliberately designed for combat veterans because our curriculum is built to translate the unique experiences of frontline service into a successful entrepreneurial career. First, we help combat veterans recognize and reframe the powerful skills they already possess. The ability to lead small teams, make critical decisions under extreme uncertainty, risk analysis, and execute a mission with limited resources are the essence of entrepreneurship. Our training shows you how planning an operation is analogous to developing a market-entry strategy. Second, we bridge the skill gaps that often exist after years of operational focus. Frontline service builds incredible leaders, but it doesn\'t typically teach financial modeling, marketing analytics, or the art of effective storytelling and networking. Vetted provides targeted instruction in these crucial business fundamentals catered to the combat veteran. By limiting the cohort to veterans with a shared combat background, we create a high-trust environment built on mutual understanding. This fosters unparalleled peer support, allowing participants to not only build a business but also engage in a process of mutual growth and recovery.',
+      order: 7,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
     },
     {
-      id: 'faq-weekly-meetings',
-      question: 'When are the weekly meetings?',
-      answer: 'You must attend two weekly meetings: a lecture and a lab.<br><br>There are multiple lecture days per week, however you will be assigned to one lecture group for the duration of the program.<br><br>Please refer to the full <a href="/curriculum" class="text-blue-600 hover:text-blue-800 underline font-medium">curriculum</a> and <a href="/sched.pdf" class="text-blue-600 hover:text-blue-800 underline font-medium">schedule</a> for lecture times, exact dates, and exception weeks which adjust around holidays.',
-      order: 6,
+      id: 'faq-8',
+      question: 'What kind of support continues after the Accelerator?',
+      answer: 'Graduates join our exclusive alumni network with ongoing access to mentors, investors, and fellow veteran entrepreneurs. We also provide continued resources such as advanced workshops and networking events throughout the year.',
+      order: 8,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-9',
+      question: 'Is Alpha-Bet connected to Vetted?',
+      answer: 'Yes. Alpha-Bet is our education program for aspiring veteran founders.',
+      order: 9,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-10',
+      question: 'If I have already raised money, can I apply?',
+      answer: 'We prefer to be first money in, or very close to that. A small amount raised from Friends and Family is okay.',
+      order: 10,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-11',
+      question: 'Will this program help me find additional funding for my startup?',
+      answer: 'One of the benefits of joining Vetted is joining the robust network of founders and investors. While we can\'t guarantee additional funding, you will gain all the tools and introductions needed to go and execute a successful fundraise.',
+      order: 11,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-12',
+      question: 'Do you help solo-founders find co-founders?',
+      answer: 'While we can\'t guarantee this, we have a broad network of talented founders/operators/experts who can help open doors and make introductions.',
+      order: 12,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-13',
+      question: 'Is travelling to both bootcamps required?',
+      answer: 'Yes. 100% participation is required. If you cannot make the travel and participate fully, you will not be admitted to the program.',
+      order: 13,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-14',
+      question: 'How do we choose which startups to fund?',
+      answer: 'We have an application process that\'s open to any startup founded by a combat veteran. You can apply here.',
+      order: 14,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-15',
+      question: 'What can I use the Vetted investment for?',
+      answer: 'You can use your Vetted investment however it best supports your company\'s growth. For most founders, that starts with covering personal runway — paying yourself a modest salary so you can focus full-time on building the business. From there, it\'s about deploying capital strategically to accelerate progress where it matters most.',
+      order: 15,
+      isVisible: true,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+    {
+      id: 'faq-16',
+      question: 'Why are there two 10-day bootcamps?',
+      answer: 'We have found that the momentum gained in these bootcamps is much better than weekly meetings. We see significant gain from each company. This is balanced knowing that people have families and so we do 2 trips spread apart by 6 weeks to strike the right balance.',
+      order: 16,
       isVisible: true,
       createdAt: new Date(),
       updatedAt: new Date()
