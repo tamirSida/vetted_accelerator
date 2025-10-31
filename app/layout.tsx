@@ -17,12 +17,12 @@ const blackOpsOne = Black_Ops_One({
 });
 
 export const metadata: Metadata = {
-  title: "Alpha-Bet | Entrepreneurship Program for Combat Veterans",
-  description: "Entrepreneurship program for US and Israeli combat veterans. From battlefield to business - your next mission starts here.",
-  keywords: "veterans, entrepreneurship, startup, combat veterans, business program, Version Bravo, military veterans, veteran business, startup accelerator",
-  authors: [{ name: "Alpha-Bet Program" }],
-  creator: "Alpha-Bet Program",
-  publisher: "Alpha-Bet Program",
+  title: "Vetted Accelerator | Elite Combat Veteran Startup Program",
+  description: "Where veteran grit meets venture growth. A 10-week accelerator program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.",
+  keywords: "veteran startup accelerator, combat veteran entrepreneurs, military startup program, veteran founded startups, startup accelerator, veteran business, military entrepreneurs, startup fund, veteran investment",
+  authors: [{ name: "Vetted Accelerator" }],
+  creator: "Vetted Accelerator",
+  publisher: "Vetted Accelerator",
   robots: {
     index: true,
     follow: true,
@@ -35,25 +35,39 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Alpha-Bet | Entrepreneurship Program for Combat Veterans",
-    description: "Entrepreneurship program for US and Israeli combat veterans. From battlefield to business - your next mission starts here.",
-    url: "https://alpha-bet.org",
-    siteName: "Alpha-Bet",
+    title: "Vetted Accelerator | Elite Combat Veteran Startup Program",
+    description: "Where veteran grit meets venture growth. A 10-week accelerator program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.",
+    url: "https://vetted-accelerator.com",
+    siteName: "Vetted Accelerator",
     type: "website",
     locale: "en_US",
     images: ["/logo.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alpha-Bet | Entrepreneurship Program for Combat Veterans",
-    description: "Entrepreneurship program for US and Israeli combat veterans. From battlefield to business - your next mission starts here.",
+    title: "Vetted Accelerator | Elite Combat Veteran Startup Program",
+    description: "Where veteran grit meets venture growth. A 10-week accelerator program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.",
     images: ["/logo.png"],
   },
   alternates: {
-    canonical: "https://alpha-bet.org",
+    canonical: "https://vetted-accelerator.com",
   },
   verification: {
     google: "google-site-verification",
+  },
+  icons: {
+    icon: [
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon/favicon.ico', sizes: 'any' }
+    ],
+    apple: [
+      { url: '/favicon/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    other: [
+      { url: '/favicon/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/favicon/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' }
+    ]
   },
 };
 
@@ -66,7 +80,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <head>
         {/* Web App Meta */}
-        <link rel="manifest" href="/site.webmanifest" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta name="theme-color" content="#2563eb" />
         <meta name="msapplication-TileColor" content="#2563eb" />
         
@@ -85,31 +99,36 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "EducationalOrganization",
-              "name": "Alpha-Bet",
-              "description": "Entrepreneurship program for US and Israeli combat veterans",
-              "url": "https://alpha-bet.org",
-              "educationalCredentialAwarded": "Entrepreneurship Program Certificate",
+              "@type": "Organization",
+              "name": "Vetted Accelerator",
+              "description": "A 10-week accelerator program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans",
+              "url": "https://vetted-accelerator.com",
+              "logo": "https://vetted-accelerator.com/logo.png",
+              "sameAs": [],
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Alpha-Bet Programs",
+                "name": "Vetted Accelerator Programs",
                 "itemListElement": [
                   {
                     "@type": "Course",
-                    "name": "10-Week Entrepreneurship Program",
-                    "description": "Comprehensive entrepreneurship program for combat veterans",
+                    "name": "10-Week Veteran Startup Accelerator",
+                    "description": "Elite accelerator program for combat veteran entrepreneurs with funding and mentorship",
                     "provider": {
                       "@type": "Organization",
-                      "name": "Alpha-Bet"
-                    }
+                      "name": "Vetted Accelerator"
+                    },
+                    "courseMode": "Hybrid",
+                    "duration": "P10W"
                   }
                 ]
               },
               "audience": {
                 "@type": "Audience",
-                "audienceType": "Combat Veterans",
+                "audienceType": "Elite Combat Veterans",
                 "geographicArea": ["United States", "Israel"]
-              }
+              },
+              "foundingDate": "2024",
+              "specialty": "Veteran Startup Acceleration and Investment"
             })
           }}
         />

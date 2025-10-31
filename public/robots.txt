@@ -3,7 +3,8 @@ Allow: /
 
 # Important pages for search engines
 Allow: /
-Allow: /home
+Allow: /accelerator
+Allow: /program
 Allow: /team
 Allow: /curriculum  
 Allow: /qualifications
@@ -15,6 +16,7 @@ Allow: /terms
 Disallow: /*?admin=true
 Disallow: /api/
 Disallow: /_next/
+Disallow: /setup-admin
 
 # Sitemap location
-Sitemap: https://alpha-bet.org/sitemap.xml
+Sitemap: https://vetted-accelerator.com/sitemap.xml
