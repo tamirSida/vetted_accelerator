@@ -9,6 +9,7 @@ import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
 import SimpleAdminToggle from '@/components/admin/simple-admin-toggle';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProgramPage() {
   const { isAdminMode } = useAdmin();
@@ -609,6 +610,68 @@ export default function ProgramPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom Navigation Section */}
+      <section className="py-16 px-4 bg-gradient-to-br from-white via-white to-gray-200">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">Ready for the Next Step?</h2>
+            <p className="text-gray-800 max-w-2xl mx-auto">Continue exploring the Vetted Accelerator program to see how we can help transform your military experience into entrepreneurial success.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <Link
+              href="/accelerator"
+              className="group block relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-105 bg-white text-gray-900 border-white shadow-2xl"
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gray-900 text-white">
+                    <i className="fas fa-rocket text-lg"></i>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold leading-tight text-gray-900">Accelerator Overview</h3>
+                  </div>
+                  <div className="text-gray-900">
+                    <i className="fas fa-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
+                  </div>
+                </div>
+                <p className="leading-relaxed text-gray-700">Learn about the Vetted Accelerator program and what makes us different.</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/team"
+              className="group block relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-105 bg-white/10 text-white border-blue-200 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-blue-300"
+            >
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-blue-100 text-blue-600 border border-blue-200 shadow-md group-hover:bg-blue-200 group-hover:shadow-lg">
+                    <i className="fas fa-users text-lg"></i>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold leading-tight text-blue-600">Meet Our Team</h3>
+                  </div>
+                  <div className="text-blue-500">
+                    <i className="fas fa-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
+                  </div>
+                </div>
+                <p className="leading-relaxed text-blue-700">Get to know the experienced veterans and entrepreneurs leading the program.</p>
+              </div>
+            </Link>
+          </div>
+          
+          <div className="text-center mt-12">
+            <a 
+              href="https://application.alphabet.vbv.vc"
+              className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-xl"
+            >
+              <i className="fas fa-rocket"></i>
+              <span>Apply to Vetted Accelerator</span>
+            </a>
           </div>
         </div>
       </section>

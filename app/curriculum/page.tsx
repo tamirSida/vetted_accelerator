@@ -54,9 +54,9 @@ export default function CurriculumPage() {
 
   const handleEditHeader = useCallback(() => {
     const headerToEdit = curriculumHeader || {
-      badge: '10-WEEK CURRICULUM',
-      title: 'The Alpha-Bet Program',
-      description: 'A practical MBA for founders, designed to turn your idea into a viable business.'
+      badge: '16-WEEK CURRICULUM',
+      title: 'Vetted Accelerator Curriculum',
+      description: ''
     };
     setEditingItem(headerToEdit);
     setEditingType('header');
@@ -66,7 +66,7 @@ export default function CurriculumPage() {
   const handleEditCTA = useCallback(() => {
     const defaultCTA = {
       title: 'Your Entrepreneurial Journey Awaits',
-      description: 'Transform 10 weeks of intensive learning into a lifetime of entrepreneurial success. Each week builds on the last, creating a comprehensive foundation for your startup journey.',
+      description: 'Transform 16 weeks of intensive learning into a lifetime of entrepreneurial success. Each week builds on the last, creating a comprehensive foundation for your startup journey.',
       buttonText: 'Start Your Journey',
       buttonLink: '/qualifications'
     };
@@ -180,7 +180,7 @@ export default function CurriculumPage() {
       ];
     }
     return [
-      { key: 'weekNumber', label: 'Week Number', type: 'number' as const, required: true, placeholder: '1-10' },
+      { key: 'weekNumber', label: 'Week Number', type: 'number' as const, required: true, placeholder: '1-16' },
       { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'Enter week title' },
       { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter week description...' },
       { key: 'icon', label: 'Font Awesome Icon', type: 'text' as const, required: false, placeholder: 'e.g., fas fa-rocket' },
@@ -208,10 +208,10 @@ export default function CurriculumPage() {
   return (
     <>
       <SEOHead
-        title="10-Week Curriculum - Alpha-Bet Entrepreneurship Program"
-        description="Explore Alpha-Bet's comprehensive 10-week curriculum: From idea to business plan. Learn lean methodology, customer discovery, networking, market analysis, and presentation skills designed for combat veterans."
+        title="16-Week Curriculum - Vetted Accelerator Program"
+        description="Explore Vetted Accelerator's comprehensive 16-week curriculum: From idea to business plan. Learn lean methodology, customer discovery, networking, market analysis, and presentation skills designed for elite combat veterans."
         keywords={[
-          '10-week entrepreneurship curriculum',
+          '16-week entrepreneurship curriculum',
           'startup curriculum veterans',
           'business training program',
           'lean methodology training',

@@ -34,9 +34,9 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
   
   // Default header values with fallback to CMS data
   const activeHeader = {
-    badge: header?.badge || '10-WEEK CURRICULUM',
-    title: header?.title || 'The Alpha-Bet Program',
-    description: header?.description || 'A practical MBA for founders, designed to turn your idea into a viable business.'
+    badge: header?.badge || '16-WEEK CURRICULUM',
+    title: header?.title || 'Vetted Accelerator Curriculum',
+    description: header?.description || ''
   };
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [loadingText, setLoadingText] = useState('INITIALIZING...');
@@ -214,6 +214,108 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
       isVisible: true, 
       createdAt: new Date(), 
       updatedAt: new Date() 
+    },
+    { 
+      id: 'week-11', 
+      weekNumber: 11, 
+      title: 'Week 11', 
+      description: 'Week 11 content to be added.', 
+      icon: 'fas fa-cog', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Practical Application',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 11, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      id: 'week-12', 
+      weekNumber: 12, 
+      title: 'Week 12', 
+      description: 'Week 12 content to be added.', 
+      icon: 'fas fa-rocket', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Practical Application',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 12, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      id: 'week-13', 
+      weekNumber: 13, 
+      title: 'Week 13', 
+      description: 'Week 13 content to be added.', 
+      icon: 'fas fa-chart-bar', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Practical Application',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 13, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      id: 'week-14', 
+      weekNumber: 14, 
+      title: 'Week 14', 
+      description: 'Week 14 content to be added.', 
+      icon: 'fas fa-target', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Practical Application',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 14, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      id: 'week-15', 
+      weekNumber: 15, 
+      title: 'Week 15', 
+      description: 'Week 15 content to be added.', 
+      icon: 'fas fa-trophy', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Practical Application',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 15, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
+    },
+    { 
+      id: 'week-16', 
+      weekNumber: 16, 
+      title: 'Week 16', 
+      description: 'Week 16 content to be added.', 
+      icon: 'fas fa-star', 
+      badge1Text: 'Workshop',
+      badge1Icon: 'fas fa-clock',
+      badge2Text: 'Hands-on Learning', 
+      badge2Icon: 'fas fa-users',
+      badge3Text: 'Final Project',
+      badge3Icon: 'fas fa-lightbulb',
+      order: 16, 
+      isVisible: true, 
+      createdAt: new Date(), 
+      updatedAt: new Date() 
     }
   ];
 
@@ -273,7 +375,7 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
       const configData = {
         type: buttonConfig.type,
         url: buttonConfig.url,
-        buttonText: '10-Week Program',
+        buttonText: '16-Week Program',
         isVisible: true,
         order: 1
       };
@@ -389,9 +491,11 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
             {activeHeader.title}
           </h2>
           
-          <p className="text-base sm:text-lg text-blue-600 max-w-2xl mx-auto leading-relaxed">
-            {activeHeader.description}
-          </p>
+          {activeHeader.description && (
+            <p className="text-base sm:text-lg text-blue-600 max-w-2xl mx-auto leading-relaxed">
+              {activeHeader.description}
+            </p>
+          )}
         </div>
 
         {/* Military Loading Screen */}
