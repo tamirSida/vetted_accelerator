@@ -6,7 +6,8 @@ Allow: /
 Allow: /accelerator
 Allow: /program
 Allow: /team
-Allow: /curriculum  
+Allow: /curriculum
+Allow: /portfolio
 Allow: /qualifications
 Allow: /service-requirements
 Allow: /privacy

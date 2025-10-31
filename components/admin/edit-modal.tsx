@@ -9,7 +9,7 @@ import { Textarea } from '@/components/ui/textarea';
 interface FormField {
   key: string;
   label: string;
-  type: 'text' | 'textarea' | 'email' | 'url' | 'number' | 'radio' | 'date' | 'datetime-local' | 'titles-list';
+  type: 'text' | 'textarea' | 'email' | 'url' | 'number' | 'radio' | 'date' | 'datetime-local' | 'titles-list' | 'select';
   required?: boolean;
   placeholder?: string;
   value?: string;
@@ -310,6 +310,23 @@ export default function EditModal({
                       Add Title
                     </Button>
                   </div>
+                ) : field.type === 'select' ? (
+                  <select
+                    value={formData[field.key] || ''}
+                    onChange={(e) => updateFormData({
+                      ...formData,
+                      [field.key]: e.target.value
+                    })}
+                    required={field.required}
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    <option value="">Select {field.label}</option>
+                    {field.options?.map((option) => (
+                      <option key={String(option.value)} value={String(option.value)}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
                 ) : (
                   <Input
                     type={field.type}

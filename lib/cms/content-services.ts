@@ -26,7 +26,8 @@ import {
   AcceleratorHero,
   ProgramPhase,
   ProgramSnapshot,
-  ProgramBenefit
+  ProgramBenefit,
+  PortfolioCompany
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -350,6 +351,12 @@ export class ProgramBenefitService extends BaseFirestoreService<ProgramBenefit> 
   }
 }
 
+export class PortfolioCompanyService extends BaseFirestoreService<PortfolioCompany> {
+  constructor() {
+    super('portfolio-companies');
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -555,5 +562,12 @@ export class CMSServiceFactory {
       this.instances.set('programBenefit', new ProgramBenefitService());
     }
     return this.instances.get('programBenefit');
+  }
+
+  static getPortfolioCompanyService(): PortfolioCompanyService {
+    if (!this.instances.has('portfolioCompany')) {
+      this.instances.set('portfolioCompany', new PortfolioCompanyService());
+    }
+    return this.instances.get('portfolioCompany');
   }
 }

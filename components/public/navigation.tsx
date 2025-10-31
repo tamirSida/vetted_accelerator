@@ -17,6 +17,7 @@ export default function Navigation() {
     { name: 'Program', href: '/program' },
     { name: 'Team', href: '/team' },
     { name: 'Curriculum', href: '/curriculum' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: 'Qualifications', href: '/qualifications' },
     { name: 'FAQ', href: '/#faq' },
     { name: 'Apply', href: EXTERNAL_URLS.APPLY_FORM, external: true },

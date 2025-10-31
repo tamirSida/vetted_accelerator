@@ -352,6 +352,18 @@ export interface ProgramBenefit {
   updatedAt: Date;
 }
 
+export interface PortfolioCompany {
+  id: string;
+  name: string;
+  description: string;
+  logo: string; // URL to company logo
+  status: 'exited' | 'fundraising' | 'none';
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;
