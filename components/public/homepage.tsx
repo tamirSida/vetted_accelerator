@@ -10,6 +10,7 @@ import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/comp
 import EditableSection from '@/components/admin/editable-section';
 import SimpleAdminToggle from '@/components/admin/simple-admin-toggle';
 import EditModal from '@/components/admin/edit-modal';
+import { useAdmin } from '@/lib/cms/admin-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -21,15 +22,18 @@ import {
   HeroSection as HeroType, 
   ContentSection as ContentType,
   FAQ,
-  MissionSection as MissionSectionType
+  MissionSection as MissionSectionType,
+  WhyChooseVettedBullet
 } from '@/lib/types/cms';
 import MissionEditModal from '@/components/admin/mission-edit-modal';
 
 function AlphaBetHomepageContent() {
+  const { isAdminMode } = useAdmin();
   const [hero, setHero] = useState<HeroType | null>(null);
   const [contentSections, setContentSections] = useState<ContentType[]>([]);
   const [faqs, setFaqs] = useState<FAQ[]>([]);
   const [missionSection, setMissionSection] = useState<MissionSectionType | null>(null);
+  const [whyChooseBullets, setWhyChooseBullets] = useState<WhyChooseVettedBullet[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(0);
   const [dividerWidth, setDividerWidth] = useState(200);
@@ -45,9 +49,7 @@ function AlphaBetHomepageContent() {
 
   // State to store the current content for each section
   const [sectionContent, setSectionContent] = useState({
-    mission: "You've demonstrated courage, discipline, and leadership in the most challenging environments. Now, we're here to help you apply those same traits to the world of entrepreneurship.\n\n• Bridge military experience with entrepreneurial skills\n• Get practical MBA-level education designed for founders  \n• Join a community of battle-tested veteran entrepreneurs\n• Create lasting impact through veteran-led innovation",
-    'why-alpha-bet': "• ⁠A Unique Partnership Between U.S. and Israel Veterans: We are the only platform uniting elite U.S. and Israeli operators. This gives our founders a distinct advantage: Israeli startups gain a trusted path to the U.S. market, while American founders get direct access to Israel's deep-tech ecosystem.\n• Recognized as a Proven Platform & Led By People Who've Been There: Our team includes multi-exit, combat veteran entrepreneurs and academics. Veteran Founders choose us for our proven track record and practical, in-the-trenches and purpose-built curriculum.\n• An Unparalleled Network of Mission-Driven Leaders: We connect our students with a curated network of unicorn founders and top executives. Amidst growing support for veterans, these leaders are personally invested in our mission and actively mentor our companies as the premier platform for giving back to this community.",
-    'what-you-gain': "• Build a Strong Team: During the program you will work in cross border teams to develop a startup. The program provides an opportunity to meet and work with other mission-driven veterans.\n• Gain Confidence & Knowledge: Learn to translate the skills you gained in your service to a new career in entrepreneurship. You will leave with a practical understanding of the entrepreneurial process, from ideation to venture creation.\n• Not just lessons, gain practical experience: Work in groups on real ideas and present to  investors and industry experts.\n• Priority Application to Version Bravo Accelerator: This gives you a direct path to the next level of funding and mentorship."
+    'why-founders-choose-vetted': "• Elite Founders. Global Network. Proven Platform Vetted unites the most capable operators from the U.S. and Israel — bridging two of the world's strongest innovation ecosystems to create a trusted community of veteran-led startups.\n• 1-on-1 Mentorship from Proven Founders Our mentors include unicorn founders, investors, and top executives — many of whom have served themselves. You'll receive hands-on guidance from those who've built, scaled, and exited successful companies.\n• A Purpose-Built Curriculum Designed by veteran entrepreneurs and academic leaders, our 10-week accelerator program blends practical startup training with tactical execution — from product and fundraising to leadership and storytelling.\n• Mission-Aligned Capital direct investment from the Vetted Fund and network of mission aligned co-investors."
   });
 
   // Enable URL-based admin access
@@ -94,10 +96,10 @@ function AlphaBetHomepageContent() {
   const handleKeyPress = useCallback((e: KeyboardEvent) => {
     if (e.key === 'ArrowLeft' && activeSection > 0) {
       scrollToSection(activeSection - 1);
-    } else if (e.key === 'ArrowRight' && activeSection < 2) {
+    } else if (e.key === 'ArrowRight' && activeSection < whyChooseBullets.length) {
       scrollToSection(activeSection + 1);
     }
-  }, [activeSection, scrollToSection]);
+  }, [activeSection, scrollToSection, whyChooseBullets.length]);
 
   // Set up keyboard listeners
   useEffect(() => {
@@ -152,12 +154,14 @@ function AlphaBetHomepageContent() {
         heroData,
         contentData,
         faqData,
-        missionData
+        missionData,
+        bulletsData
       ] = await Promise.all([
         CMSServiceFactory.getHeroService().getActiveHero(),
         CMSServiceFactory.getContentSectionService().getVisible(),
         CMSServiceFactory.getFAQService().getVisible(),
-        CMSServiceFactory.getMissionSectionService().getActiveMission()
+        CMSServiceFactory.getMissionSectionService().getActiveMission(),
+        CMSServiceFactory.getWhyChooseVettedBulletService().getVisible()
       ]);
 
       console.log('Loaded hero data:', heroData);
@@ -165,6 +169,51 @@ function AlphaBetHomepageContent() {
       setContentSections(contentData);
       setFaqs(faqData);
       setMissionSection(missionData);
+      
+      // If no bullets exist, create default ones
+      if (bulletsData.length === 0) {
+        const defaultBullets = [
+          {
+            title: 'Elite Founders. Global Network. Proven Platform',
+            description: 'Vetted unites the most capable operators from the U.S. and Israel — bridging two of the world\'s strongest innovation ecosystems to create a trusted community of veteran-led startups.',
+            order: 1,
+            isVisible: true
+          },
+          {
+            title: '1-on-1 Mentorship from Proven Founders',
+            description: 'Our mentors include unicorn founders, investors, and top executives — many of whom have served themselves. You\'ll receive hands-on guidance from those who\'ve built, scaled, and exited successful companies.',
+            order: 2,
+            isVisible: true
+          },
+          {
+            title: 'A Purpose-Built Curriculum',
+            description: 'Designed by veteran entrepreneurs and academic leaders, our 10-week accelerator program blends practical startup training with tactical execution — from product and fundraising to leadership and storytelling.',
+            order: 3,
+            isVisible: true
+          },
+          {
+            title: 'Mission-Aligned Capital',
+            description: 'Direct investment from the Vetted Fund and network of mission aligned co-investors.',
+            order: 4,
+            isVisible: true
+          }
+        ];
+        
+        // Create the default bullets
+        try {
+          for (const bullet of defaultBullets) {
+            await CMSServiceFactory.getWhyChooseVettedBulletService().create(bullet);
+          }
+          // Reload to get the created bullets
+          const newBulletsData = await CMSServiceFactory.getWhyChooseVettedBulletService().getVisible();
+          setWhyChooseBullets(newBulletsData);
+        } catch (error) {
+          console.error('Error creating default bullets:', error);
+          setWhyChooseBullets(bulletsData);
+        }
+      } else {
+        setWhyChooseBullets(bulletsData);
+      }
       
       // Load CMS content into local state for sections that exist
       setSectionContent(prev => {
@@ -255,6 +304,35 @@ function AlphaBetHomepageContent() {
   const handleEditMission = useCallback(() => {
     setMissionEditModalOpen(true);
   }, []);
+
+  const handleEditBullet = useCallback((bullet: WhyChooseVettedBullet) => {
+    setEditingType('why-choose-bullet');
+    setEditingItem(bullet);
+    setEditModalOpen(true);
+  }, []);
+
+  const handleAddBullet = useCallback(() => {
+    setEditingType('why-choose-bullet');
+    setEditingItem({
+      title: '',
+      description: '',
+      order: whyChooseBullets.length + 1,
+      isVisible: true
+    });
+    setEditModalOpen(true);
+  }, [whyChooseBullets.length]);
+
+  const handleDeleteBullet = useCallback(async (bullet: WhyChooseVettedBullet) => {
+    if (confirm(`Are you sure you want to delete "${bullet.title}"?`)) {
+      try {
+        await CMSServiceFactory.getWhyChooseVettedBulletService().delete(bullet.id);
+        await loadContent();
+      } catch (error) {
+        console.error('Error deleting bullet:', error);
+        alert('Failed to delete bullet. Please try again.');
+      }
+    }
+  }, [loadContent]);
 
   const handleSaveMission = useCallback(async (data: Partial<MissionSectionType>) => {
     try {
@@ -412,6 +490,17 @@ function AlphaBetHomepageContent() {
           };
           await CMSServiceFactory.getFAQService().create(faqData);
         }
+      } else if (editingType === 'why-choose-bullet') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getWhyChooseVettedBulletService().update(editingItem.id, data);
+        } else {
+          const bulletData = {
+            ...data,
+            isVisible: true,
+            order: data.order || whyChooseBullets.length + 1
+          };
+          await CMSServiceFactory.getWhyChooseVettedBulletService().create(bulletData);
+        }
       }
       
       await loadContent();
@@ -455,6 +544,12 @@ function AlphaBetHomepageContent() {
         return [
           { key: 'question', label: 'Question', type: 'text' as const, required: true, placeholder: 'Enter the FAQ question' },
           { key: 'answer', label: 'Answer', type: 'textarea' as const, required: true, placeholder: 'Enter the FAQ answer...' },
+          { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
+        ];
+      case 'why-choose-bullet':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Elite Founders. Global Network. Proven Platform' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the detailed description...' },
           { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
         ];
       default:
@@ -805,10 +900,17 @@ function AlphaBetHomepageContent() {
 
         {/* Horizontal Scrollable Content Sections */}
         <div className="relative">
+          {/* Section Title */}
+          <div className="text-center mb-8 lg:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              Why Founders Choose Vetted
+            </h2>
+          </div>
+          
           {/* Navigation Indicators */}
           <div className="flex justify-center mb-3 lg:mb-6 px-4">
             <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-full px-6 py-3 shadow-lg">
-              {['Our Mission', 'Why Alpha-Bet?', 'What You\'ll Gain'].map((title, index) => (
+              {whyChooseBullets.map((bullet, index) => (
                 <button
                   key={index}
                   onClick={() => scrollToSection(index)}
@@ -821,7 +923,7 @@ function AlphaBetHomepageContent() {
                   <div className={`w-2 h-2 rounded-full transition-colors ${
                     activeSection === index ? 'bg-white' : 'bg-gray-400'
                   }`}></div>
-                  <span className="hidden sm:inline text-sm font-medium">{title}</span>
+                  <span className="hidden sm:inline text-sm font-medium">{bullet.title}</span>
                 </button>
               ))}
             </div>
@@ -834,119 +936,99 @@ function AlphaBetHomepageContent() {
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', touchAction: 'manipulation' }}
             onScroll={handleScroll}
           >
-            {/* Mission Section */}
-            <div 
-              ref={el => { sectionRefs.current[0] = el; }}
-              className="min-w-full snap-center"
-            >
-              <EditableSection
-                sectionName="Mission"
-                onEdit={handleEditMission}
+            {whyChooseBullets.length > 0 ? whyChooseBullets.map((bullet, index) => (
+              <div 
+                key={bullet.id}
+                ref={el => { sectionRefs.current[index] = el; }}
+                className="min-w-full snap-center relative group"
               >
-                {missionSection ? (
-                  <MissionSection 
-                    mission={missionSection}
-                    onEdit={handleEditMission}
-                  />
-                ) : (
-                  <div className="py-16 text-center">
-                    <div className="text-gray-500 mb-4">
-                      <i className="fas fa-bullseye text-4xl opacity-30"></i>
+                <EditableSection
+                  sectionName={`Why Choose Vetted Bullet ${index + 1}`}
+                  onEdit={() => handleEditBullet(bullet)}
+                >
+                  <section className="py-16 sm:py-24 px-4 bg-transparent relative">
+                    <div className="max-w-4xl mx-auto text-center">
+                      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-8 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+                        {bullet.title}
+                      </h2>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                        {bullet.description}
+                      </p>
+                      
+                      {/* Admin Controls */}
+                      {isAdminMode && (
+                        <div className="absolute top-4 right-4 flex gap-2">
+                          <button
+                            onClick={() => handleEditBullet(bullet)}
+                            className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                            title="Edit bullet"
+                          >
+                            <i className="fas fa-edit mr-1"></i>
+                            Edit
+                          </button>
+                          <button
+                            onClick={() => handleDeleteBullet(bullet)}
+                            className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition-colors"
+                            title="Delete bullet"
+                          >
+                            <i className="fas fa-trash mr-1"></i>
+                            Delete
+                          </button>
+                          <button
+                            onClick={() => handleAddBullet()}
+                            className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition-colors"
+                            title="Add new bullet"
+                          >
+                            <i className="fas fa-plus mr-1"></i>
+                            Add
+                          </button>
+                        </div>
+                      )}
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-600 mb-2">No Mission Section</h3>
-                    <p className="text-gray-500 mb-6">Create your mission section to get started.</p>
+                  </section>
+                </EditableSection>
+              </div>
+            )) : (
+              <div className="min-w-full snap-center">
+                <section className="py-16 sm:py-24 px-4 bg-transparent">
+                  <div className="max-w-4xl mx-auto text-center">
+                    <div className="text-gray-500 mb-4">
+                      <i className="fas fa-plus-circle text-4xl opacity-30"></i>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-600 mb-2">No bullets added yet</h3>
+                    <p className="text-gray-500 mb-6">Add your first "Why Choose Vetted" bullet point.</p>
+                    {isAdminMode && (
+                      <button
+                        onClick={() => handleAddBullet()}
+                        className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      >
+                        Add First Bullet
+                      </button>
+                    )}
+                  </div>
+                </section>
+              </div>
+            )}
+            
+            {/* Add Bullet Button */}
+            {whyChooseBullets.length > 0 && isAdminMode && (
+              <div className="min-w-full snap-center">
+                <section className="py-16 sm:py-24 px-4 bg-transparent">
+                  <div className="max-w-4xl mx-auto text-center">
+                    <div className="text-gray-400 mb-4">
+                      <i className="fas fa-plus-circle text-4xl opacity-50"></i>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-500 mb-4">Add Another Bullet</h3>
                     <button
-                      onClick={handleEditMission}
-                      className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      onClick={() => handleAddBullet()}
+                      className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors border-2 border-dashed border-gray-300"
                     >
-                      Create Mission Section
+                      Add Bullet Point
                     </button>
                   </div>
-                )}
-              </EditableSection>
-            </div>
-
-            {/* Why Alpha-Bet Section */}
-            <div 
-              ref={el => { sectionRefs.current[1] = el; }}
-              className="min-w-full snap-center"
-            >
-              <EditableSection
-                sectionName="Why Alpha-Bet"
-                onEdit={() => {
-                  const contentSection = contentSections.find(section => section.type === 'why-alpha-bet');
-                  const getDefaultDescription = (type: string) => {
-                    switch (type) {
-                      case 'mission': return 'Our foundation and purpose';
-                      case 'why-alpha-bet': return 'What makes us unique';
-                      case 'what-you-gain': return 'Your transformation journey';
-                      default: return 'Learn more';
-                    }
-                  };
-                  
-                  handleEdit('content', {
-                    ...contentSection,
-                    id: contentSection?.id || "default-why-alpha-bet",
-                    title: contentSection?.title || "Why Alpha-Bet?",
-                    content: contentSection?.content || "This isn't a traditional classroom. This is a community of like-minded individuals who share your unique experiences and understand the 'battle-tested' approach to problem-solving.\n\n• Proven Network: Access to Version Bravo ecosystem with US and Israeli operators\n• Veteran-to-Veteran Mentorship: Learn from successful entrepreneur combat veterans\n• Fast-Track to Success: Priority application to Version Bravo accelerator with investment",
-                    description: contentSection?.description || getDefaultDescription('why-alpha-bet'),
-                    type: "why-alpha-bet"
-                  });
-                }}
-              >
-                <ContentSection
-                  title="Why Alpha-Bet?"
-                  content={sectionContent['why-alpha-bet']}
-                  type="why-alpha-bet"
-                  description={contentSections.find(section => section.type === 'why-alpha-bet')?.description}
-                  onEditHighlight={(highlight, index) => handleEditHighlight('why-alpha-bet', highlight, index)}
-                  onDeleteHighlight={(highlight, index) => handleDeleteHighlight('why-alpha-bet', highlight, index)}
-                  onAddHighlight={() => handleAddHighlight('why-alpha-bet')}
-                  onEditDescription={() => handleEditDescription('why-alpha-bet')}
-                />
-              </EditableSection>
-            </div>
-
-            {/* What You'll Gain Section */}
-            <div 
-              ref={el => { sectionRefs.current[2] = el; }}
-              className="min-w-full snap-center"
-            >
-              <EditableSection
-                sectionName="What You'll Gain"
-                onEdit={() => {
-                  const contentSection = contentSections.find(section => section.type === 'what-you-gain');
-                  const getDefaultDescription = (type: string) => {
-                    switch (type) {
-                      case 'mission': return 'Our foundation and purpose';
-                      case 'why-alpha-bet': return 'What makes us unique';
-                      case 'what-you-gain': return 'Your transformation journey';
-                      default: return 'Learn more';
-                    }
-                  };
-                  
-                  handleEdit('content', {
-                    ...contentSection,
-                    id: contentSection?.id || "default-what-you-gain",
-                    title: contentSection?.title || "What You'll Gain",
-                    content: contentSection?.content || "Transform your military experience into entrepreneurial success through our comprehensive 10-week program.\n\n• Build a Strong Team: Connect and develop startups with mission-driven veteran peers\n• Gain Confidence & Knowledge: Master the entrepreneurial process from ideation to venture creation\n• Experience Real-World Pitching: Present your startup to actual investors\n• Receive Priority for Acceleration: Direct path to Version Bravo accelerator with investment opportunity",
-                    description: contentSection?.description || getDefaultDescription('what-you-gain'),
-                    type: "what-you-gain"
-                  });
-                }}
-              >
-                <ContentSection
-                  title="What You'll Gain"
-                  content={sectionContent['what-you-gain']}
-                  type="what-you-gain"
-                  description={contentSections.find(section => section.type === 'what-you-gain')?.description}
-                  onEditHighlight={(highlight, index) => handleEditHighlight('what-you-gain', highlight, index)}
-                  onDeleteHighlight={(highlight, index) => handleDeleteHighlight('what-you-gain', highlight, index)}
-                  onAddHighlight={() => handleAddHighlight('what-you-gain')}
-                  onEditDescription={() => handleEditDescription('what-you-gain')}
-                />
-              </EditableSection>
-            </div>
+                </section>
+              </div>
+            )}
           </div>
           
           {/* Navigation Arrows */}
@@ -963,13 +1045,13 @@ function AlphaBetHomepageContent() {
           </button>
           
           <button 
-            onClick={() => activeSection < 2 && scrollToSection(activeSection + 1)}
+            onClick={() => activeSection < whyChooseBullets.length && scrollToSection(activeSection + 1)}
             className={`absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-              activeSection < 2 
+              activeSection < whyChooseBullets.length 
                 ? 'bg-white shadow-lg hover:shadow-xl text-gray-600 hover:text-blue-600' 
                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
             }`}
-            disabled={activeSection >= 2}
+            disabled={activeSection >= whyChooseBullets.length}
           >
             <i className="fas fa-chevron-right"></i>
           </button>

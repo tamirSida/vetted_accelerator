@@ -261,6 +261,16 @@ export interface PreRecordedSession {
   updatedAt: Date;
 }
 
+export interface WhyChooseVettedBullet {
+  id: string;
+  title: string; // "Elite Founders. Global Network. Proven Platform"
+  description: string; // Detailed description text
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;

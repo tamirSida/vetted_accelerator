@@ -19,7 +19,8 @@ import {
   SplashSection,
   MissionSection,
   LiveQAEvent,
-  PreRecordedSession
+  PreRecordedSession,
+  WhyChooseVettedBullet
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -286,6 +287,11 @@ export class CurriculumButtonConfigService extends BaseFirestoreService<Curricul
   }
 }
 
+export class WhyChooseVettedBulletService extends BaseFirestoreService<WhyChooseVettedBullet> {
+  constructor() {
+    super('why-choose-vetted-bullets');
+  }
+}
 
 // Service factory for easy instantiation
 export class CMSServiceFactory {
@@ -443,5 +449,12 @@ export class CMSServiceFactory {
       this.instances.set('curriculumButtonConfig', new CurriculumButtonConfigService());
     }
     return this.instances.get('curriculumButtonConfig');
+  }
+
+  static getWhyChooseVettedBulletService(): WhyChooseVettedBulletService {
+    if (!this.instances.has('whyChooseVettedBullet')) {
+      this.instances.set('whyChooseVettedBullet', new WhyChooseVettedBulletService());
+    }
+    return this.instances.get('whyChooseVettedBullet');
   }
 }
