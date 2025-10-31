@@ -349,7 +349,7 @@ export default function InfoSession() {
                           <div className="relative aspect-video bg-black rounded-lg overflow-hidden shadow-2xl">
                             <iframe
                               src={getYouTubeEmbedUrl(preRecordedSession.sessionUrl)}
-                              title={preRecordedSession.title || "Alpha-Bet Program Overview"}
+                              title={preRecordedSession.title || "Alpha-Bet Accelerator Overview"}
                               className="w-full h-full border-0"
                               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                               allowFullScreen

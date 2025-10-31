@@ -339,7 +339,7 @@ export default function ProgramPage() {
       <section className="py-16 sm:py-24 px-4 bg-gradient-to-br from-white via-white to-gray-200">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mb-8 leading-tight tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
-            Program Overview
+            Accelerator Overview
           </h1>
           <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
             A comprehensive 10-week journey from operator to founder, with immersive bootcamps in Israel and Miami.

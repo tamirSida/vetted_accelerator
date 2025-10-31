@@ -41,7 +41,7 @@ export default function TermsOfServicePage() {
           <div className="max-w-4xl mx-auto prose prose-lg max-w-none">
             
             <div className="bg-green-50 border-l-4 border-green-400 p-6 mb-8">
-              <h2 className="text-xl font-bold text-green-900 mb-2">Program Overview</h2>
+              <h2 className="text-xl font-bold text-green-900 mb-2">Accelerator Overview</h2>
               <p className="text-green-800 mb-0">
                 Alpha-Bet is a free, 10-week entrepreneurship program designed exclusively for US and Israeli combat veterans. 
                 These terms outline the expectations and commitments for program participants.

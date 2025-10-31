@@ -717,12 +717,12 @@ function AlphaBetHomepageContent() {
               
               {/* Left side - Hero content */}
               <div className="order-3 lg:order-1 text-center lg:text-left">
-                <h1 className="hidden lg:block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black" style={{ fontFamily: "'Black Ops One', cursive" }}>
+                <h2 className="hidden lg:block text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-black" style={{ fontFamily: "'Black Ops One', cursive" }}>
                   {activeHero.headline.includes('By Version Bravo') ? 
                     activeHero.headline.replace(' By Version Bravo', '').replace('By Version Bravo', '') :
                     activeHero.headline
                   }
-                </h1>
+                </h2>
                 <p 
                   ref={subtitleRef}
                   className="text-lg sm:text-xl md:text-2xl text-black font-bold mb-4 leading-relaxed" 
