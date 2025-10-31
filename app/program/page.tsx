@@ -623,45 +623,51 @@ export default function ProgramPage() {
                 </button>
               )}
               
-              <div className="flex flex-wrap justify-center gap-6">
-                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-seedling text-blue-600 text-xl"></i>
+              <div className="space-y-6">
+                {/* First Row - 3 items */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-seedling text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
+                    <p className="text-gray-600">{programSnapshot.stage}</p>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
-                  <p className="text-gray-600">{programSnapshot.stage}</p>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-clock text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
+                    <p className="text-gray-600">{programSnapshot.duration}</p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-laptop text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
+                    <p className="text-gray-600">{programSnapshot.format}</p>
+                  </div>
                 </div>
                 
-                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-clock text-blue-600 text-xl"></i>
+                {/* Second Row - 2 items, centered */}
+                <div className="flex justify-center gap-6">
+                  <div className="text-center w-full max-w-[200px]">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
+                    <p className="text-gray-600">{programSnapshot.cohortSize}</p>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
-                  <p className="text-gray-600">{programSnapshot.duration}</p>
-                </div>
-                
-                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-laptop text-blue-600 text-xl"></i>
+                  
+                  <div className="text-center w-full max-w-[200px]">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-trophy text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
+                    <p className="text-gray-600">{programSnapshot.demoDay}</p>
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
-                  <p className="text-gray-600">{programSnapshot.format}</p>
-                </div>
-                
-                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-users text-blue-600 text-xl"></i>
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
-                  <p className="text-gray-600">{programSnapshot.cohortSize}</p>
-                </div>
-                
-                <div className="text-center w-full sm:w-auto sm:min-w-[200px]">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i className="fas fa-trophy text-blue-600 text-xl"></i>
-                  </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
-                  <p className="text-gray-600">{programSnapshot.demoDay}</p>
                 </div>
               </div>
             </div>

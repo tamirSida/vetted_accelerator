@@ -156,7 +156,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
             className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-xl"
           >
             <i className="fas fa-rocket"></i>
-            <span>Apply to Alpha-Bet</span>
+            <span>Apply to Vetted Accelerator</span>
           </a>
         </div>
       </div>

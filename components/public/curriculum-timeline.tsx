@@ -681,27 +681,6 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
                       {item.description}
                     </p>
 
-                    {/* Quick preview badges */}
-                    <div className="flex flex-wrap gap-2">
-                      {item.badge1Text && (
-                        <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                          {item.badge1Icon && <i className={`${item.badge1Icon} mr-1`}></i>}
-                          {item.badge1Text}
-                        </span>
-                      )}
-                      {item.badge2Text && (
-                        <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                          {item.badge2Icon && <i className={`${item.badge2Icon} mr-1`}></i>}
-                          {item.badge2Text}
-                        </span>
-                      )}
-                      {item.badge3Text && (
-                        <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                          {item.badge3Icon && <i className={`${item.badge3Icon} mr-1`}></i>}
-                          {item.badge3Text}
-                        </span>
-                      )}
-                    </div>
 
                     {/* Mobile tap indicator */}
                     <div className="block md:hidden mt-4 pt-3 border-t border-white/10">
@@ -740,98 +719,6 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
           )}
         </div>
 
-        {/* Bottom Summary */}
-        <div className="mt-16 text-center">
-          <div className="max-w-4xl mx-auto bg-gradient-to-br from-white/15 via-white/10 to-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl relative group">
-            {/* CTA Edit Button */}
-            {isAdminMode && onEditCTA && (
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onEditCTA();
-                }}
-                className="absolute -top-2 -right-2 w-8 h-8 bg-purple-500 hover:bg-purple-400 text-white rounded-full flex items-center justify-center text-xs transition-all shadow-lg hover:shadow-xl hover:scale-110 z-[100] opacity-0 group-hover:opacity-100"
-                title="Edit curriculum CTA section"
-              >
-                <i className="fas fa-edit"></i>
-              </button>
-            )}
-            
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
-                <i className="fas fa-rocket text-white text-lg"></i>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-black">
-                {cta?.title || 'Your Entrepreneurial Journey Awaits'}
-              </h3>
-            </div>
-            
-            <p className="text-lg text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
-              {cta?.description || 'Transform 16 weeks of intensive learning into a lifetime of entrepreneurial success. Each week builds on the last, creating a comprehensive foundation for your startup journey.'}
-            </p>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-              <div className="bg-white/10 rounded-xl p-4 border border-white/20">
-                <div className="text-3xl font-bold text-blue-600 mb-2">16</div>
-                <div className="text-black font-medium">Intensive Weeks</div>
-                <div className="text-gray-700 text-sm">Structured Learning Path</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-4 border border-white/20">
-                <div className="text-3xl font-bold text-blue-600 mb-2">100+</div>
-                <div className="text-black font-medium">Practical Hours</div>
-                <div className="text-gray-700 text-sm">Hands-On Experience</div>
-              </div>
-              <div className="bg-white/10 rounded-xl p-4 border border-white/20">
-                <div className="text-3xl font-bold text-blue-600 mb-2">∞</div>
-                <div className="text-black font-medium">Network Value</div>
-                <div className="text-gray-700 text-sm">Lifelong Connections</div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a 
-                href={cta?.buttonLink || EXTERNAL_URLS.APPLY_FORM}
-                className="inline-flex items-center gap-2 bg-white rounded-full px-6 py-3 text-gray-900 font-semibold hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-              >
-                <i className="fas fa-graduation-cap"></i>
-                <span>{cta?.buttonText || 'Apply Now'}</span>
-              </a>
-              <div className="relative">
-                {buttonConfig.type === 'download' ? (
-                  <a 
-                    href={`/api/download?url=${encodeURIComponent(buttonConfig.url)}&filename=Alpha-Bet-10-Week-Program.pdf`}
-                    className="inline-flex items-center gap-2 bg-white/10 text-blue-700 border-blue-200 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-blue-300 rounded-full px-6 py-3 font-semibold transition-all duration-300"
-                  >
-                    <i className="fas fa-download"></i>
-                    <span>10-Week Program</span>
-                  </a>
-                ) : (
-                  <a 
-                    href={buttonConfig.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-white/10 text-blue-700 border-blue-200 shadow-lg hover:bg-white/15 hover:shadow-xl hover:border-blue-300 rounded-full px-6 py-3 font-semibold transition-all duration-300"
-                  >
-                    <i className="fas fa-calendar-alt"></i>
-                    <span>10-Week Program</span>
-                  </a>
-                )}
-                
-                {/* Admin Edit Button */}
-                {isAdminMode && (
-                  <button
-                    onClick={() => setShowButtonEdit(true)}
-                    className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 hover:bg-purple-400 text-white rounded-full flex items-center justify-center text-xs transition-all shadow-lg hover:shadow-xl hover:scale-110 z-10"
-                    title="Edit button configuration"
-                  >
-                    <i className="fas fa-cog text-xs"></i>
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Mobile Modal for Week Details */}
@@ -924,29 +811,6 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
                 </div>
               </div>
 
-              {/* Quick preview badges */}
-              <div className="mt-6 pt-4 border-t border-white/10">
-                <div className="flex flex-wrap gap-2">
-                  {mobileModalItem?.badge1Text && (
-                    <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                      {mobileModalItem.badge1Icon && <i className={`${mobileModalItem.badge1Icon} mr-1`}></i>}
-                      {mobileModalItem.badge1Text}
-                    </span>
-                  )}
-                  {mobileModalItem?.badge2Text && (
-                    <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                      {mobileModalItem.badge2Icon && <i className={`${mobileModalItem.badge2Icon} mr-1`}></i>}
-                      {mobileModalItem.badge2Text}
-                    </span>
-                  )}
-                  {mobileModalItem?.badge3Text && (
-                    <span className="px-3 py-1 bg-blue-50 rounded-full text-xs text-blue-700 border border-blue-200">
-                      {mobileModalItem.badge3Icon && <i className={`${mobileModalItem.badge3Icon} mr-1`}></i>}
-                      {mobileModalItem.badge3Text}
-                    </span>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </div>

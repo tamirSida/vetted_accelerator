@@ -71,7 +71,7 @@ export default function Navigation() {
               <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center relative">
                 <Image 
                   src="/logo.png"
-                  alt="Alpha-Bet Logo" 
+                  alt="Vetted Logo" 
                   width={48}
                   height={48}
                   className="object-contain filter brightness-0 invert" 

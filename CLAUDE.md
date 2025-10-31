@@ -47,7 +47,7 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 ### Individual Page Routes:
 - `/` - Splash page with optimized video loading (3-second timeout, redirect to home)
 - `/home` - Homepage with hero, mission/why/what sections, FAQ, and bottom navigation
-- `/team` - Team page with unified "Alpha-Bet Team" section, drag-and-drop reordering, and classification system
+- `/team` - Team page with unified "The Vetted Team" section, drag-and-drop reordering, and classification system
 - `/curriculum` - 10-week program curriculum with military loading animation and lightweight button CMS
 - `/qualifications` - Comprehensive eligibility requirements with participant types and candidate profiles
 - `/info-session` - Info sessions page with live Q&A events and pre-recorded session management
@@ -66,7 +66,7 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 1. **Hero Section** - Headline, split sub-headline with dynamic gradient divider, CTA text/link, background image, application window dates with smart status logic
 2. **Content Sections** - **GRANULAR CMS**: Individual editing of Mission Brief + Key Highlights with add/remove functionality
 3. **Curriculum Timeline** - 10-week program with week number, title, description, icons, editable CTA with lightweight button configuration
-4. **Team Members** - Unified "Alpha-Bet Team" with drag-and-drop reordering, team classification, dynamic titles/positions
+4. **Team Members** - Unified "The Vetted Team" with drag-and-drop reordering, team classification, dynamic titles/positions
 5. **Qualifications Page** - Program Introduction, Participant Types (Explorers/Builders), Alpha-Bet Candidate profile, Program Exclusions
 6. **Info Sessions Page** - Live Q&A events with date/URL management and pre-recorded session with URL configuration
 7. **Testimonials** - Quote, author, title, company, profile image

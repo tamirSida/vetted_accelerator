@@ -288,7 +288,7 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
           </div>
           
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
-            Alpha-Bet Team
+            The Vetted Team
           </h1>
           
           <p className="text-lg sm:text-xl text-blue-600 max-w-3xl mx-auto leading-relaxed" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>

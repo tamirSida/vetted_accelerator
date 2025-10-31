@@ -57,7 +57,7 @@ export default function TeamPage() {
     const defaultHeader = {
       id: 'team-header-1',
       label: "LEADERSHIP TEAM",
-      title: "Alpha-Bet Team",
+      title: "The Vetted Team",
       description: "Battle-tested leaders and mentors who understand your journey and are committed to your success",
       isVisible: true,
       order: 1,
@@ -172,9 +172,9 @@ export default function TeamPage() {
     <>
       <SEOHead
         title="Meet Our Team - Alpha-Bet Leadership & Mentors"
-        description="Meet the Alpha-Bet team: Combat veterans, successful entrepreneurs, and business leaders who mentor participants in our veteran entrepreneurship program. Learn from battle-tested leaders."
+        description="Meet the The Vetted Team: Combat veterans, successful entrepreneurs, and business leaders who mentor participants in our veteran entrepreneurship program. Learn from battle-tested leaders."
         keywords={[
-          'Alpha-Bet team',
+          'The Vetted Team',
           'veteran mentors',
           'military entrepreneur mentors',
           'veteran business leaders',

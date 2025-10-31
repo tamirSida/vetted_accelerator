@@ -233,7 +233,7 @@ export default function InfoSession() {
                   Sign Up for Live Q&A
                 </h2>
                 <p className="text-gray-800 max-w-2xl mx-auto">
-                  Join our live sessions to ask questions and interact directly with the Alpha-Bet team.
+                  Join our live sessions to ask questions and interact directly with the The Vetted Team.
                 </p>
               </div>
 
