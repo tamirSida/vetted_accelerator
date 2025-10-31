@@ -98,8 +98,83 @@ export default function ProgramPage() {
         setProgramPhases(phasesData);
       }
 
-      setProgramSnapshot(snapshotData);
-      setProgramBenefits(benefitsData);
+      // If no snapshot exists, create default one
+      if (!snapshotData) {
+        const defaultSnapshot = {
+          stage: 'Pre-Seed or Pre-Incorporation',
+          duration: '10 weeks',
+          format: 'Hybrid (online + two 10-day bootcamps in Israel and Florida)',
+          cohortSize: '16–20 startups',
+          demoDay: 'The LAB Miami',
+          isVisible: true,
+          order: 1
+        };
+        
+        try {
+          await CMSServiceFactory.getProgramSnapshotService().create(defaultSnapshot);
+          const newSnapshotData = await CMSServiceFactory.getProgramSnapshotService().getActiveSnapshot();
+          setProgramSnapshot(newSnapshotData);
+        } catch (error) {
+          console.error('Error creating default snapshot:', error);
+          setProgramSnapshot(null);
+        }
+      } else {
+        setProgramSnapshot(snapshotData);
+      }
+
+      // If no benefits exist, create default ones
+      if (benefitsData.length === 0) {
+        const defaultBenefits = [
+          {
+            title: 'Integrated Funding Path',
+            description: 'Direct investment from the Vetted Fund, plus follow-on opportunities through our LP and investor network.',
+            icon: 'fas fa-dollar-sign',
+            order: 1,
+            isVisible: true
+          },
+          {
+            title: 'Elite Mentorship',
+            description: 'Work 1-on-1 with founders, operators, and investors who\'ve built multi-million-dollar companies and served at the highest levels.',
+            icon: 'fas fa-user-tie',
+            order: 2,
+            isVisible: true
+          },
+          {
+            title: 'Battle-Tested Curriculum',
+            description: 'Hands-on workshops in GTM, product, fundraising, storytelling, and more. (Click to view full curriculum.)',
+            icon: 'fas fa-graduation-cap',
+            order: 3,
+            isVisible: true
+          },
+          {
+            title: 'The Vetted Network',
+            description: 'A global community of veteran founders, investors, and partners in both the U.S. and Israel.',
+            icon: 'fas fa-globe',
+            order: 4,
+            isVisible: true
+          },
+          {
+            title: 'Lifelong Alumni Network',
+            description: 'When the 10 weeks end, you have access to the Vetted Alumni Network, where founders, mentors, and investors continue to serve each other for life.',
+            icon: 'fas fa-users',
+            order: 5,
+            isVisible: true
+          }
+        ];
+
+        try {
+          for (const benefit of defaultBenefits) {
+            await CMSServiceFactory.getProgramBenefitService().create(benefit);
+          }
+          const newBenefitsData = await CMSServiceFactory.getProgramBenefitService().getVisible();
+          setProgramBenefits(newBenefitsData);
+        } catch (error) {
+          console.error('Error creating default benefits:', error);
+          setProgramBenefits([]);
+        }
+      } else {
+        setProgramBenefits(benefitsData);
+      }
     } catch (error) {
       console.error('Error loading content:', error);
     } finally {
@@ -174,6 +249,28 @@ export default function ProgramPage() {
           ...phase,
           graphics: updatedGraphics
         });
+      } else if (editingType === 'program-snapshot') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getProgramSnapshotService().update(editingItem.id, data);
+        } else {
+          const snapshotData = {
+            ...data,
+            isVisible: true,
+            order: 1
+          };
+          await CMSServiceFactory.getProgramSnapshotService().create(snapshotData);
+        }
+      } else if (editingType === 'program-benefit') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getProgramBenefitService().update(editingItem.id, data);
+        } else {
+          const benefitData = {
+            ...data,
+            isVisible: true,
+            order: programBenefits.length + 1
+          };
+          await CMSServiceFactory.getProgramBenefitService().create(benefitData);
+        }
       }
       
       await loadContent();
@@ -182,7 +279,7 @@ export default function ProgramPage() {
       console.error('Error saving:', error);
       alert('Failed to save changes. Please try again.');
     }
-  }, [editingType, editingItem, loadContent, programPhases]);
+  }, [editingType, editingItem, loadContent, programPhases, programBenefits.length]);
 
   const getEditFields = useCallback(() => {
     switch (editingType) {
@@ -199,6 +296,20 @@ export default function ProgramPage() {
           { key: 'title', label: 'Title', type: 'text' as const, required: false, placeholder: 'e.g., Workshops in Storytelling...' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: false, placeholder: 'Enter the graphic description...' },
           { key: 'image', label: 'Image URL', type: 'text' as const, required: false, placeholder: 'https://example.com/image.jpg' }
+        ];
+      case 'program-snapshot':
+        return [
+          { key: 'stage', label: 'Stage', type: 'text' as const, required: true, placeholder: 'e.g., Pre-Seed or Pre-Incorporation' },
+          { key: 'duration', label: 'Duration', type: 'text' as const, required: true, placeholder: 'e.g., 10 weeks' },
+          { key: 'format', label: 'Format', type: 'text' as const, required: true, placeholder: 'e.g., Hybrid (online + two 10-day bootcamps...)' },
+          { key: 'cohortSize', label: 'Cohort Size', type: 'text' as const, required: true, placeholder: 'e.g., 16–20 startups' },
+          { key: 'demoDay', label: 'Demo Day', type: 'text' as const, required: true, placeholder: 'e.g., The LAB Miami' }
+        ];
+      case 'program-benefit':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Integrated Funding Path' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the benefit description...' },
+          { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-dollar-sign' }
         ];
       default:
         return [];
@@ -363,12 +474,157 @@ export default function ProgramPage() {
         </div>
       </section>
 
+      {/* Program Snapshot Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              Program Snapshot
+            </h2>
+          </div>
+          
+          {programSnapshot ? (
+            <div className="bg-white rounded-xl shadow-lg p-8 relative">
+              {isAdminMode && (
+                <button
+                  onClick={() => {
+                    setEditingType('program-snapshot');
+                    setEditingItem(programSnapshot);
+                    setEditModalOpen(true);
+                  }}
+                  className="absolute top-4 right-4 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                  title="Edit snapshot"
+                >
+                  <i className="fas fa-edit"></i>
+                </button>
+              )}
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-seedling text-blue-600 text-xl"></i>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
+                  <p className="text-gray-600">{programSnapshot.stage}</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-clock text-blue-600 text-xl"></i>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
+                  <p className="text-gray-600">{programSnapshot.duration}</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-laptop text-blue-600 text-xl"></i>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
+                  <p className="text-gray-600">{programSnapshot.format}</p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-users text-blue-600 text-xl"></i>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
+                  <p className="text-gray-600">{programSnapshot.cohortSize}</p>
+                </div>
+                
+                <div className="text-center md:col-span-2 lg:col-span-1">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fas fa-trophy text-blue-600 text-xl"></i>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
+                  <p className="text-gray-600">{programSnapshot.demoDay}</p>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+              {isAdminMode && (
+                <button
+                  onClick={() => {
+                    setEditingType('program-snapshot');
+                    setEditingItem({});
+                    setEditModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                >
+                  Add Program Snapshot
+                </button>
+              )}
+              {!isAdminMode && <p className="text-gray-500">Program snapshot coming soon...</p>}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* What You'll Get Section */}
+      <section className="py-16 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              What You'll Get
+            </h2>
+            {isAdminMode && (
+              <button
+                onClick={() => {
+                  setEditingType('program-benefit');
+                  setEditingItem({});
+                  setEditModalOpen(true);
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors mt-4"
+              >
+                <i className="fas fa-plus"></i>
+                Add Benefit
+              </button>
+            )}
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {programBenefits.map((benefit) => (
+              <div key={benefit.id} className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow relative">
+                {isAdminMode && (
+                  <button
+                    onClick={() => {
+                      setEditingType('program-benefit');
+                      setEditingItem(benefit);
+                      setEditModalOpen(true);
+                    }}
+                    className="absolute top-4 right-4 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                    title="Edit benefit"
+                  >
+                    <i className="fas fa-edit"></i>
+                  </button>
+                )}
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className={`${benefit.icon} text-blue-600 text-xl`}></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Edit Modal */}
       <EditModal
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSave={handleSave}
-        title={`${editingItem?.id ? 'Edit' : 'Add'} ${editingType === 'program-phase' ? 'Program Phase' : editingType === 'program-graphic' ? 'Graphic' : 'Content'}`}
+        title={`${editingItem?.id ? 'Edit' : 'Add'} ${
+          editingType === 'program-phase' ? 'Program Phase' : 
+          editingType === 'program-graphic' ? 'Graphic' : 
+          editingType === 'program-snapshot' ? 'Program Snapshot' :
+          editingType === 'program-benefit' ? 'Benefit' : 
+          'Content'
+        }`}
         fields={getEditFields()}
         initialData={editingItem}
       />
