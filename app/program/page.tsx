@@ -121,6 +121,18 @@ export default function ProgramPage() {
     setEditModalOpen(true);
   }, []);
 
+  const handleEditGraphic = useCallback((phase: ProgramPhase, graphic: any) => {
+    setEditingType('program-graphic');
+    setEditingItem({ ...graphic, phaseId: phase.id });
+    setEditModalOpen(true);
+  }, []);
+
+  const handleAddGraphic = useCallback((phase: ProgramPhase) => {
+    setEditingType('program-graphic');
+    setEditingItem({ phaseId: phase.id });
+    setEditModalOpen(true);
+  }, []);
+
   const handleSave = useCallback(async (data: any) => {
     try {
       if (editingType === 'program-phase') {
@@ -135,6 +147,33 @@ export default function ProgramPage() {
           };
           await CMSServiceFactory.getProgramPhaseService().create(phaseData);
         }
+      } else if (editingType === 'program-graphic') {
+        const phaseId = editingItem.phaseId;
+        const phase = programPhases.find(p => p.id === phaseId);
+        if (!phase) return;
+
+        let updatedGraphics = [...(phase.graphics || [])];
+        
+        if (editingItem.id) {
+          // Update existing graphic
+          const graphicIndex = updatedGraphics.findIndex(g => g.id === editingItem.id);
+          if (graphicIndex !== -1) {
+            updatedGraphics[graphicIndex] = { ...updatedGraphics[graphicIndex], ...data };
+          }
+        } else {
+          // Add new graphic
+          const newGraphic = {
+            ...data,
+            id: `graphic-${Date.now()}`,
+            order: updatedGraphics.length + 1
+          };
+          updatedGraphics.push(newGraphic);
+        }
+
+        await CMSServiceFactory.getProgramPhaseService().update(phaseId, {
+          ...phase,
+          graphics: updatedGraphics
+        });
       }
       
       await loadContent();
@@ -143,7 +182,7 @@ export default function ProgramPage() {
       console.error('Error saving:', error);
       alert('Failed to save changes. Please try again.');
     }
-  }, [editingType, editingItem, loadContent, programPhases.length]);
+  }, [editingType, editingItem, loadContent, programPhases]);
 
   const getEditFields = useCallback(() => {
     switch (editingType) {
@@ -153,6 +192,12 @@ export default function ProgramPage() {
           { key: 'subtitle', label: 'Subtitle', type: 'text' as const, required: true, placeholder: 'e.g., Your journey starts...' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the phase description...' },
           { key: 'duration', label: 'Duration', type: 'text' as const, required: true, placeholder: 'e.g., 10 days' },
+          { key: 'image', label: 'Image URL', type: 'text' as const, required: false, placeholder: 'https://example.com/image.jpg' }
+        ];
+      case 'program-graphic':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: false, placeholder: 'e.g., Workshops in Storytelling...' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: false, placeholder: 'Enter the graphic description...' },
           { key: 'image', label: 'Image URL', type: 'text' as const, required: false, placeholder: 'https://example.com/image.jpg' }
         ];
       default:
@@ -256,24 +301,55 @@ export default function ProgramPage() {
                           {phase.graphics && phase.graphics.length > 0 && (
                             <div className="space-y-4">
                               {phase.graphics.map((graphic, graphicIndex) => (
-                                <div key={graphic.id} className="bg-gray-50 rounded-lg p-4">
-                                  <h4 className="font-semibold text-gray-900 mb-2">
-                                    Graphic {graphicIndex + 1}: {graphic.title}
-                                  </h4>
+                                <div key={graphic.id} className="bg-gray-50 rounded-lg p-4 relative">
+                                  <div className="flex items-start justify-between mb-2">
+                                    <h4 className="font-semibold text-gray-900">
+                                      {graphic.title}
+                                    </h4>
+                                    {isAdminMode && (
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleEditGraphic(phase, graphic);
+                                        }}
+                                        className="px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors ml-2"
+                                        title="Edit graphic"
+                                      >
+                                        <i className="fas fa-edit"></i>
+                                      </button>
+                                    )}
+                                  </div>
                                   <p className="text-gray-600 text-sm">{graphic.description}</p>
                                   {graphic.image && (
                                     <div className="mt-3">
                                       <Image
                                         src={graphic.image}
-                                        alt={graphic.title}
-                                        width={400}
-                                        height={200}
-                                        className="w-full h-auto rounded-md object-cover"
+                                        alt={graphic.title || 'Graphic image'}
+                                        width={800}
+                                        height={500}
+                                        className="max-w-2xl h-80 rounded-md object-contain bg-gray-100"
                                       />
                                     </div>
                                   )}
                                 </div>
                               ))}
+                            </div>
+                          )}
+                          
+                          {/* Add Graphic Button */}
+                          {isAdminMode && (
+                            <div className="mt-4">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleAddGraphic(phase);
+                                }}
+                                className="inline-flex items-center gap-2 px-3 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
+                                title="Add new graphic"
+                              >
+                                <i className="fas fa-plus"></i>
+                                Add Graphic
+                              </button>
                             </div>
                           )}
                         </div>
@@ -292,7 +368,7 @@ export default function ProgramPage() {
         isOpen={editModalOpen}
         onClose={() => setEditModalOpen(false)}
         onSave={handleSave}
-        title={`Edit ${editingType === 'program-phase' ? 'Program Phase' : 'Content'}`}
+        title={`${editingItem?.id ? 'Edit' : 'Add'} ${editingType === 'program-phase' ? 'Program Phase' : editingType === 'program-graphic' ? 'Graphic' : 'Content'}`}
         fields={getEditFields()}
         initialData={editingItem}
       />
