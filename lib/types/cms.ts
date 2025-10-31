@@ -364,6 +364,17 @@ export interface PortfolioCompany {
   updatedAt: Date;
 }
 
+export interface AcceleratorImageSection {
+  id: string;
+  title: string; // Section title
+  description: string; // Text content
+  image: string; // Image URL
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;

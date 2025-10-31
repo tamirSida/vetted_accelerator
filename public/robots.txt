@@ -3,7 +3,6 @@ Allow: /
 
 # Important pages for search engines
 Allow: /
-Allow: /accelerator
 Allow: /program
 Allow: /team
 Allow: /curriculum

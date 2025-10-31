@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAdmin } from '@/lib/cms/admin-context';
 import { CMSServiceFactory } from '@/lib/cms/content-services';
-import { ProgramPhase, ProgramSnapshot, ProgramBenefit } from '@/lib/types/cms';
+import { ProgramPhase, ProgramSnapshot, ProgramBenefit, AcceleratorImageSection } from '@/lib/types/cms';
 import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
@@ -16,6 +16,7 @@ export default function ProgramPage() {
   const [programPhases, setProgramPhases] = useState<ProgramPhase[]>([]);
   const [programSnapshot, setProgramSnapshot] = useState<ProgramSnapshot | null>(null);
   const [programBenefits, setProgramBenefits] = useState<ProgramBenefit[]>([]);
+  const [acceleratorImageSection, setAcceleratorImageSection] = useState<AcceleratorImageSection | null>(null);
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -28,10 +29,11 @@ export default function ProgramPage() {
   const loadContent = useCallback(async () => {
     try {
       setLoading(true);
-      const [phasesData, snapshotData, benefitsData] = await Promise.all([
+      const [phasesData, snapshotData, benefitsData, imageSectionData] = await Promise.all([
         CMSServiceFactory.getProgramPhaseService().getVisible(),
         CMSServiceFactory.getProgramSnapshotService().getActiveSnapshot(),
-        CMSServiceFactory.getProgramBenefitService().getVisible()
+        CMSServiceFactory.getProgramBenefitService().getVisible(),
+        CMSServiceFactory.getAcceleratorImageSectionService().getActiveSection()
       ]);
 
       // If no phases exist, create default ones
@@ -176,6 +178,8 @@ export default function ProgramPage() {
       } else {
         setProgramBenefits(benefitsData);
       }
+
+      setAcceleratorImageSection(imageSectionData);
     } catch (error) {
       console.error('Error loading content:', error);
     } finally {
@@ -272,6 +276,17 @@ export default function ProgramPage() {
           };
           await CMSServiceFactory.getProgramBenefitService().create(benefitData);
         }
+      } else if (editingType === 'accelerator-image-section') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getAcceleratorImageSectionService().update(editingItem.id, data);
+        } else {
+          const imageSectionData = {
+            ...data,
+            isVisible: true,
+            order: 1
+          };
+          await CMSServiceFactory.getAcceleratorImageSectionService().create(imageSectionData);
+        }
       }
       
       await loadContent();
@@ -312,6 +327,12 @@ export default function ProgramPage() {
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the benefit description...' },
           { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-dollar-sign' }
         ];
+      case 'accelerator-image-section':
+        return [
+          { key: 'title', label: 'Section Title', type: 'text' as const, required: false, placeholder: 'e.g., Our Accelerator in Action' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: false, placeholder: 'Enter the section description...' },
+          { key: 'image', label: 'Image URL', type: 'text' as const, required: true, placeholder: 'https://example.com/image.jpg' }
+        ];
       default:
         return [];
     }
@@ -335,15 +356,117 @@ export default function ProgramPage() {
       <DiscreteAdminDot />
       <SimpleAdminToggle />
 
+      {/* Vetted Accelerator Section */}
+      <section className="py-8 sm:py-12 px-4 bg-gradient-to-br from-white via-white to-gray-200 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 relative group">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+              <span className="text-gray-700 text-sm font-medium tracking-wide">ACCELERATOR PROGRAM</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              The Vetted Accelerator
+            </h1>
+            <h2 className="text-lg sm:text-xl text-blue-600 max-w-3xl mx-auto leading-relaxed mb-8" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+              Where veteran grit meets venture growth.
+            </h2>
+            
+            <div className="prose prose-lg max-w-4xl mx-auto">
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
+                You've led teams, executed under pressure, and thrived where others wouldn't dare.
+              </p>
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
+                Now it's time to bring that same mindset to your next mission: building a world-class company.
+              </p>
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
+                The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
+              </p>
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
+                <strong>Our #1 Principle: Provide Value to our Founders</strong>
+              </p>
+              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
+                This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
+              </p>
+            </div>
+
+            {/* Image Section */}
+            {acceleratorImageSection ? (
+              <div className="mt-16 relative">
+                {isAdminMode && (
+                  <button
+                    onClick={() => {
+                      setEditingType('accelerator-image-section');
+                      setEditingItem(acceleratorImageSection);
+                      setEditModalOpen(true);
+                    }}
+                    className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors z-10"
+                    title="Edit image section"
+                  >
+                    <i className="fas fa-edit mr-1"></i>
+                    Edit Section
+                  </button>
+                )}
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  {(acceleratorImageSection.title || acceleratorImageSection.description) && (
+                    <div>
+                      {acceleratorImageSection.title && (
+                        <h3 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
+                          {acceleratorImageSection.title}
+                        </h3>
+                      )}
+                      {acceleratorImageSection.description && (
+                        <p className="text-lg text-gray-700 leading-relaxed">
+                          {acceleratorImageSection.description}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  <div className={`relative ${!(acceleratorImageSection.title || acceleratorImageSection.description) ? 'lg:col-span-2 max-w-4xl mx-auto' : 'max-w-lg mx-auto'}`}>
+                    <Image
+                      src={acceleratorImageSection.image}
+                      alt={acceleratorImageSection.title || 'Accelerator image'}
+                      width={600}
+                      height={500}
+                      className="rounded-xl shadow-lg object-cover w-full h-[350px] sm:h-[450px]"
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : isAdminMode ? (
+              <div className="mt-16 text-center">
+                <button
+                  onClick={() => {
+                    setEditingType('accelerator-image-section');
+                    setEditingItem({});
+                    setEditModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                >
+                  Add Image Section
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
+
       {/* Hero Section */}
-      <section className="py-16 sm:py-24 px-4 bg-gradient-to-br from-white via-white to-gray-200">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-black mb-8 leading-tight tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
-            Accelerator Overview
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
-            A comprehensive 10-week journey from operator to founder, with immersive bootcamps in Israel and Miami.
-          </p>
+      <section className="py-8 sm:py-12 px-4 bg-gradient-to-br from-white via-white to-gray-200 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.15),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]"></div>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 relative group">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              Accelerator Overview
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+              A comprehensive 10-week journey from operator to founder, with immersive bootcamps in Israel and Miami.
+            </p>
+          </div>
         </div>
       </section>
 
