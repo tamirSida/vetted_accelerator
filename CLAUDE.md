@@ -1,7 +1,7 @@
-# Alpha-Bet Project - Claude Context
+# Vetted Accelerator Project - Claude Context
 
 ## Project Overview
-Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, designed to equip them with the skills, network, and battle-tested mindset to build successful startups. This is a Next.js website with a complete CMS system and multi-page architecture.
+Vetted Accelerator is an entrepreneurship program for US and Israeli combat veterans, designed to equip them with the skills, network, and battle-tested mindset to build successful startups. This is a Next.js website with a complete CMS system and multi-page architecture.
 
 ## Project Structure
 - **Framework**: Next.js 15.4.6 with TypeScript and Tailwind CSS
@@ -21,7 +21,7 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 - `bottom-navigation.tsx` - Contextual user journey flow between pages
 - `hero-section.tsx` - Landing hero with seamless background integration
 - `content-section.tsx` - Modern grid-based content with granular CMS, glass morphism effects, and color-coded sections
-- `curriculum-timeline.tsx` - Side-to-side curriculum layout with mobile popup modals, lightweight button CMS, and drag-and-drop admin reordering
+- `curriculum-timeline.tsx` - Side-to-side curriculum layout with mobile popup modals, 16-week program structure, and admin reordering (badges removed)
 - `unified-team-section.tsx` - Unified team component with drag-and-drop reordering and team classification (Academic Team vs Program Staff)
 - `testimonials-section.tsx` - Dark themed testimonial cards with quote patterns
 - `cta-section.tsx` - Final mission briefing style call-to-action
@@ -48,8 +48,8 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 - `/` - Splash page with optimized video loading (3-second timeout, redirect to home)
 - `/home` - Homepage with hero, mission/why/what sections, FAQ, and bottom navigation
 - `/team` - Team page with unified "The Vetted Team" section, drag-and-drop reordering, and classification system
-- `/curriculum` - 10-week program curriculum with military loading animation and lightweight button CMS
-- `/qualifications` - Comprehensive eligibility requirements with participant types and candidate profiles
+- `/curriculum` - 16-week program curriculum with military loading animation (bottom CTA section removed)
+- `/program` - Program overview with phases, benefits, and portfolio snapshot (moved from /accelerator)
 - `/info-session` - Info sessions page with live Q&A events and pre-recorded session management
 - `/service-requirements` - Detailed military service eligibility criteria page
 - `/privacy` - Privacy policy page with comprehensive data protection information
@@ -65,13 +65,13 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 ### Fully CMS-Enabled Sections:
 1. **Hero Section** - Headline, split sub-headline with dynamic gradient divider, CTA text/link, background image, application window dates with smart status logic
 2. **Content Sections** - **GRANULAR CMS**: Individual editing of Mission Brief + Key Highlights with add/remove functionality
-3. **Curriculum Timeline** - 10-week program with week number, title, description, icons, editable CTA with lightweight button configuration
+3. **Curriculum Timeline** - 16-week program with week number, title, description, icons (badges and bottom CTA removed)
 4. **Team Members** - Unified "The Vetted Team" with drag-and-drop reordering, team classification, dynamic titles/positions
-5. **Qualifications Page** - Program Introduction, Participant Types (Explorers/Builders), Alpha-Bet Candidate profile, Program Exclusions
+5. **Program Page** - Accelerator overview, program phases, benefits, portfolio snapshot with CMS-editable image sections
 6. **Info Sessions Page** - Live Q&A events with date/URL management and pre-recorded session with URL configuration
 7. **Testimonials** - Quote, author, title, company, profile image
 8. **Call to Action** - Title, description, button text/link with dual button support
-9. **FAQ Items** - Question, answer with HTML support, order, visibility controls, and hardcoded fallbacks including program eligibility and meeting times
+9. **FAQ Items** - 16 new Vetted Accelerator focused questions replacing previous Alpha-Bet FAQs
 10. **Splash Page** - Headline, sub-headline, redirect URL, timer duration with video optimization
 11. **Service Requirements** - Static page with comprehensive military service criteria
 
@@ -103,7 +103,7 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 - **Military Aesthetic**: Shield icons, badges, monospace fonts for loading screens
 - **Seamless Dark Theme**: Continuous gradient backgrounds without page breaks
 - **Grid-Based Layouts**: 2-column responsive grids for content highlights
-- **Color-Coded Sections**: Blue (Mission), Purple (Why Alpha-Bet), Yellow (What You'll Gain)
+- **Color-Coded Sections**: Blue (Mission), Purple (Why Vetted), Yellow (What You'll Gain)
 - **Glass Morphism**: Backdrop blur effects, transparent overlays, and modern card designs
 - **Professional Layout**: Side-to-side alternating curriculum, clean checklist qualifications
 - **Responsive Design**: Mobile-first approach with breakpoints and popup modals
@@ -133,7 +133,7 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 - `npm run typecheck` - TypeScript checking
 
 ## Firebase Configuration
-- **Collections**: hero-sections, content-sections, curriculum-items, curriculum-headers, call-to-actions, faqs, testimonials, alpha-bet-team, program-intros, participant-types, candidate-profiles, program-exclusions, splash-sections, live-qa-events, pre-recorded-sessions, mission-sections
+- **Collections**: hero-sections, content-sections, curriculum-items, curriculum-headers, call-to-actions, faqs, testimonials, alpha-bet-team, program-intros, participant-types, candidate-profiles, program-exclusions, splash-sections, live-qa-events, pre-recorded-sessions, mission-sections, accelerator-image-sections, program-phases, program-snapshots, program-benefits, portfolio-companies
 - **Authentication**: Admin users for CMS access with discrete login methods
 - **Security Rules**: Authenticated users have full access, public read access
 - **External Images**: LinkedIn and other media domains configured in next.config.ts
@@ -152,6 +152,14 @@ Alpha-Bet is an entrepreneurship program for US and Israeli combat veterans, des
 - ✅ Performance optimizations including image optimization and efficient rendering
 
 ## Recent Major Updates:
+- **Branding Update**: Changed from "Alpha-Bet" to "Vetted" throughout the application
+- **Program Page**: Moved accelerator content to program page, added CMS-editable image sections
+- **Portfolio Management**: Added portfolio companies with status flags (exited/fundraising) and delete functionality
+- **Curriculum Simplification**: Removed badge tags and bottom CTA section from curriculum timeline
+- **FAQ Overhaul**: Replaced 6 old FAQs with 16 new Vetted Accelerator focused questions
+- **Navigation Updates**: Removed accelerator and qualifications pages from navigation
+- **Grid Layout Fixes**: Fixed centering issues in program snapshot section (5-item grid)
+- **Footer Branding**: Updated copyright from "Alpha-Bet Program" to "Vetted Program"
 - **Info Sessions Page**: Complete page with live Q&A event management and pre-recorded session configuration
 - **Application Status Logic**: Smart status display based on current date vs application/program dates with dynamic month detection
 - **Dynamic Gradient Divider**: Hero subtitle divider now spans the full width of the text dynamically
