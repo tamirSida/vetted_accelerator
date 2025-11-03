@@ -370,7 +370,7 @@ export default function ProgramPage() {
               The Vetted Accelerator
             </h1>
             <h2 className="text-lg sm:text-xl text-blue-600 max-w-3xl mx-auto leading-relaxed mb-8" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
-              Where veteran grit meets venture growth.
+              Our #1 Principle: Provide Value to our Founders
             </h2>
             
             <div className="prose prose-lg max-w-4xl mx-auto">
@@ -382,9 +382,6 @@ export default function ProgramPage() {
               </p>
               <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
                 The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
-              </p>
-              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
-                <strong>Our #1 Principle: Provide Value to our Founders</strong>
               </p>
               <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
                 This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
