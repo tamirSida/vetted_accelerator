@@ -15,7 +15,7 @@ export default function Navigation() {
     { name: 'Home', href: '/' },
     { name: 'Program', href: '/program' },
     { name: 'Team', href: '/team' },
-    { name: 'Curriculum', href: '/curriculum' },
+    { name: 'Modules', href: '/curriculum' },
     { name: 'Portfolio', href: '/portfolio' },
     { name: 'FAQ', href: '/#faq' },
     { name: 'Apply', href: EXTERNAL_URLS.APPLY_FORM, external: true },

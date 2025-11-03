@@ -143,8 +143,8 @@ export default function ProgramPage() {
             isVisible: true
           },
           {
-            title: 'Battle-Tested Curriculum',
-            description: 'Hands-on workshops in GTM, product, fundraising, storytelling, and more. (Click to view full curriculum.)',
+            title: 'Battle-Tested Module Program',
+            description: 'Hands-on workshops in GTM, product, fundraising, storytelling, and more. (Click to view full module program.).',
             icon: 'fas fa-graduation-cap',
             order: 3,
             isVisible: true

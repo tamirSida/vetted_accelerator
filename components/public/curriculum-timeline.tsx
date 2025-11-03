@@ -34,8 +34,8 @@ export default function CurriculumTimeline({ items, header, cta, onEdit, onDelet
   
   // Default header values with fallback to CMS data
   const activeHeader = {
-    badge: header?.badge || '16-WEEK CURRICULUM',
-    title: header?.title || 'Vetted Accelerator Curriculum',
+    badge: header?.badge || '16-WEEK MODULE PROGRAM',
+    title: header?.title || 'Vetted Accelerator Module Program',
     description: header?.description || ''
   };
   const [loadingProgress, setLoadingProgress] = useState(0);

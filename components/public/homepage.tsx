@@ -54,7 +54,7 @@ function AlphaBetHomepageContent() {
 
   // State to store the current content for each section
   const [sectionContent, setSectionContent] = useState({
-    'why-founders-choose-vetted': "• Elite Founders. Global Network. Proven Platform Vetted unites the most capable operators from the U.S. and Israel — bridging two of the world's strongest innovation ecosystems to create a trusted community of veteran-led startups.\n• 1-on-1 Mentorship from Proven Founders Our mentors include unicorn founders, investors, and top executives — many of whom have served themselves. You'll receive hands-on guidance from those who've built, scaled, and exited successful companies.\n• A Purpose-Built Curriculum Designed by veteran entrepreneurs and academic leaders, our 10-week accelerator program blends practical startup training with tactical execution — from product and fundraising to leadership and storytelling.\n• Mission-Aligned Capital direct investment from the Vetted Fund and network of mission aligned co-investors."
+    'why-founders-choose-vetted': "• Elite Founders. Global Network. Proven Platform Vetted unites the most capable operators from the U.S. and Israel — bridging two of the world's strongest innovation ecosystems to create a trusted community of veteran-led startups.\n• 1-on-1 Mentorship from Proven Founders Our mentors include unicorn founders, investors, and top executives — many of whom have served themselves. You'll receive hands-on guidance from those who've built, scaled, and exited successful companies.\n• A Purpose-Built Module Program Designed by veteran entrepreneurs and academic leaders, our 10-week accelerator program blends practical startup training with tactical execution — from product and fundraising to leadership and storytelling.\n• Mission-Aligned Capital direct investment from the Vetted Fund and network of mission aligned co-investors."
   });
 
   // Enable URL-based admin access
@@ -195,7 +195,7 @@ function AlphaBetHomepageContent() {
             isVisible: true
           },
           {
-            title: 'A Purpose-Built Curriculum',
+            title: 'A Purpose-Built Module Program',
             description: 'Designed by veteran entrepreneurs and academic leaders, our 10-week accelerator program blends practical startup training with tactical execution — from product and fundraising to leadership and storytelling.',
             order: 3,
             isVisible: true
@@ -594,7 +594,7 @@ function AlphaBetHomepageContent() {
           { key: 'programStartDate', label: 'Program Start Date', type: 'date' as const, required: false, placeholder: '2025-03-15' },
           { key: 'programEndDate', label: 'Program End Date', type: 'date' as const, required: false, placeholder: '2025-05-24' },
           { key: 'ctaText', label: 'Call-to-Action Text', type: 'text' as const, required: true, placeholder: 'e.g., Apply Now' },
-          { key: 'ctaLink', label: 'Call-to-Action Link', type: 'text' as const, required: true, placeholder: '/curriculum or https://...' },
+          { key: 'ctaLink', label: 'Call-to-Action Link', type: 'text' as const, required: true, placeholder: '/modules or https://...' },
           { key: 'backgroundImage', label: 'Background Image URL', type: 'text' as const, required: false, placeholder: '/images/hero.jpeg or https://...' }
         ];
       case 'content':

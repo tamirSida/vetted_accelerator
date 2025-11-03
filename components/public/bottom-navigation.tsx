@@ -18,7 +18,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
             primary: true
           },
           {
-            title: 'View Curriculum',
+            title: 'View Modules',
             description: 'Explore our comprehensive 10-week entrepreneurship program.',
             href: '/curriculum',
             icon: 'fas fa-graduation-cap',
@@ -29,7 +29,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
       case 'team':
         return [
           {
-            title: 'View Our Curriculum',
+            title: 'View Our Modules',
             description: 'Discover what you\'ll learn in our 10-week program.',
             href: '/curriculum',
             icon: 'fas fa-graduation-cap',
@@ -73,7 +73,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
             external: true
           },
           {
-            title: 'Review Curriculum',
+            title: 'Review Modules',
             description: 'Take another look at what you\'ll learn.',
             href: '/curriculum',
             icon: 'fas fa-graduation-cap',

@@ -6,7 +6,7 @@ import {
   TeamMember, 
   TeamHeader,
   Testimonial, 
-  CurriculumItem, 
+  CurriculumItem,
   CurriculumHeader,
   CallToAction,
   CurriculumButtonConfig,

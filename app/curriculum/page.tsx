@@ -54,8 +54,8 @@ export default function CurriculumPage() {
 
   const handleEditHeader = useCallback(() => {
     const headerToEdit = curriculumHeader || {
-      badge: '16-WEEK CURRICULUM',
-      title: 'Vetted Accelerator Curriculum',
+      badge: '16-WEEK MODULE PROGRAM',
+      title: 'Vetted Accelerator Module Program',
       description: ''
     };
     setEditingItem(headerToEdit);
@@ -202,7 +202,7 @@ export default function CurriculumPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-black mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading Vetted Accelerator curriculum...</p>
+          <p className="mt-4 text-gray-600">Loading Vetted Accelerator modules...</p>
         </div>
       </div>
     );
@@ -211,16 +211,16 @@ export default function CurriculumPage() {
   return (
     <>
       <SEOHead
-        title="16-Week Curriculum - Vetted Accelerator Program"
-        description="Explore Vetted Accelerator's comprehensive 16-week curriculum: From idea to business plan. Learn lean methodology, customer discovery, networking, market analysis, and presentation skills designed for elite combat veterans."
+        title="16-Week Module Program - Vetted Accelerator Program"
+        description="Explore Vetted Accelerator's comprehensive 16-week module program: From idea to business plan. Learn lean methodology, customer discovery, networking, market analysis, and presentation skills designed for elite combat veterans."
         keywords={[
-          '16-week entrepreneurship curriculum',
-          'startup curriculum veterans',
+          '16-week entrepreneurship module program',
+          'startup module program veterans',
           'business training program',
           'lean methodology training',
           'customer discovery course',
           'business plan development',
-          'startup accelerator curriculum',
+          'startup accelerator modules',
           'entrepreneur training syllabus',
           'military entrepreneur education',
           'veteran business course'
@@ -235,8 +235,8 @@ export default function CurriculumPage() {
         
 
         {/* Curriculum Timeline */}
-        <CurriculumTimeline 
-          items={curriculum} 
+        <CurriculumTimeline
+          items={curriculum}
           header={curriculumHeader}
           cta={curriculumCTA}
           onEdit={(item) => handleEdit(item)}
