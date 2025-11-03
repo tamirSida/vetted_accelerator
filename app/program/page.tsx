@@ -361,91 +361,83 @@ export default function ProgramPage() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(120,119,198,0.15),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.05),transparent_50%)]"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16 relative group">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-              <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-              <span className="text-gray-700 text-sm font-medium tracking-wide">ACCELERATOR PROGRAM</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
-              The Vetted Accelerator
-            </h1>
-            <h2 className="text-lg sm:text-xl text-blue-600 max-w-3xl mx-auto leading-relaxed mb-8" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
-              Our #1 Principle: Provide Value to our Founders
-            </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
-            <div className="prose prose-lg max-w-4xl mx-auto">
-              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
-                You've led teams, executed under pressure, and thrived where others wouldn't dare.
-              </p>
-              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
-                Now it's time to bring that same mindset to your next mission: building a world-class company.
-              </p>
-              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
-                The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
-              </p>
-              <p className="text-lg sm:text-xl text-gray-700 leading-relaxed mb-6 text-left">
-                This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
-              </p>
+            {/* Text Content - Left Side */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                <span className="text-gray-700 text-sm font-medium tracking-wide">ACCELERATOR PROGRAM</span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-black mb-4 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
+                The Vetted Accelerator
+              </h1>
+              <h2 className="text-lg sm:text-xl text-blue-600 leading-relaxed mb-8" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+                Our #1 Principle: Provide Value to our Founders
+              </h2>
+              
+              <div className="space-y-6">
+                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                  You've led teams, executed under pressure, and thrived where others wouldn't dare.
+                </p>
+                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                  Now it's time to bring that same mindset to your next mission: building a world-class company.
+                </p>
+                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                  The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
+                </p>
+                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                  This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
+                </p>
+              </div>
             </div>
 
-            {/* Image Section */}
-            {acceleratorImageSection ? (
-              <div className="mt-16 relative">
-                {isAdminMode && (
+            {/* Image Section - Right Side */}
+            <div className="relative">
+              {acceleratorImageSection ? (
+                <>
+                  {isAdminMode && (
+                    <button
+                      onClick={() => {
+                        setEditingType('accelerator-image-section');
+                        setEditingItem(acceleratorImageSection);
+                        setEditModalOpen(true);
+                      }}
+                      className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors z-10"
+                      title="Edit image section"
+                    >
+                      <i className="fas fa-edit mr-1"></i>
+                      Edit Section
+                    </button>
+                  )}
+                  <Image
+                    src={acceleratorImageSection.image}
+                    alt={acceleratorImageSection.title || 'Accelerator image'}
+                    width={600}
+                    height={500}
+                    className="rounded-xl shadow-lg object-cover w-full h-[350px] sm:h-[450px]"
+                  />
+                </>
+              ) : isAdminMode ? (
+                <div className="text-center">
                   <button
                     onClick={() => {
                       setEditingType('accelerator-image-section');
-                      setEditingItem(acceleratorImageSection);
+                      setEditingItem({});
                       setEditModalOpen(true);
                     }}
-                    className="absolute top-4 right-4 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors z-10"
-                    title="Edit image section"
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
                   >
-                    <i className="fas fa-edit mr-1"></i>
-                    Edit Section
+                    Add Image Section
                   </button>
-                )}
-                
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                  {(acceleratorImageSection.title || acceleratorImageSection.description) && (
-                    <div>
-                      {acceleratorImageSection.title && (
-                        <h3 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
-                          {acceleratorImageSection.title}
-                        </h3>
-                      )}
-                      {acceleratorImageSection.description && (
-                        <p className="text-lg text-gray-700 leading-relaxed">
-                          {acceleratorImageSection.description}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  <div className={`relative ${!(acceleratorImageSection.title || acceleratorImageSection.description) ? 'lg:col-span-2 max-w-4xl mx-auto' : 'max-w-lg mx-auto'}`}>
-                    <Image
-                      src={acceleratorImageSection.image}
-                      alt={acceleratorImageSection.title || 'Accelerator image'}
-                      width={600}
-                      height={500}
-                      className="rounded-xl shadow-lg object-cover w-full h-[350px] sm:h-[450px]"
-                    />
-                  </div>
                 </div>
-              </div>
-            ) : isAdminMode ? (
-              <div className="mt-16 text-center">
-                <button
-                  onClick={() => {
-                    setEditingType('accelerator-image-section');
-                    setEditingItem({});
-                    setEditModalOpen(true);
-                  }}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                >
-                  Add Image Section
-                </button>
-              </div>
-            ) : null}
+              ) : (
+                <div className="w-full h-[350px] sm:h-[450px] bg-gray-200 rounded-xl flex items-center justify-center">
+                  <span className="text-gray-500">Image coming soon...</span>
+                </div>
+              )}
+            </div>
+            
           </div>
         </div>
       </section>
