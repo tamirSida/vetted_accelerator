@@ -223,7 +223,7 @@ export default function FAQSection({ faqs, onEdit, onDelete }: FAQSectionProps) 
           </h2>
           
           <p className="text-lg sm:text-xl text-gray-800 max-w-3xl mx-auto leading-relaxed">
-            Get answers to common questions about the Alpha-Bet program and application process.
+            Get answers to common questions about The Vetted Accelerator and application process.
           </p>
         </div>
 
@@ -308,7 +308,7 @@ export default function FAQSection({ faqs, onEdit, onDelete }: FAQSectionProps) 
               Still Have Questions?
             </h3>
             <p className="text-lg text-gray-800 leading-relaxed mb-6 max-w-2xl mx-auto">
-              Our team is here to help you understand if Alpha-Bet is the right fit for your entrepreneurial journey.
+              Our team is here to help you understand if The Vetted Accelerator is the right fit for you.
             </p>
             <div className="flex justify-center">
               <a

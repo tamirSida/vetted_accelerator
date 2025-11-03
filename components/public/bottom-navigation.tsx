@@ -98,7 +98,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
             Ready for the Next Step?
           </h2>
           <p className="text-gray-800 max-w-2xl mx-auto">
-            Continue exploring the Alpha-Bet program to see how we can help transform your military experience into entrepreneurial success.
+            Continue exploring The Vetted Accelerator to see how we can help transform your military experience into entrepreneurial success.
           </p>
         </div>
 
