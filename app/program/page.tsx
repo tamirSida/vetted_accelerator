@@ -442,6 +442,98 @@ export default function ProgramPage() {
         </div>
       </section>
 
+      {/* Program Snapshot Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
+              Program Snapshot
+            </h2>
+          </div>
+          
+          {programSnapshot ? (
+            <div className="bg-white rounded-xl shadow-lg p-8 relative">
+              {isAdminMode && (
+                <button
+                  onClick={() => {
+                    setEditingType('program-snapshot');
+                    setEditingItem(programSnapshot);
+                    setEditModalOpen(true);
+                  }}
+                  className="absolute top-4 right-4 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                  title="Edit snapshot"
+                >
+                  <i className="fas fa-edit"></i>
+                </button>
+              )}
+              
+              <div className="space-y-6">
+                {/* First Row - 3 items */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-seedling text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
+                    <p className="text-gray-600">{programSnapshot.stage}</p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-clock text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
+                    <p className="text-gray-600">{programSnapshot.duration}</p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-laptop text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
+                    <p className="text-gray-600">{programSnapshot.format}</p>
+                  </div>
+                </div>
+                
+                {/* Second Row - 2 items, centered */}
+                <div className="flex justify-center gap-6">
+                  <div className="text-center w-full max-w-[200px]">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
+                    <p className="text-gray-600">{programSnapshot.cohortSize}</p>
+                  </div>
+                  
+                  <div className="text-center w-full max-w-[200px]">
+                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <i className="fas fa-trophy text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
+                    <p className="text-gray-600">{programSnapshot.demoDay}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+              {isAdminMode && (
+                <button
+                  onClick={() => {
+                    setEditingType('program-snapshot');
+                    setEditingItem({});
+                    setEditModalOpen(true);
+                  }}
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                >
+                  Add Program Snapshot
+                </button>
+              )}
+              {!isAdminMode && <p className="text-gray-500">Program snapshot coming soon...</p>}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Hero Section */}
       <section className="py-8 sm:py-12 px-4 bg-gradient-to-br from-white via-white to-gray-200 relative overflow-hidden">
@@ -584,99 +676,6 @@ export default function ProgramPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Program Snapshot Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
-              Program Snapshot
-            </h2>
-          </div>
-          
-          {programSnapshot ? (
-            <div className="bg-white rounded-xl shadow-lg p-8 relative">
-              {isAdminMode && (
-                <button
-                  onClick={() => {
-                    setEditingType('program-snapshot');
-                    setEditingItem(programSnapshot);
-                    setEditModalOpen(true);
-                  }}
-                  className="absolute top-4 right-4 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
-                  title="Edit snapshot"
-                >
-                  <i className="fas fa-edit"></i>
-                </button>
-              )}
-              
-              <div className="space-y-6">
-                {/* First Row - 3 items */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-seedling text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
-                    <p className="text-gray-600">{programSnapshot.stage}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-clock text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
-                    <p className="text-gray-600">{programSnapshot.duration}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-laptop text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
-                    <p className="text-gray-600">{programSnapshot.format}</p>
-                  </div>
-                </div>
-                
-                {/* Second Row - 2 items, centered */}
-                <div className="flex justify-center gap-6">
-                  <div className="text-center w-full max-w-[200px]">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-users text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
-                    <p className="text-gray-600">{programSnapshot.cohortSize}</p>
-                  </div>
-                  
-                  <div className="text-center w-full max-w-[200px]">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-trophy text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
-                    <p className="text-gray-600">{programSnapshot.demoDay}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-              {isAdminMode && (
-                <button
-                  onClick={() => {
-                    setEditingType('program-snapshot');
-                    setEditingItem({});
-                    setEditModalOpen(true);
-                  }}
-                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
-                >
-                  Add Program Snapshot
-                </button>
-              )}
-              {!isAdminMode && <p className="text-gray-500">Program snapshot coming soon...</p>}
-            </div>
-          )}
         </div>
       </section>
 
