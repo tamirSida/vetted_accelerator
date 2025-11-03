@@ -296,23 +296,23 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
           </p>
         </div>
 
-        {/* Alpha-Bet Academic Team */}
-        {displayMembers.slice(0, 3).length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
-              Alpha-Bet Academic Team
-            </h2>
+        {/* Program Staff */}
+        <div className="mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+            Program Staff
+          </h2>
+          {displayMembers.length > 0 ? (
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
               onDragEnd={handleDragEnd}
             >
               <SortableContext
-                items={displayMembers.slice(0, 3).map(member => member.id)}
+                items={displayMembers.map(member => member.id)}
                 strategy={verticalListSortingStrategy}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                  {displayMembers.slice(0, 3).map((member, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-8">
+                  {displayMembers.map((member, index) => (
                     <SortableTeamMember
                       key={member.id}
                       member={member}
@@ -326,56 +326,49 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
                 </div>
               </SortableContext>
             </DndContext>
-          </div>
-        )}
-
-        {/* Program Staff */}
-        {displayMembers.slice(3).length > 0 && (
-          <div className="mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
-              Program Staff
-            </h2>
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
-            >
-              <SortableContext
-                items={displayMembers.slice(3).map(member => member.id)}
-                strategy={verticalListSortingStrategy}
+          ) : (
+            <div className="text-center text-gray-600 mb-8">
+              <p>No program staff members added yet.</p>
+            </div>
+          )}
+          
+          {/* Add New Staff Member Button */}
+          {isAdminMode && (
+            <div className="flex justify-center">
+              <button
+                onClick={() => onEdit && onEdit()}
+                className="w-80 h-80 bg-gray-100/50 backdrop-blur-md rounded-2xl border-2 border-dashed border-gray-400 hover:border-gray-600 hover:bg-gray-200/50 transition-all duration-300 flex flex-col items-center justify-center gap-4 text-gray-600 hover:text-gray-800"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-                  {displayMembers.slice(3).map((member, index) => (
-                    <SortableTeamMember
-                      key={member.id}
-                      member={member}
-                      index={index + 3}
-                      onEdit={onEdit}
-                      onDelete={onDelete}
-                      hoveredMember={hoveredMember}
-                      setHoveredMember={setHoveredMember}
-                    />
-                  ))}
+                <div className="w-16 h-16 rounded-full border-2 border-dashed border-current flex items-center justify-center">
+                  <i className="fas fa-plus text-2xl"></i>
                 </div>
-              </SortableContext>
-            </DndContext>
-          </div>
-        )}
+                <span className="text-lg font-medium">Add Program Staff</span>
+              </button>
+            </div>
+          )}
+        </div>
 
-        {/* Add New Member Button */}
-        {isAdminMode && (
-          <div className="flex justify-center">
-            <button
-              onClick={() => onEdit && onEdit()}
-              className="w-80 h-80 bg-gray-100/50 backdrop-blur-md rounded-2xl border-2 border-dashed border-gray-400 hover:border-gray-600 hover:bg-gray-200/50 transition-all duration-300 flex flex-col items-center justify-center gap-4 text-gray-600 hover:text-gray-800"
-            >
-              <div className="w-16 h-16 rounded-full border-2 border-dashed border-current flex items-center justify-center">
-                <i className="fas fa-plus text-2xl"></i>
-              </div>
-              <span className="text-lg font-medium">Add Team Member</span>
-            </button>
-          </div>
-        )}
+        {/* Mentors Section */}
+        <div className="mb-16">
+          <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+            Mentors
+          </h2>
+          
+          {isAdminMode && (
+            <div className="flex justify-center">
+              <button
+                onClick={() => onEdit && onEdit()}
+                className="w-80 h-80 bg-gray-100/50 backdrop-blur-md rounded-2xl border-2 border-dashed border-gray-400 hover:border-gray-600 hover:bg-gray-200/50 transition-all duration-300 flex flex-col items-center justify-center gap-4 text-gray-600 hover:text-gray-800"
+              >
+                <div className="w-16 h-16 rounded-full border-2 border-dashed border-current flex items-center justify-center">
+                  <i className="fas fa-plus text-2xl"></i>
+                </div>
+                <span className="text-lg font-medium">Add Mentor</span>
+              </button>
+            </div>
+          )}
+        </div>
+
       </div>
     </section>
   );
