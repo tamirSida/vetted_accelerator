@@ -681,6 +681,7 @@ function AlphaBetHomepageContent() {
     applicationWindowCloses: "2025-02-28",
     programStartDate: "2025-03-15",
     programEndDate: "2025-05-24",
+    cohortNumber: 1,
     ctaText: "Explore Program",
     ctaLink: "/curriculum"
   };
