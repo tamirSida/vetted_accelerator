@@ -6,7 +6,7 @@ export const EXTERNAL_URLS = {
   APPLY_FORM: 'https://application.alphabet.vbv.vc',
   
   // Social media links
-  LINKEDIN: 'https://www.linkedin.com/school/versionbravo/posts/?feedView=all',
+  LINKEDIN: 'https://www.linkedin.com/company/thevetted/posts/?feedView=all',
   
   // Contact email
   CONTACT_EMAIL: 'info@thevetted.vc',

@@ -341,6 +341,17 @@ export interface ProgramSnapshot {
   updatedAt: Date;
 }
 
+export interface ProgramSnapshotItem {
+  id: string;
+  title: string; // "Stage", "Duration", "Format", etc.
+  description: string; // "Pre-Seed or Pre-Incorporation", "10 weeks", etc.
+  icon: string; // Font Awesome icon class
+  order: number;
+  isVisible: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ProgramBenefit {
   id: string;
   title: string; // "Integrated Funding Path"

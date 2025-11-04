@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAdmin } from '@/lib/cms/admin-context';
 import { CMSServiceFactory } from '@/lib/cms/content-services';
-import { ProgramPhase, ProgramSnapshot, ProgramBenefit, AcceleratorImageSection } from '@/lib/types/cms';
+import { ProgramPhase, ProgramSnapshot, ProgramSnapshotItem, ProgramBenefit, AcceleratorImageSection } from '@/lib/types/cms';
 import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
@@ -15,6 +15,7 @@ export default function ProgramPage() {
   const { isAdminMode } = useAdmin();
   const [programPhases, setProgramPhases] = useState<ProgramPhase[]>([]);
   const [programSnapshot, setProgramSnapshot] = useState<ProgramSnapshot | null>(null);
+  const [programSnapshotItems, setProgramSnapshotItems] = useState<ProgramSnapshotItem[]>([]);
   const [programBenefits, setProgramBenefits] = useState<ProgramBenefit[]>([]);
   const [acceleratorImageSection, setAcceleratorImageSection] = useState<AcceleratorImageSection | null>(null);
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
@@ -29,9 +30,10 @@ export default function ProgramPage() {
   const loadContent = useCallback(async () => {
     try {
       setLoading(true);
-      const [phasesData, snapshotData, benefitsData, imageSectionData] = await Promise.all([
+      const [phasesData, snapshotData, snapshotItemsData, benefitsData, imageSectionData] = await Promise.all([
         CMSServiceFactory.getProgramPhaseService().getVisible(),
         CMSServiceFactory.getProgramSnapshotService().getActiveSnapshot(),
+        CMSServiceFactory.getProgramSnapshotItemService().getVisible(),
         CMSServiceFactory.getProgramBenefitService().getVisible(),
         CMSServiceFactory.getAcceleratorImageSectionService().getActiveSection()
       ]);
@@ -101,29 +103,62 @@ export default function ProgramPage() {
         setProgramPhases(phasesData);
       }
 
-      // If no snapshot exists, create default one
-      if (!snapshotData) {
-        const defaultSnapshot = {
-          stage: 'Pre-Seed or Pre-Incorporation',
-          duration: '10 weeks',
-          format: 'Hybrid (online + two 10-day bootcamps in Israel and Florida)',
-          cohortSize: '16–20 startups',
-          demoDay: 'The LAB Miami',
-          isVisible: true,
-          order: 1
-        };
+      // If no snapshot items exist, create default ones
+      if (snapshotItemsData.length === 0) {
+        const defaultSnapshotItems = [
+          {
+            title: 'Stage',
+            description: 'Pre-Seed or Pre-Incorporation',
+            icon: 'fas fa-seedling',
+            order: 1,
+            isVisible: true
+          },
+          {
+            title: 'Duration',
+            description: '10 weeks',
+            icon: 'fas fa-clock',
+            order: 2,
+            isVisible: true
+          },
+          {
+            title: 'Format',
+            description: 'Hybrid (online + two 10-day bootcamps in Israel and Florida)',
+            icon: 'fas fa-laptop',
+            order: 3,
+            isVisible: true
+          },
+          {
+            title: 'Cohort Size',
+            description: '16–20 startups',
+            icon: 'fas fa-users',
+            order: 4,
+            isVisible: true
+          },
+          {
+            title: 'Demo Day',
+            description: 'The LAB Miami',
+            icon: 'fas fa-trophy',
+            order: 5,
+            isVisible: true
+          }
+        ];
         
         try {
-          await CMSServiceFactory.getProgramSnapshotService().create(defaultSnapshot);
-          const newSnapshotData = await CMSServiceFactory.getProgramSnapshotService().getActiveSnapshot();
-          setProgramSnapshot(newSnapshotData);
+          for (const item of defaultSnapshotItems) {
+            await CMSServiceFactory.getProgramSnapshotItemService().create(item);
+          }
+          const newSnapshotItemsData = await CMSServiceFactory.getProgramSnapshotItemService().getVisible();
+          setProgramSnapshotItems(newSnapshotItemsData);
         } catch (error) {
-          console.error('Error creating default snapshot:', error);
-          setProgramSnapshot(null);
+          console.error('Error creating default snapshot items:', error);
+          setProgramSnapshotItems([]);
         }
       } else {
-        setProgramSnapshot(snapshotData);
+        setProgramSnapshotItems(snapshotItemsData);
       }
+      
+      // Legacy snapshot support (keep for backwards compatibility)
+      setProgramSnapshot(snapshotData);
 
       // If no benefits exist, create default ones
       if (benefitsData.length === 0) {
@@ -213,6 +248,30 @@ export default function ProgramPage() {
     setEditModalOpen(true);
   }, []);
 
+  const handleEditSnapshotItem = useCallback((item: ProgramSnapshotItem) => {
+    setEditingType('program-snapshot-item');
+    setEditingItem(item);
+    setEditModalOpen(true);
+  }, []);
+
+  const handleAddSnapshotItem = useCallback(() => {
+    setEditingType('program-snapshot-item');
+    setEditingItem({});
+    setEditModalOpen(true);
+  }, []);
+
+  const handleDeleteSnapshotItem = useCallback(async (itemId: string) => {
+    if (window.confirm('Are you sure you want to delete this snapshot item?')) {
+      try {
+        await CMSServiceFactory.getProgramSnapshotItemService().delete(itemId);
+        await loadContent();
+      } catch (error) {
+        console.error('Error deleting snapshot item:', error);
+        alert('Failed to delete snapshot item. Please try again.');
+      }
+    }
+  }, [loadContent]);
+
   const handleSave = useCallback(async (data: any) => {
     try {
       if (editingType === 'program-phase') {
@@ -265,6 +324,17 @@ export default function ProgramPage() {
           };
           await CMSServiceFactory.getProgramSnapshotService().create(snapshotData);
         }
+      } else if (editingType === 'program-snapshot-item') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getProgramSnapshotItemService().update(editingItem.id, data);
+        } else {
+          const snapshotItemData = {
+            ...data,
+            isVisible: true,
+            order: programSnapshotItems.length + 1
+          };
+          await CMSServiceFactory.getProgramSnapshotItemService().create(snapshotItemData);
+        }
       } else if (editingType === 'program-benefit') {
         if (editingItem && editingItem.id) {
           await CMSServiceFactory.getProgramBenefitService().update(editingItem.id, data);
@@ -295,7 +365,7 @@ export default function ProgramPage() {
       console.error('Error saving:', error);
       alert('Failed to save changes. Please try again.');
     }
-  }, [editingType, editingItem, loadContent, programPhases, programBenefits.length]);
+  }, [editingType, editingItem, loadContent, programPhases, programBenefits.length, programSnapshotItems.length]);
 
   const getEditFields = useCallback(() => {
     switch (editingType) {
@@ -320,6 +390,12 @@ export default function ProgramPage() {
           { key: 'format', label: 'Format', type: 'text' as const, required: true, placeholder: 'e.g., Hybrid (online + two 10-day bootcamps...)' },
           { key: 'cohortSize', label: 'Cohort Size', type: 'text' as const, required: true, placeholder: 'e.g., 16–20 startups' },
           { key: 'demoDay', label: 'Demo Day', type: 'text' as const, required: true, placeholder: 'e.g., The LAB Miami' }
+        ];
+      case 'program-snapshot-item':
+        return [
+          { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Stage, Duration, Format' },
+          { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'e.g., Pre-Seed or Pre-Incorporation' },
+          { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-seedling' }
         ];
       case 'program-benefit':
         return [
@@ -449,84 +525,57 @@ export default function ProgramPage() {
             <h2 className="text-3xl sm:text-4xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
               Program Snapshot
             </h2>
+            {isAdminMode && (
+              <button
+                onClick={handleAddSnapshotItem}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors mt-4"
+              >
+                <i className="fas fa-plus"></i>
+                Add Snapshot Item
+              </button>
+            )}
           </div>
           
-          {programSnapshot ? (
-            <div className="bg-white rounded-xl shadow-lg p-8 relative">
-              {isAdminMode && (
-                <button
-                  onClick={() => {
-                    setEditingType('program-snapshot');
-                    setEditingItem(programSnapshot);
-                    setEditModalOpen(true);
-                  }}
-                  className="absolute top-4 right-4 px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
-                  title="Edit snapshot"
-                >
-                  <i className="fas fa-edit"></i>
-                </button>
-              )}
-              
-              <div className="space-y-6">
-                {/* First Row - 3 items */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center">
-                  <div className="text-center">
+          {programSnapshotItems.length > 0 ? (
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <div className="flex flex-wrap justify-center gap-6">
+                {programSnapshotItems.map((item) => (
+                  <div key={item.id} className="text-center w-full sm:w-auto sm:min-w-[200px] sm:max-w-[280px] relative group">
+                    {isAdminMode && (
+                      <div className="absolute -top-2 -right-2 flex gap-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button
+                          onClick={() => handleEditSnapshotItem(item)}
+                          className="w-8 h-8 bg-blue-500 hover:bg-blue-400 text-white rounded-full flex items-center justify-center text-xs transition-all shadow-lg hover:shadow-xl hover:scale-110"
+                          title="Edit snapshot item"
+                        >
+                          <i className="fas fa-edit"></i>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteSnapshotItem(item.id)}
+                          className="w-8 h-8 bg-red-500 hover:bg-red-400 text-white rounded-full flex items-center justify-center text-xs transition-all shadow-lg hover:shadow-xl hover:scale-110"
+                          title="Delete snapshot item"
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      </div>
+                    )}
                     <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-seedling text-blue-600 text-xl"></i>
+                      <i className={`${item.icon} text-blue-600 text-xl`}></i>
                     </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Stage</h3>
-                    <p className="text-gray-600">{programSnapshot.stage}</p>
+                    <h3 className="font-semibold text-gray-900 mb-2">{item.title}</h3>
+                    <p className="text-gray-600">{item.description}</p>
                   </div>
-                  
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-clock text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
-                    <p className="text-gray-600">{programSnapshot.duration}</p>
-                  </div>
-                  
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-laptop text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Format</h3>
-                    <p className="text-gray-600">{programSnapshot.format}</p>
-                  </div>
-                </div>
-                
-                {/* Second Row - 2 items, centered */}
-                <div className="flex justify-center gap-6">
-                  <div className="text-center w-full max-w-[200px]">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-users text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Cohort Size</h3>
-                    <p className="text-gray-600">{programSnapshot.cohortSize}</p>
-                  </div>
-                  
-                  <div className="text-center w-full max-w-[200px]">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <i className="fas fa-trophy text-blue-600 text-xl"></i>
-                    </div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Demo Day</h3>
-                    <p className="text-gray-600">{programSnapshot.demoDay}</p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-lg p-8 text-center">
               {isAdminMode && (
                 <button
-                  onClick={() => {
-                    setEditingType('program-snapshot');
-                    setEditingItem({});
-                    setEditModalOpen(true);
-                  }}
+                  onClick={handleAddSnapshotItem}
                   className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
                 >
-                  Add Program Snapshot
+                  Add Program Snapshot Items
                 </button>
               )}
               {!isAdminMode && <p className="text-gray-500">Program snapshot coming soon...</p>}
@@ -736,7 +785,7 @@ export default function ProgramPage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">Ready for the Next Step?</h2>
-            <p className="text-gray-800 max-w-2xl mx-auto">Continue exploring the Vetted Accelerator program to see how we can help transform your military experience into entrepreneurial success.</p>
+            <p className="text-gray-800 max-w-2xl mx-auto">Continue exploring the Vetted Accelerator to see how we can help transform your military experience into entrepreneurial success.</p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -802,6 +851,7 @@ export default function ProgramPage() {
           editingType === 'program-phase' ? 'Program Phase' : 
           editingType === 'program-graphic' ? 'Graphic' : 
           editingType === 'program-snapshot' ? 'Program Snapshot' :
+          editingType === 'program-snapshot-item' ? 'Snapshot Item' :
           editingType === 'program-benefit' ? 'Benefit' : 
           'Content'
         }`}

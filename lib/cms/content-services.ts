@@ -26,6 +26,7 @@ import {
   AcceleratorHero,
   ProgramPhase,
   ProgramSnapshot,
+  ProgramSnapshotItem,
   ProgramBenefit,
   PortfolioCompany,
   AcceleratorImageSection
@@ -346,6 +347,12 @@ export class ProgramSnapshotService extends BaseFirestoreService<ProgramSnapshot
   }
 }
 
+export class ProgramSnapshotItemService extends BaseFirestoreService<ProgramSnapshotItem> {
+  constructor() {
+    super('program-snapshot-items');
+  }
+}
+
 export class ProgramBenefitService extends BaseFirestoreService<ProgramBenefit> {
   constructor() {
     super('program-benefits');
@@ -567,6 +574,13 @@ export class CMSServiceFactory {
       this.instances.set('programSnapshot', new ProgramSnapshotService());
     }
     return this.instances.get('programSnapshot');
+  }
+
+  static getProgramSnapshotItemService(): ProgramSnapshotItemService {
+    if (!this.instances.has('programSnapshotItem')) {
+      this.instances.set('programSnapshotItem', new ProgramSnapshotItemService());
+    }
+    return this.instances.get('programSnapshotItem');
   }
 
   static getProgramBenefitService(): ProgramBenefitService {

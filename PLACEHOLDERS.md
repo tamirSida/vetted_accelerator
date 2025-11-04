@@ -15,7 +15,7 @@ This document tracks all placeholder content in the Alpha-Bet website that needs
 
 | Platform | Current Value | Location | Status | Priority |
 |----------|---------------|----------|--------|----------|
-| LinkedIn | `https://www.linkedin.com/school/versionbravo/posts/?feedView=all` | `/lib/config/urls.ts` | ✅ Real VBV LinkedIn | COMPLETE |
+| LinkedIn | `https://www.linkedin.com/company/thevetted/posts/?feedView=all` | `/lib/config/urls.ts` | ✅ Real VBV LinkedIn | COMPLETE |
 | Twitter | ❌ REMOVED | N/A | ✅ No Twitter Links | COMPLETE |
 
 ### 👥 Team Members (CMS Manageable)

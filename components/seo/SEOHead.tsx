@@ -78,7 +78,7 @@ export default function SEOHead({
         "description": "Version Bravo provides entrepreneurship programs and business development for combat veterans",
         "foundingDate": "2020",
         "sameAs": [
-          "https://www.linkedin.com/school/versionbravo/posts/?feedView=all"
+          "https://www.linkedin.com/company/thevetted/posts/?feedView=all"
         ],
         "contactPoint": {
           "@type": "ContactPoint",
