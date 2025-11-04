@@ -589,6 +589,7 @@ function AlphaBetHomepageContent() {
           { key: 'headline', label: 'Headline', type: 'text' as const, required: true, placeholder: 'Enter the main headline' },
           { key: 'subHeadline', label: 'First Sub-headline', type: 'textarea' as const, required: true, placeholder: 'The only entrepreneurship program for US and Israeli combat veterans.' },
           { key: 'subHeadline2', label: 'Second Sub-headline', type: 'textarea' as const, required: false, placeholder: 'Alpha-Bet equips you with the skills, network, and battle-tested mindset to build a successful startup...' },
+          { key: 'cohortNumber', label: 'Cohort Number', type: 'number' as const, required: false, placeholder: 'e.g., 1, 2, 3' },
           { key: 'applicationWindowOpens', label: 'Application Window Opens', type: 'date' as const, required: false, placeholder: '2025-01-15' },
           { key: 'applicationWindowCloses', label: 'Application Window Closes', type: 'date' as const, required: false, placeholder: '2025-02-28' },
           { key: 'programStartDate', label: 'Program Start Date', type: 'date' as const, required: false, placeholder: '2025-03-15' },
@@ -711,7 +712,7 @@ function AlphaBetHomepageContent() {
               {/* Mobile headline - shows above image on mobile only */}
               <div className="lg:hidden order-1 text-center mb-4">
                 <h1 className="text-3xl sm:text-4xl font-bold leading-tight text-black" style={{ fontFamily: "'Black Ops One', cursive" }}>
-                  Alpha-Bet
+                  From Frontline to Founder
                 </h1>
               </div>
               
@@ -745,17 +746,16 @@ function AlphaBetHomepageContent() {
                       const openDate = activeHero.applicationWindowOpens ? new Date(activeHero.applicationWindowOpens) : null;
                       const closeDate = activeHero.applicationWindowCloses ? new Date(activeHero.applicationWindowCloses) : null;
                       const startDate = activeHero.programStartDate ? new Date(activeHero.programStartDate) : null;
-                      
-                      const programMonth = startDate ? startDate.toLocaleDateString('en-US', { month: 'long' }) : 'Spring';
+                      const cohortNum = activeHero.cohortNumber || 1;
                       
                       let isActive = false;
                       let statusText = "Unavailable";
                       let statusColor = "text-red-500";
                       let dotColor = "bg-red-500";
-                      let message = `Application window for ${programMonth} Class has closed`;
+                      let message = `Applications for Cohort #${cohortNum} have closed`;
                       
                       if (!openDate || !closeDate) {
-                        message = `Applications for ${programMonth} Class will be announced soon`;
+                        message = `Applications for Cohort #${cohortNum} will be announced soon`;
                         statusText = "Pending";
                         statusColor = "text-gray-500";
                         dotColor = "bg-gray-500";
@@ -764,7 +764,7 @@ function AlphaBetHomepageContent() {
                         const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
                         const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
                         
-                        message = `Applications for ${programMonth} Class open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                        message = `Applications for Cohort #${cohortNum} open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
                         if (activeHero.programStartDate && activeHero.programEndDate) {
                           message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                         }
@@ -776,7 +776,7 @@ function AlphaBetHomepageContent() {
                         const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
                         const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
                         
-                        message = `Applications for ${programMonth} Class are open<br>until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                        message = `Applications for Cohort #${cohortNum} are open<br>until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
                         if (startDateFormatted && endDateFormatted) {
                           message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                         }
@@ -836,17 +836,16 @@ function AlphaBetHomepageContent() {
                     const openDate = activeHero.applicationWindowOpens ? new Date(activeHero.applicationWindowOpens) : null;
                     const closeDate = activeHero.applicationWindowCloses ? new Date(activeHero.applicationWindowCloses) : null;
                     const startDate = activeHero.programStartDate ? new Date(activeHero.programStartDate) : null;
-                    
-                    const programMonth = startDate ? startDate.toLocaleDateString('en-US', { month: 'long' }) : 'Spring';
+                    const cohortNum = activeHero.cohortNumber || 1;
                     
                     let isActive = false;
                     let statusText = "Unavailable";
                     let statusColor = "text-red-500";
                     let dotColor = "bg-red-500";
-                    let message = `Application window for ${programMonth} Class has closed`;
+                    let message = `Applications for Cohort #${cohortNum} have closed`;
                     
                     if (!openDate || !closeDate) {
-                      message = `Applications for ${programMonth} Class will be announced soon`;
+                      message = `Applications for Cohort #${cohortNum} will be announced soon`;
                       statusText = "Pending";
                       statusColor = "text-gray-500";
                       dotColor = "bg-gray-500";
@@ -855,7 +854,7 @@ function AlphaBetHomepageContent() {
                       const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
                       const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
                       
-                      message = `Applications for ${programMonth} Class open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                      message = `Applications for Cohort #${cohortNum} open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
                       if (activeHero.programStartDate && activeHero.programEndDate) {
                         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                       }
@@ -867,7 +866,7 @@ function AlphaBetHomepageContent() {
                       const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
                       const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
                       
-                      message = `Applications for ${programMonth} class are open until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                      message = `Applications for Cohort #${cohortNum} are open until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
                       if (startDateFormatted && endDateFormatted) {
                         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                       }

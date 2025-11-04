@@ -10,6 +10,7 @@ export interface HeroSection {
   applicationWindowCloses?: string;
   programStartDate?: string;
   programEndDate?: string;
+  cohortNumber?: number;
   isVisible: boolean;
   order: number;
   createdAt: Date;

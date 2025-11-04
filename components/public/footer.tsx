@@ -221,7 +221,7 @@ export default function Footer() {
         <div className="mt-8 pt-8 border-t border-blue-800">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © {currentYear} Vetted Program. All rights reserved.
+              © 2025 Vetted Accelerator. All rights reserved.
             </p>
             <p className="text-gray-400 text-sm mt-2 sm:mt-0">
               Empowering veterans to become entrepreneurs.
