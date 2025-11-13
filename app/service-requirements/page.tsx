@@ -12,8 +12,8 @@ export default function ServiceRequirementsPage() {
   return (
     <>
       <SEOHead
-        title="Service Requirements - Alpha-Bet Program"
-        description="Military service requirements for Alpha-Bet: Combat veteran eligibility criteria for US and Israeli military personnel. Detailed requirements for program participation."
+        title="Service Requirements - The Vetted Accelerator"
+        description="Military service requirements for The Vetted Accelerator: Combat veteran eligibility criteria for US and Israeli military personnel. Detailed requirements for program participation."
         noindex={true}
       />
       <div className="relative">
@@ -28,10 +28,10 @@ export default function ServiceRequirementsPage() {
               Service Requirements
             </h1>
             <p className="text-lg sm:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Military service criteria for Alpha-Bet program eligibility
+              Military service criteria for The Vetted Accelerator program eligibility
             </p>
             <div className="mt-8 text-sm text-gray-600">
-              Last Updated: August 29, 2025
+              Last Updated: November 13, 2025
             </div>
           </div>
         </section>
@@ -202,7 +202,7 @@ export default function ServiceRequirementsPage() {
             
             <div className="text-center text-gray-600">
               <p>
-                These requirements ensure that Alpha-Bet serves those who have demonstrated the courage, 
+                These requirements ensure that The Vetted Accelerator serves those who have demonstrated the courage, 
                 discipline, and leadership that comes from frontline military service, creating a cohort 
                 united by shared experiences and values.
               </p>
