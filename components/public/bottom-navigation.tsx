@@ -37,7 +37,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           },
           {
             title: 'Check Qualifications',
-            description: 'See if you meet the requirements to join Alpha-Bet.',
+            description: 'See if you meet the requirements to join our accelerator.',
             href: '/qualifications',
             icon: 'fas fa-check-circle',
             primary: false
