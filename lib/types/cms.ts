@@ -44,6 +44,7 @@ export interface TeamMember {
   image?: string;
   military?: string; // Military background
   linkedinUrl?: string;
+  category?: 'staff' | 'mentor'; // Team member category: 'staff' for Program Staff, 'mentor' for Mentors
   order: number;
   isVisible: boolean;
   createdAt: Date;

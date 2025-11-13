@@ -213,8 +213,9 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
     setLocalMembers(teamMembers);
   }, [teamMembers]);
 
-  // Use local members for display (allows immediate UI updates during drag)
-  const displayMembers = localMembers;
+  // Filter team members by category
+  const staffMembers = localMembers.filter(member => !member.category || member.category === 'staff');
+  const mentorMembers = localMembers.filter(member => member.category === 'mentor');
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -223,27 +224,32 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
     })
   );
 
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = (event: DragEndEvent, memberCategory: 'staff' | 'mentor') => {
     const { active, over } = event;
 
     if (over && active.id !== over.id) {
-      const oldIndex = displayMembers.findIndex(member => member.id === active.id);
-      const newIndex = displayMembers.findIndex(member => member.id === over.id);
+      const categoryMembers = memberCategory === 'staff' ? staffMembers : mentorMembers;
+      const oldIndex = categoryMembers.findIndex(member => member.id === active.id);
+      const newIndex = categoryMembers.findIndex(member => member.id === over.id);
 
-      const reorderedMembers = arrayMove(displayMembers, oldIndex, newIndex);
+      const reorderedCategoryMembers = arrayMove(categoryMembers, oldIndex, newIndex);
       
-      // Update local state immediately for smooth UX
-      setLocalMembers(reorderedMembers);
-      
-      // Update order values
-      const updatedMembers = reorderedMembers.map((member, index) => ({
+      // Update order values within the category
+      const updatedCategoryMembers = reorderedCategoryMembers.map((member, index) => ({
         ...member,
         order: index + 1
       }));
 
+      // Merge with other category members
+      const otherCategoryMembers = memberCategory === 'staff' ? mentorMembers : staffMembers;
+      const allUpdatedMembers = [...updatedCategoryMembers, ...otherCategoryMembers];
+      
+      // Update local state immediately for smooth UX
+      setLocalMembers(allUpdatedMembers);
+
       // Call parent handler to save to Firebase
       if (onReorder) {
-        onReorder(updatedMembers);
+        onReorder(allUpdatedMembers);
       }
     }
   };
@@ -301,18 +307,18 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
             Program Staff
           </h2>
-          {displayMembers.length > 0 ? (
+          {staffMembers.length > 0 ? (
             <DndContext
               sensors={sensors}
               collisionDetection={closestCenter}
-              onDragEnd={handleDragEnd}
+              onDragEnd={(event) => handleDragEnd(event, 'staff')}
             >
               <SortableContext
-                items={displayMembers.map(member => member.id)}
+                items={staffMembers.map(member => member.id)}
                 strategy={verticalListSortingStrategy}
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-8">
-                  {displayMembers.map((member, index) => (
+                  {staffMembers.map((member, index) => (
                     <SortableTeamMember
                       key={member.id}
                       member={member}
@@ -332,8 +338,8 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
             </div>
           )}
           
-          {/* Add New Staff Member Button */}
-          {isAdminMode && (
+          {/* Show Add Team Member button only if there are no staff members */}
+          {isAdminMode && staffMembers.length === 0 && (
             <div className="flex justify-center">
               <button
                 onClick={() => onEdit && onEdit()}
@@ -342,7 +348,7 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
                 <div className="w-16 h-16 rounded-full border-2 border-dashed border-current flex items-center justify-center">
                   <i className="fas fa-plus text-2xl"></i>
                 </div>
-                <span className="text-lg font-medium">Add Program Staff</span>
+                <span className="text-lg font-medium">Add Team Member</span>
               </button>
             </div>
           )}
@@ -353,8 +359,39 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
             Mentors
           </h2>
+          {mentorMembers.length > 0 ? (
+            <DndContext
+              sensors={sensors}
+              collisionDetection={closestCenter}
+              onDragEnd={(event) => handleDragEnd(event, 'mentor')}
+            >
+              <SortableContext
+                items={mentorMembers.map(member => member.id)}
+                strategy={verticalListSortingStrategy}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 mb-8">
+                  {mentorMembers.map((member, index) => (
+                    <SortableTeamMember
+                      key={member.id}
+                      member={member}
+                      index={index}
+                      onEdit={onEdit}
+                      onDelete={onDelete}
+                      hoveredMember={hoveredMember}
+                      setHoveredMember={setHoveredMember}
+                    />
+                  ))}
+                </div>
+              </SortableContext>
+            </DndContext>
+          ) : (
+            <div className="text-center text-gray-600 mb-8">
+              <p>No mentors added yet.</p>
+            </div>
+          )}
           
-          {isAdminMode && (
+          {/* Show Add Team Member button only if there are no mentors */}
+          {isAdminMode && mentorMembers.length === 0 && (
             <div className="flex justify-center">
               <button
                 onClick={() => onEdit && onEdit()}
@@ -363,11 +400,24 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
                 <div className="w-16 h-16 rounded-full border-2 border-dashed border-current flex items-center justify-center">
                   <i className="fas fa-plus text-2xl"></i>
                 </div>
-                <span className="text-lg font-medium">Add Mentor</span>
+                <span className="text-lg font-medium">Add Team Member</span>
               </button>
             </div>
           )}
         </div>
+
+        {/* Unified Add Team Member Button */}
+        {isAdminMode && (staffMembers.length > 0 || mentorMembers.length > 0) && (
+          <div className="flex justify-center mb-16">
+            <button
+              onClick={() => onEdit && onEdit()}
+              className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-medium transition-colors shadow-lg hover:shadow-xl flex items-center gap-3"
+            >
+              <i className="fas fa-plus"></i>
+              <span>Add Team Member</span>
+            </button>
+          </div>
+        )}
 
       </div>
     </section>

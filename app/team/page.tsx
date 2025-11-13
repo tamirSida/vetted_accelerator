@@ -41,10 +41,13 @@ export default function TeamPage() {
     const editingData = item ? {
       ...item,
       // Ensure titles is an array - convert from old format if needed
-      titles: item.titles || (item.role ? [{ id: `title-${item.id}`, title: item.role }] : [])
+      titles: item.titles || (item.role ? [{ id: `title-${item.id}`, title: item.role }] : []),
+      // Ensure category is set, defaulting to 'staff' if not specified
+      category: item.category || 'staff'
     } : {
       // Default new member structure
-      titles: []
+      titles: [],
+      category: 'staff' // Default category for new members
     };
     
     setEditingItem(editingData);
@@ -83,6 +86,7 @@ export default function TeamPage() {
           ...data,
           titles,
           role: titles.length > 0 ? titles[0].title : 'Team Member', // Fallback for compatibility
+          category: data.category || 'staff', // Ensure category is set
           isVisible: true,
           order: editingItem?.order || teamMembers.length + 1
         };
@@ -138,6 +142,16 @@ export default function TeamPage() {
 
   const memberFields = useMemo(() => [
     { key: 'name', label: 'Name', type: 'text' as const, required: true, placeholder: 'Enter full name' },
+    { 
+      key: 'category', 
+      label: 'Team Member Type', 
+      type: 'radio' as const, 
+      required: true, 
+      options: [
+        { value: 'staff', label: 'Program Staff' },
+        { value: 'mentor', label: 'Mentor' }
+      ]
+    },
     { 
       key: 'titles', 
       label: 'Titles/Positions', 
