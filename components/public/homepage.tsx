@@ -530,14 +530,17 @@ function AlphaBetHomepageContent() {
           await CMSServiceFactory.getContentSectionService().create(contentData);
         }
       } else if (editingType === 'faq') {
-        if (editingItem && editingItem.id && !editingItem.id.startsWith('faq-')) {
-          await CMSServiceFactory.getFAQService().update(editingItem.id, data);
+        const faqData = {
+          ...data,
+          isVisible: true,
+          order: data.order || faqs.length + 1
+        };
+
+        if (editingItem && editingItem.id) {
+          // Update existing FAQ (both CMS and hardcoded)
+          await CMSServiceFactory.getFAQService().update(editingItem.id, faqData);
         } else {
-          const faqData = {
-            ...data,
-            isVisible: true,
-            order: data.order || faqs.length + 1
-          };
+          // Create new FAQ
           await CMSServiceFactory.getFAQService().create(faqData);
         }
       } else if (editingType === 'why-choose-bullet') {

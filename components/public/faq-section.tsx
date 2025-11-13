@@ -163,23 +163,24 @@ export default function FAQSection({ faqs, onEdit, onDelete }: FAQSectionProps) 
     }
   ];
 
-  // Merge CMS FAQs with defaults - hardcoded FAQs first, then Firebase FAQs
+  // Merge CMS FAQs with defaults - CMS FAQs override hardcoded ones
   const mergeFAQsWithDefaults = () => {
-    // Filter visible hardcoded FAQs and sort by order
-    const visibleDefaultFAQs = defaultFAQs
+    // Filter visible CMS FAQs and sort by order
+    const visibleCmsFAQs = faqs
       .filter(faq => faq.isVisible !== false)
       .sort((a, b) => a.order - b.order);
     
-    // Filter visible Firebase FAQs (exclude duplicates by ID or question) and sort by order
-    const visibleCmsFAQs = faqs
+    // Filter hardcoded FAQs that are NOT overridden by CMS (by ID or question)
+    const visibleDefaultFAQs = defaultFAQs
       .filter(faq => faq.isVisible !== false)
-      .filter(faq => !defaultFAQs.some(defaultFaq => 
-        defaultFaq.id === faq.id || defaultFaq.question === faq.question
+      .filter(defaultFaq => !visibleCmsFAQs.some(cmsFaq => 
+        cmsFaq.id === defaultFaq.id || cmsFaq.question === defaultFaq.question
       ))
       .sort((a, b) => a.order - b.order);
     
-    // Return hardcoded FAQs first, then Firebase FAQs
-    return [...visibleDefaultFAQs, ...visibleCmsFAQs];
+    // Combine CMS and remaining hardcoded FAQs, sort by order
+    const allFAQs = [...visibleCmsFAQs, ...visibleDefaultFAQs];
+    return allFAQs.sort((a, b) => a.order - b.order);
   };
 
   const displayFAQs = mergeFAQsWithDefaults();
