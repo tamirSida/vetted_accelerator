@@ -51,63 +51,6 @@ export default function Footer() {
                 <i className="fab fa-linkedin text-xl"></i>
               </a>
             </div>
-            
-            {/* Our Partners Section - Hidden on mobile, moved to Legal section */}
-            <div className="mt-8 hidden md:block">
-              <h4 className="text-white font-semibold mb-4">
-                Our Partners
-              </h4>
-              <div className="flex flex-wrap items-center gap-4">
-                <Image 
-                  src="/partnerships/afins.png"
-                  alt="AFINS Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/honor-foundation.png"
-                  alt="Honor Foundation Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/momentum.png"
-                  alt="Momentum Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto', maxWidth: '80px', maxHeight: '40px' }}
-                />
-                <Image 
-                  src="/partnerships/shabak.png"
-                  alt="Shabak Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/atalef.png"
-                  alt="Atalef Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/versionbravo.png"
-                  alt="Version Bravo Partner" 
-                  width={80}
-                  height={40}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}
@@ -159,61 +102,6 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-            
-            {/* Our Partners Section - Mobile only */}
-            <div className="mt-6 md:hidden">
-              <h3 className="text-white font-semibold mb-4">Our Partners</h3>
-              <div className="flex flex-wrap items-center gap-3">
-                <Image 
-                  src="/partnerships/afins.png"
-                  alt="AFINS Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/honor-foundation.png"
-                  alt="Honor Foundation Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/momentum.png"
-                  alt="Momentum Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto', maxWidth: '60px', maxHeight: '30px' }}
-                />
-                <Image 
-                  src="/partnerships/shabak.png"
-                  alt="Shabak Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain filter brightness-0 invert opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/atalef.png"
-                  alt="Atalef Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-                <Image 
-                  src="/partnerships/versionbravo.png"
-                  alt="Version Bravo Partner" 
-                  width={60}
-                  height={30}
-                  className="object-contain opacity-70 hover:opacity-100 transition-opacity"
-                  style={{ width: 'auto', height: 'auto' }}
-                />
-              </div>
-            </div>
           </div>
         </div>
 
