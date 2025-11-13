@@ -1030,22 +1030,22 @@ export default function ProgramPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <Link
-              href="/accelerator"
+              href="/curriculum"
               className="group block relative overflow-hidden rounded-xl border transition-all duration-300 hover:scale-105 bg-white text-gray-900 border-white shadow-2xl"
             >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-gray-900 text-white">
-                    <i className="fas fa-rocket text-lg"></i>
+                    <i className="fas fa-graduation-cap text-lg"></i>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold leading-tight text-gray-900">Accelerator Overview</h3>
+                    <h3 className="text-xl font-bold leading-tight text-gray-900">View Program Modules</h3>
                   </div>
                   <div className="text-gray-900">
                     <i className="fas fa-arrow-right text-lg group-hover:translate-x-1 transition-transform"></i>
                   </div>
                 </div>
-                <p className="leading-relaxed text-gray-700">Learn about the Vetted Accelerator program and what makes us different.</p>
+                <p className="leading-relaxed text-gray-700">Explore our comprehensive 16-week curriculum and see what you'll learn.</p>
               </div>
             </Link>
             
