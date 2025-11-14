@@ -31,7 +31,7 @@ Alpha-Bet is a specialized entrepreneurship program designed exclusively for com
 - **Curriculum**: 10-week program timeline with interactive mobile modals
 - **Qualifications**: Comprehensive eligibility requirements
 - **Service Requirements**: Detailed military service criteria
-- **Legal Pages**: Privacy policy and terms of service
+- **Legal Pages**: Terms of service
 
 ### 🎨 Military-Themed Design
 - **Color Scheme**: Gray-900 to Black gradients with white accents
@@ -159,7 +159,7 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 4. **Curriculum** (`/curriculum`) - 10-week program details
 5. **Qualifications** (`/qualifications`) - Eligibility requirements
 6. **Service Requirements** (`/service-requirements`) - Military criteria
-7. **Legal Pages** (`/privacy`, `/terms`) - Policies and terms
+7. **Legal Pages** (`/terms`) - Policies and terms
 
 ### Content Types
 - Hero sections with customizable messaging

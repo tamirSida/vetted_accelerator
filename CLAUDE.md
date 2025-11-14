@@ -52,7 +52,6 @@ Vetted Accelerator is an entrepreneurship program for US and Israeli combat vete
 - `/program` - Program overview with phases, benefits, and portfolio snapshot (moved from /accelerator)
 - `/info-session` - Info sessions page with live Q&A events and pre-recorded session management
 - `/service-requirements` - Detailed military service eligibility criteria page
-- `/privacy` - Privacy policy page with comprehensive data protection information
 - `/terms` - Terms of service page with program guidelines and participant responsibilities
 
 ### External Links (Configurable via `/lib/config/urls.ts`):

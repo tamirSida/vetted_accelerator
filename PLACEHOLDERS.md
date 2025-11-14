@@ -136,7 +136,7 @@ npm run dev    # Test in development
 **Recent Major Changes**: 
 - ✅ Implemented granular CMS with database persistence
 - ✅ Enhanced visual design with seamless backgrounds and grid layouts
-- ✅ Updated privacy policy to reflect minimal data collection
+- ✅ Removed privacy policy page
 - ✅ Fixed double footer issues on legal pages
 - ✅ Removed Twitter references and updated LinkedIn to real VBV URL
 **Next Action**: Update EXTERNAL_URLS.APPLY_FORM in `/lib/config/urls.ts` when form URL available  
