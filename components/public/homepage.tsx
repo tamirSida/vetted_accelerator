@@ -626,6 +626,7 @@ function AlphaBetHomepageContent() {
         return [
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Elite Founders. Global Network. Proven Platform' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the detailed description...' },
+          { key: 'image', label: 'Image URL', type: 'text' as const, required: false, placeholder: 'https://example.com/image.jpg' },
           { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
         ];
       case 'ecosystem-section':
@@ -1039,6 +1040,20 @@ function AlphaBetHomepageContent() {
                       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-black mb-8 tracking-tight" style={{ fontFamily: "'Black Ops One', cursive" }}>
                         {bullet.title}
                       </h2>
+                      
+                      {/* Image Section */}
+                      {bullet.image && (
+                        <div className="mb-8">
+                          <Image
+                            src={bullet.image}
+                            alt={bullet.title}
+                            width={600}
+                            height={400}
+                            className="rounded-xl shadow-lg object-cover w-full h-[300px] sm:h-[400px] mx-auto"
+                          />
+                        </div>
+                      )}
+                      
                       <p className="text-lg sm:text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
                         {bullet.description}
                       </p>

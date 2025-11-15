@@ -267,6 +267,7 @@ export interface WhyChooseVettedBullet {
   id: string;
   title: string; // "Elite Founders. Global Network. Proven Platform"
   description: string; // Detailed description text
+  image?: string; // Optional image URL for the bullet point
   order: number;
   isVisible: boolean;
   createdAt: Date;
