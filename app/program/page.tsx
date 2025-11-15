@@ -492,7 +492,7 @@ export default function ProgramPage() {
                 Our #1 Principle: Provide Value to our Founders
               </h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
                   You've led teams, executed under pressure, and thrived where others wouldn't dare.
                 </p>
@@ -530,8 +530,8 @@ export default function ProgramPage() {
                     src={acceleratorImageSection.image}
                     alt={acceleratorImageSection.title || 'Accelerator image'}
                     width={600}
-                    height={500}
-                    className="rounded-xl shadow-lg object-cover w-full h-[350px] sm:h-[450px]"
+                    height={600}
+                    className="rounded-xl shadow-lg object-cover w-full h-[400px] sm:h-[550px]"
                   />
                 </>
               ) : isAdminMode ? (
@@ -548,7 +548,7 @@ export default function ProgramPage() {
                   </button>
                 </div>
               ) : (
-                <div className="w-full h-[350px] sm:h-[450px] bg-gray-200 rounded-xl flex items-center justify-center">
+                <div className="w-full h-[400px] sm:h-[550px] bg-gray-200 rounded-xl flex items-center justify-center">
                   <span className="text-gray-500">Image coming soon...</span>
                 </div>
               )}
