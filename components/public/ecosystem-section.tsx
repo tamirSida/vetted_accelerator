@@ -66,7 +66,27 @@ export default function EcosystemSectionComponent({
     }
   ];
 
-  const displayCards = ecosystemCards.length > 0 ? ecosystemCards : defaultCards;
+  // Merge CMS cards with defaults - CMS cards override hardcoded ones
+  const mergeCardsWithDefaults = () => {
+    // Filter visible CMS cards and sort by order
+    const visibleCmsCards = ecosystemCards
+      .filter(card => card.isVisible !== false)
+      .sort((a, b) => a.order - b.order);
+    
+    // Filter hardcoded cards that are NOT overridden by CMS (by ID or title)
+    const visibleDefaultCards = defaultCards
+      .filter(card => card.isVisible !== false)
+      .filter(defaultCard => !visibleCmsCards.some(cmsCard => 
+        cmsCard.id === defaultCard.id || cmsCard.title === defaultCard.title
+      ))
+      .sort((a, b) => a.order - b.order);
+    
+    // Combine CMS and remaining hardcoded cards, sort by order
+    const allCards = [...visibleCmsCards, ...visibleDefaultCards];
+    return allCards.sort((a, b) => a.order - b.order);
+  };
+
+  const displayCards = mergeCardsWithDefaults();
 
   return (
     <EditableSection
@@ -130,13 +150,15 @@ export default function EcosystemSectionComponent({
                       >
                         <i className="fas fa-edit"></i>
                       </button>
-                      <button
-                        onClick={() => onDeleteCard?.(card)}
-                        className="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition-colors"
-                        title="Delete card"
-                      >
-                        <i className="fas fa-trash"></i>
-                      </button>
+                      {!defaultCards.some(defaultCard => defaultCard.id === card.id || defaultCard.title === card.title) && (
+                        <button
+                          onClick={() => onDeleteCard?.(card)}
+                          className="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition-colors"
+                          title="Delete card"
+                        >
+                          <i className="fas fa-trash"></i>
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
