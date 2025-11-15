@@ -11,9 +11,9 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
       case 'home':
         return [
           {
-            title: 'Accelerator Program',
-            description: 'Discover our 10-week venture program and fund for veteran-founded startups.',
-            href: '/accelerator',
+            title: 'Program Overview',
+            description: 'Discover our comprehensive program phases, benefits, and investment model.',
+            href: '/program',
             icon: 'fas fa-rocket',
             primary: true
           },

@@ -52,6 +52,13 @@
     <priority>0.7</priority>
   </url>
   
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://alpha-bet.org/privacy</loc>
+    <lastmod>2025-08-30</lastmod>
+    <changefreq>quarterly</changefreq>
+    <priority>0.3</priority>
+  </url>
   
   <!-- Terms of Service -->
   <url>

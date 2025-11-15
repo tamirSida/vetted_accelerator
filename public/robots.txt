@@ -8,6 +8,7 @@ Allow: /team
 Allow: /curriculum
 Allow: /portfolio
 Allow: /service-requirements
+Allow: /privacy
 Allow: /terms
 
 # Block admin access and API routes
