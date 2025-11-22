@@ -758,7 +758,7 @@ export default function ProgramPage() {
       </section>
 
       {/* Program Snapshot Section */}
-      <section ref={snapshotSectionRef} id="program-snapshot-section" className="py-20 px-4 bg-gradient-to-br from-white via-white to-gray-100 relative overflow-hidden">
+      <section ref={snapshotSectionRef} id="program-snapshot-section" className="py-12 px-4 bg-gradient-to-br from-white via-white to-gray-100 relative overflow-hidden">
         {/* Subtle Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-blue-600/5 rounded-full blur-3xl animate-pulse"></div>
@@ -806,7 +806,7 @@ export default function ProgramPage() {
                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-gray-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                     
                     {/* Main Card */}
-                    <div className="relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-8 h-full transition-all duration-500 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:transform hover:scale-105 hover:-translate-y-3 group-hover:bg-white/95 min-h-[280px] sm:min-h-[320px]">
+                    <div className="relative bg-white border border-gray-200/80 rounded-xl p-3 sm:p-4 h-full transition-all duration-500 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10 hover:transform hover:scale-105 hover:-translate-y-2 group-hover:bg-white/95 min-h-[160px] sm:min-h-[180px]">
                       
                       {/* Admin Controls */}
                       {isAdminMode && (
@@ -829,14 +829,14 @@ export default function ProgramPage() {
                       )}
 
                       {/* Icon Container */}
-                      <div className="relative mb-6 sm:mb-8 flex justify-center">
+                      <div className="relative mb-2 sm:mb-3 flex justify-center">
                         <div className="relative">
                           {/* Icon Background Glow */}
                           <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-full blur-xl opacity-50 group-hover:opacity-75 group-hover:scale-125 transition-all duration-500"></div>
                           
                           {/* Icon Circle */}
-                          <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
-                            <i className={`${item.icon} text-white text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300`}></i>
+                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
+                            <i className={`${item.icon} text-white text-sm sm:text-base group-hover:scale-110 transition-transform duration-300`}></i>
                           </div>
                           
                           {/* Pulse Ring */}
@@ -845,8 +845,8 @@ export default function ProgramPage() {
                       </div>
 
                       {/* Content */}
-                      <div className="text-center space-y-3 sm:space-y-4">
-                        <h3 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-700 transition-colors duration-300 leading-tight" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+                      <div className="text-center space-y-1 sm:space-y-2">
+                        <h3 className="text-base sm:text-lg font-bold text-black group-hover:text-blue-700 transition-colors duration-300 leading-tight" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
                           {item.title}
                         </h3>
                         <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-700 leading-relaxed transition-colors duration-300 px-2">
@@ -874,7 +874,7 @@ export default function ProgramPage() {
                       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/20 to-gray-500/20 rounded-3xl blur opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                       
                       {/* Main Card */}
-                      <div className="relative bg-white border border-gray-200/80 rounded-2xl p-6 sm:p-8 h-full transition-all duration-500 hover:border-blue-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:transform hover:scale-105 hover:-translate-y-3 group-hover:bg-white/95 min-h-[280px] sm:min-h-[320px]">
+                      <div className="relative bg-white border border-gray-200/80 rounded-xl p-3 sm:p-4 h-full transition-all duration-500 hover:border-blue-300 hover:shadow-xl hover:shadow-blue-500/10 hover:transform hover:scale-105 hover:-translate-y-2 group-hover:bg-white/95 min-h-[160px] sm:min-h-[180px]">
                         
                         {/* Admin Controls */}
                         {isAdminMode && (
@@ -897,14 +897,14 @@ export default function ProgramPage() {
                         )}
 
                         {/* Icon Container */}
-                        <div className="relative mb-6 sm:mb-8 flex justify-center">
+                        <div className="relative mb-2 sm:mb-3 flex justify-center">
                           <div className="relative">
                             {/* Icon Background Glow */}
                             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-blue-600/20 rounded-full blur-xl opacity-50 group-hover:opacity-75 group-hover:scale-125 transition-all duration-500"></div>
                             
                             {/* Icon Circle */}
-                            <div className="relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
-                              <i className={`${item.icon} text-white text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300`}></i>
+                            <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
+                              <i className={`${item.icon} text-white text-sm sm:text-base group-hover:scale-110 transition-transform duration-300`}></i>
                             </div>
                             
                             {/* Pulse Ring */}
@@ -913,8 +913,8 @@ export default function ProgramPage() {
                         </div>
 
                         {/* Content */}
-                        <div className="text-center space-y-3 sm:space-y-4">
-                          <h3 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-700 transition-colors duration-300 leading-tight" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
+                        <div className="text-center space-y-1 sm:space-y-2">
+                          <h3 className="text-base sm:text-lg font-bold text-black group-hover:text-blue-700 transition-colors duration-300 leading-tight" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
                             {item.title}
                           </h3>
                           <p className="text-sm sm:text-base text-gray-600 group-hover:text-gray-700 leading-relaxed transition-colors duration-300 px-2">
