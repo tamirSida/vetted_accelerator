@@ -7,9 +7,9 @@ export default function Footer() {
 
   const navigationLinks = [
     { name: 'Home', href: '/' },
+    { name: 'Program', href: '/program' },
     { name: 'Team', href: '/team' },
     { name: 'Modules', href: '/curriculum' },
-    { name: 'Qualifications', href: '/qualifications' },
     { name: 'Apply', href: EXTERNAL_URLS.APPLY_FORM, external: true },
   ];
 
