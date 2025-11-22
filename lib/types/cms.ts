@@ -389,6 +389,16 @@ export interface AcceleratorImageSection {
   updatedAt: Date;
 }
 
+export interface ProgramHeroSection {
+  id: string;
+  principleTitle: string; // "Our #1 Principle: Provide Value to our Founders"
+  heroContent: string; // All the descriptive paragraphs as a single text block
+  isVisible: boolean;
+  order: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface ContentBase {
   id: string;
   isVisible: boolean;

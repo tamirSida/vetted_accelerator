@@ -18,8 +18,8 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
             primary: true
           },
           {
-            title: 'View Modules',
-            description: 'Explore our comprehensive 10-week entrepreneurship program.',
+            title: 'View Curriculum',
+            description: 'Explore the topics we cover during the course of the program.',
             href: '/curriculum',
             icon: 'fas fa-graduation-cap',
             primary: false

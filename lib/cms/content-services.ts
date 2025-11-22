@@ -29,7 +29,8 @@ import {
   ProgramSnapshotItem,
   ProgramBenefit,
   PortfolioCompany,
-  AcceleratorImageSection
+  AcceleratorImageSection,
+  ProgramHeroSection
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -376,6 +377,17 @@ export class AcceleratorImageSectionService extends BaseFirestoreService<Acceler
   }
 }
 
+export class ProgramHeroSectionService extends BaseFirestoreService<ProgramHeroSection> {
+  constructor() {
+    super('program-hero-sections');
+  }
+
+  async getActiveHero(): Promise<ProgramHeroSection | null> {
+    const heroes = await this.getVisible(1);
+    return heroes.length > 0 ? heroes[0] : null;
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -602,5 +614,12 @@ export class CMSServiceFactory {
       this.instances.set('acceleratorImageSection', new AcceleratorImageSectionService());
     }
     return this.instances.get('acceleratorImageSection');
+  }
+
+  static getProgramHeroSectionService(): ProgramHeroSectionService {
+    if (!this.instances.has('programHeroSection')) {
+      this.instances.set('programHeroSection', new ProgramHeroSectionService());
+    }
+    return this.instances.get('programHeroSection');
   }
 }

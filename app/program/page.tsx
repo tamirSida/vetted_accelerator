@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAdmin } from '@/lib/cms/admin-context';
 import { CMSServiceFactory } from '@/lib/cms/content-services';
-import { ProgramPhase, ProgramSnapshot, ProgramSnapshotItem, ProgramBenefit, AcceleratorImageSection } from '@/lib/types/cms';
+import { ProgramPhase, ProgramSnapshot, ProgramSnapshotItem, ProgramBenefit, AcceleratorImageSection, ProgramHeroSection } from '@/lib/types/cms';
 import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
@@ -18,6 +18,7 @@ export default function ProgramPage() {
   const [programSnapshotItems, setProgramSnapshotItems] = useState<ProgramSnapshotItem[]>([]);
   const [programBenefits, setProgramBenefits] = useState<ProgramBenefit[]>([]);
   const [acceleratorImageSection, setAcceleratorImageSection] = useState<AcceleratorImageSection | null>(null);
+  const [programHero, setProgramHero] = useState<ProgramHeroSection | null>(null);
   const [expandedPhase, setExpandedPhase] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -31,12 +32,13 @@ export default function ProgramPage() {
   const loadContent = useCallback(async () => {
     try {
       setLoading(true);
-      const [phasesData, snapshotData, snapshotItemsData, benefitsData, imageSectionData] = await Promise.all([
+      const [phasesData, snapshotData, snapshotItemsData, benefitsData, imageSectionData, programHeroData] = await Promise.all([
         CMSServiceFactory.getProgramPhaseService().getVisible(),
         CMSServiceFactory.getProgramSnapshotService().getActiveSnapshot(),
         CMSServiceFactory.getProgramSnapshotItemService().getVisible(),
         CMSServiceFactory.getProgramBenefitService().getVisible(),
-        CMSServiceFactory.getAcceleratorImageSectionService().getActiveSection()
+        CMSServiceFactory.getAcceleratorImageSectionService().getActiveSection(),
+        CMSServiceFactory.getProgramHeroSectionService().getActiveHero()
       ]);
 
       // If no phases exist, create default ones
@@ -216,6 +218,7 @@ export default function ProgramPage() {
       }
 
       setAcceleratorImageSection(imageSectionData);
+      setProgramHero(programHeroData);
     } catch (error) {
       console.error('Error loading content:', error);
     } finally {
@@ -312,9 +315,26 @@ export default function ProgramPage() {
     }
   }, [loadContent]);
 
+  const handleEditProgramHero = useCallback(() => {
+    setEditingType('program-hero');
+    setEditingItem(programHero);
+    setEditModalOpen(true);
+  }, [programHero]);
+
   const handleSave = useCallback(async (data: any) => {
     try {
-      if (editingType === 'program-phase') {
+      if (editingType === 'program-hero') {
+        if (editingItem && editingItem.id) {
+          await CMSServiceFactory.getProgramHeroSectionService().update(editingItem.id, data);
+        } else {
+          const heroData = {
+            ...data,
+            isVisible: true,
+            order: 1
+          };
+          await CMSServiceFactory.getProgramHeroSectionService().create(heroData);
+        }
+      } else if (editingType === 'program-phase') {
         if (editingItem && editingItem.id) {
           await CMSServiceFactory.getProgramPhaseService().update(editingItem.id, data);
         } else {
@@ -409,6 +429,11 @@ export default function ProgramPage() {
 
   const getEditFields = useCallback(() => {
     switch (editingType) {
+      case 'program-hero':
+        return [
+          { key: 'principleTitle', label: 'Principle Title', type: 'text' as const, required: true, placeholder: 'e.g., Our #1 Principle: Provide Value to our Founders' },
+          { key: 'heroContent', label: 'Hero Content', type: 'textarea' as const, required: true, placeholder: 'Enter the hero section content paragraphs...' }
+        ];
       case 'program-phase':
         return [
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., ISRAEL' },
@@ -480,7 +505,19 @@ export default function ProgramPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             
             {/* Text Content - Left Side */}
-            <div className="text-center lg:text-left">
+            <div className="text-center lg:text-left relative">
+              {/* Admin Edit Button */}
+              {isAdminMode && (
+                <button
+                  onClick={handleEditProgramHero}
+                  className="absolute top-0 right-0 px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors z-10"
+                  title="Edit hero content"
+                >
+                  <i className="fas fa-edit mr-1"></i>
+                  Edit Hero
+                </button>
+              )}
+
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
                 <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className="text-gray-700 text-sm font-medium tracking-wide">ACCELERATOR PROGRAM</span>
@@ -489,22 +526,32 @@ export default function ProgramPage() {
                 The Vetted Accelerator
               </h1>
               <h2 className="text-lg sm:text-xl text-blue-600 leading-relaxed mb-8" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
-                Our #1 Principle: Provide Value to our Founders
+                {programHero?.principleTitle || "Our #1 Principle: Provide Value to our Founders"}
               </h2>
               
               <div className="space-y-4">
-                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                  You've led teams, executed under pressure, and thrived where others wouldn't dare.
-                </p>
-                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                  Now it's time to bring that same mindset to your next mission: building a world-class company.
-                </p>
-                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                  The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
-                </p>
-                <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                  This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
-                </p>
+                {programHero?.heroContent ? (
+                  programHero.heroContent.split('\n').filter(paragraph => paragraph.trim()).map((paragraph, index) => (
+                    <p key={index} className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                      {paragraph.trim()}
+                    </p>
+                  ))
+                ) : (
+                  <>
+                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                      You've led teams, executed under pressure, and thrived where others wouldn't dare.
+                    </p>
+                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                      Now it's time to bring that same mindset to your next mission: building a world-class company.
+                    </p>
+                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                      The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
+                    </p>
+                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
+                      This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
+                    </p>
+                  </>
+                )}
               </div>
             </div>
 
@@ -1088,6 +1135,7 @@ export default function ProgramPage() {
         onClose={() => setEditModalOpen(false)}
         onSave={handleSave}
         title={`${editingItem?.id ? 'Edit' : 'Add'} ${
+          editingType === 'program-hero' ? 'Hero Content' :
           editingType === 'program-phase' ? 'Program Phase' : 
           editingType === 'program-graphic' ? 'Graphic' : 
           editingType === 'program-snapshot' ? 'Program Snapshot' :
