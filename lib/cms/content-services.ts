@@ -386,6 +386,57 @@ export class ProgramHeroSectionService extends BaseFirestoreService<ProgramHeroS
     const heroes = await this.getVisible(1);
     return heroes.length > 0 ? heroes[0] : null;
   }
+
+  async addBullet(heroId: string, bulletText: string, bulletIcon: string): Promise<void> {
+    const hero = await this.getById(heroId);
+    if (!hero) throw new Error('Hero section not found');
+
+    const newBullet = {
+      id: Date.now().toString(),
+      text: bulletText,
+      icon: bulletIcon,
+      order: hero.bullets.length + 1
+    };
+
+    const updatedHero = {
+      ...hero,
+      bullets: [...hero.bullets, newBullet]
+    };
+
+    await this.update(heroId, updatedHero);
+  }
+
+  async deleteBullet(heroId: string, bulletId: string): Promise<void> {
+    const hero = await this.getById(heroId);
+    if (!hero) throw new Error('Hero section not found');
+
+    const updatedBullets = hero.bullets
+      .filter(bullet => bullet.id !== bulletId)
+      .map((bullet, index) => ({ ...bullet, order: index + 1 }));
+
+    const updatedHero = {
+      ...hero,
+      bullets: updatedBullets
+    };
+
+    await this.update(heroId, updatedHero);
+  }
+
+  async updateBullet(heroId: string, bulletId: string, newText: string, newIcon: string): Promise<void> {
+    const hero = await this.getById(heroId);
+    if (!hero) throw new Error('Hero section not found');
+
+    const updatedBullets = hero.bullets.map(bullet =>
+      bullet.id === bulletId ? { ...bullet, text: newText, icon: newIcon } : bullet
+    );
+
+    const updatedHero = {
+      ...hero,
+      bullets: updatedBullets
+    };
+
+    await this.update(heroId, updatedHero);
+  }
 }
 
 // Service factory for easy instantiation

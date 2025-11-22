@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAdmin } from '@/lib/cms/admin-context';
 import { CMSServiceFactory } from '@/lib/cms/content-services';
-import { ProgramPhase, ProgramSnapshot, ProgramSnapshotItem, ProgramBenefit, AcceleratorImageSection, ProgramHeroSection } from '@/lib/types/cms';
+import { ProgramPhase, ProgramSnapshot, ProgramSnapshotItem, ProgramBenefit, AcceleratorImageSection, ProgramHeroSection, ProgramHeroBullet } from '@/lib/types/cms';
 import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
@@ -218,7 +218,52 @@ export default function ProgramPage() {
       }
 
       setAcceleratorImageSection(imageSectionData);
-      setProgramHero(programHeroData);
+      
+      // If no hero exists, create default one with bullets
+      if (!programHeroData) {
+        const defaultHeroData = {
+          principleTitle: 'Our #1 Principle: Provide Value to our Founders',
+          bullets: [
+            {
+              id: 'bullet-1',
+              text: 'Join a global network of Combat Veteran founders',
+              icon: 'fas fa-globe',
+              order: 1
+            },
+            {
+              id: 'bullet-2',
+              text: 'Elite mentorship from founders who\'ve built and sold companies',
+              icon: 'fas fa-user-tie',
+              order: 2
+            },
+            {
+              id: 'bullet-3',
+              text: 'Accelerator programming designed for Combat Veterans',
+              icon: 'fas fa-graduation-cap',
+              order: 3
+            },
+            {
+              id: 'bullet-4',
+              text: 'Two 10-day bootcamps in Israel and the US',
+              icon: 'fas fa-map-marked-alt',
+              order: 4
+            }
+          ],
+          isVisible: true,
+          order: 1
+        };
+
+        try {
+          await CMSServiceFactory.getProgramHeroSectionService().create(defaultHeroData);
+          const newHeroData = await CMSServiceFactory.getProgramHeroSectionService().getActiveHero();
+          setProgramHero(newHeroData);
+        } catch (error) {
+          console.error('Error creating default hero:', error);
+          setProgramHero(null);
+        }
+      } else {
+        setProgramHero(programHeroData);
+      }
     } catch (error) {
       console.error('Error loading content:', error);
     } finally {
@@ -321,6 +366,31 @@ export default function ProgramPage() {
     setEditModalOpen(true);
   }, [programHero]);
 
+  const handleEditHeroBullet = useCallback((bullet: ProgramHeroBullet) => {
+    setEditingType('program-hero-bullet');
+    setEditingItem({ ...bullet, heroId: programHero?.id });
+    setEditModalOpen(true);
+  }, [programHero]);
+
+  const handleAddHeroBullet = useCallback(() => {
+    setEditingType('program-hero-bullet');
+    setEditingItem({ heroId: programHero?.id, text: '', icon: 'fas fa-star', order: (programHero?.bullets?.length || 0) + 1 });
+    setEditModalOpen(true);
+  }, [programHero]);
+
+  const handleDeleteHeroBullet = useCallback(async (bullet: ProgramHeroBullet) => {
+    if (!programHero) return;
+    if (confirm(`Are you sure you want to delete "${bullet.text}"?`)) {
+      try {
+        await CMSServiceFactory.getProgramHeroSectionService().deleteBullet(programHero.id, bullet.id);
+        await loadContent();
+      } catch (error) {
+        console.error('Error deleting bullet:', error);
+        alert('Failed to delete bullet. Please try again.');
+      }
+    }
+  }, [programHero, loadContent]);
+
   const handleSave = useCallback(async (data: any) => {
     try {
       if (editingType === 'program-hero') {
@@ -329,10 +399,31 @@ export default function ProgramPage() {
         } else {
           const heroData = {
             ...data,
+            bullets: [],
             isVisible: true,
             order: 1
           };
           await CMSServiceFactory.getProgramHeroSectionService().create(heroData);
+        }
+      } else if (editingType === 'program-hero-bullet') {
+        const heroId = editingItem.heroId;
+        if (!heroId) return;
+
+        if (editingItem.id) {
+          // Update existing bullet
+          await CMSServiceFactory.getProgramHeroSectionService().updateBullet(
+            heroId, 
+            editingItem.id, 
+            data.text, 
+            data.icon
+          );
+        } else {
+          // Add new bullet
+          await CMSServiceFactory.getProgramHeroSectionService().addBullet(
+            heroId, 
+            data.text, 
+            data.icon
+          );
         }
       } else if (editingType === 'program-phase') {
         if (editingItem && editingItem.id) {
@@ -431,8 +522,12 @@ export default function ProgramPage() {
     switch (editingType) {
       case 'program-hero':
         return [
-          { key: 'principleTitle', label: 'Principle Title', type: 'text' as const, required: true, placeholder: 'e.g., Our #1 Principle: Provide Value to our Founders' },
-          { key: 'heroContent', label: 'Hero Content', type: 'textarea' as const, required: true, placeholder: 'Enter the hero section content paragraphs...' }
+          { key: 'principleTitle', label: 'Principle Title', type: 'text' as const, required: true, placeholder: 'e.g., Our #1 Principle: Provide Value to our Founders' }
+        ];
+      case 'program-hero-bullet':
+        return [
+          { key: 'text', label: 'Bullet Text', type: 'text' as const, required: true, placeholder: 'e.g., Join a global network of Combat Veteran founders' },
+          { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-globe' }
         ];
       case 'program-phase':
         return [
@@ -530,27 +625,84 @@ export default function ProgramPage() {
               </h2>
               
               <div className="space-y-4">
-                {programHero?.heroContent ? (
-                  programHero.heroContent.split('\n').filter(paragraph => paragraph.trim()).map((paragraph, index) => (
-                    <p key={index} className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                      {paragraph.trim()}
-                    </p>
+                {programHero?.bullets && programHero.bullets.length > 0 ? (
+                  programHero.bullets.map((bullet, index) => (
+                    <div key={bullet.id} className="flex items-start gap-4 group relative">
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i className={`${bullet.icon} text-blue-600 text-lg`}></i>
+                      </div>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed flex-1 pt-1">
+                        {bullet.text}
+                      </p>
+                      {isAdminMode && (
+                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <button
+                            onClick={() => handleEditHeroBullet(bullet)}
+                            className="px-2 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                            title="Edit bullet"
+                          >
+                            <i className="fas fa-edit"></i>
+                          </button>
+                          <button
+                            onClick={() => handleDeleteHeroBullet(bullet)}
+                            className="px-2 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700 transition-colors"
+                            title="Delete bullet"
+                          >
+                            <i className="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   ))
                 ) : (
+                  // Fallback bullets
                   <>
-                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                      You've led teams, executed under pressure, and thrived where others wouldn't dare.
-                    </p>
-                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                      Now it's time to bring that same mindset to your next mission: building a world-class company.
-                    </p>
-                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                      The Vetted Accelerator is a 10-week venture program and fund investing exclusively in startups founded by elite U.S. and Israeli combat veterans.
-                    </p>
-                    <p className="text-lg sm:text-xl text-gray-700 leading-relaxed">
-                      This is not a theoretical program. Vetted was designed to help launch your company, connect you with an unmatched network, and give you the tools, funding, and relationships to scale fast.
-                    </p>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i className="fas fa-globe text-blue-600 text-lg"></i>
+                      </div>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed flex-1 pt-1">
+                        Join a global network of Combat Veteran founders
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i className="fas fa-user-tie text-blue-600 text-lg"></i>
+                      </div>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed flex-1 pt-1">
+                        Elite mentorship from founders who've built and sold companies
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i className="fas fa-graduation-cap text-blue-600 text-lg"></i>
+                      </div>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed flex-1 pt-1">
+                        Accelerator programming designed for Combat Veterans
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i className="fas fa-map-marked-alt text-blue-600 text-lg"></i>
+                      </div>
+                      <p className="text-lg sm:text-xl text-gray-700 leading-relaxed flex-1 pt-1">
+                        Two 10-day bootcamps in Israel and the US
+                      </p>
+                    </div>
                   </>
+                )}
+                
+                {/* Add Bullet Button */}
+                {isAdminMode && programHero && (
+                  <div className="pt-4">
+                    <button
+                      onClick={handleAddHeroBullet}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm rounded hover:bg-green-700 transition-colors"
+                    >
+                      <i className="fas fa-plus"></i>
+                      Add Bullet Point
+                    </button>
+                  </div>
                 )}
               </div>
             </div>
@@ -1136,6 +1288,7 @@ export default function ProgramPage() {
         onSave={handleSave}
         title={`${editingItem?.id ? 'Edit' : 'Add'} ${
           editingType === 'program-hero' ? 'Hero Content' :
+          editingType === 'program-hero-bullet' ? 'Hero Bullet' :
           editingType === 'program-phase' ? 'Program Phase' : 
           editingType === 'program-graphic' ? 'Graphic' : 
           editingType === 'program-snapshot' ? 'Program Snapshot' :

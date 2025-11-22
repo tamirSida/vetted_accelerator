@@ -389,10 +389,17 @@ export interface AcceleratorImageSection {
   updatedAt: Date;
 }
 
+export interface ProgramHeroBullet {
+  id: string;
+  text: string;
+  icon: string; // Font Awesome icon class (e.g., "fas fa-globe")
+  order: number;
+}
+
 export interface ProgramHeroSection {
   id: string;
   principleTitle: string; // "Our #1 Principle: Provide Value to our Founders"
-  heroContent: string; // All the descriptive paragraphs as a single text block
+  bullets: ProgramHeroBullet[]; // Array of bullet points with icons
   isVisible: boolean;
   order: number;
   createdAt: Date;
