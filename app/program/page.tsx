@@ -561,7 +561,9 @@ export default function ProgramPage() {
         return [
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Integrated Funding Path' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the benefit description...' },
-          { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-dollar-sign' }
+          { key: 'icon', label: 'Icon (FontAwesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-dollar-sign' },
+          { key: 'buttonText', label: 'Button Text (Optional)', type: 'text' as const, required: false, placeholder: 'e.g., Learn More' },
+          { key: 'buttonUrl', label: 'Button URL (Optional)', type: 'text' as const, required: false, placeholder: 'e.g., /curriculum or https://...' }
         ];
       case 'accelerator-image-section':
         return [
@@ -778,7 +780,7 @@ export default function ProgramPage() {
             </h2>
             
             <p className="text-xl text-gray-700 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in-up delay-200">
-              Everything you need to know about the Vetted Accelerator in one powerful overview
+              Everything you need to know about the Vetted Accelerator
             </p>
 
             {isAdminMode && (
@@ -1206,12 +1208,37 @@ export default function ProgramPage() {
                   </button>
                 )}
                 
-                <div className="text-center">
+                <div className="text-center h-full flex flex-col">
                   <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i className={`${benefit.icon} text-blue-600 text-xl`}></i>
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{benefit.description}</p>
+                  <p className="text-gray-600 leading-relaxed flex-1">{benefit.description}</p>
+                  
+                  {/* Optional Button */}
+                  {benefit.buttonText && benefit.buttonUrl && (
+                    <div className="mt-4">
+                      {benefit.buttonUrl.startsWith('http') ? (
+                        <a
+                          href={benefit.buttonUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                        >
+                          {benefit.buttonText}
+                          <i className="fas fa-arrow-right text-xs"></i>
+                        </a>
+                      ) : (
+                        <Link
+                          href={benefit.buttonUrl}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                        >
+                          {benefit.buttonText}
+                          <i className="fas fa-arrow-right text-xs"></i>
+                        </Link>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

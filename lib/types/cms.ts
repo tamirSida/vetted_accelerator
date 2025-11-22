@@ -360,6 +360,8 @@ export interface ProgramBenefit {
   title: string; // "Integrated Funding Path"
   description: string; // Benefit description
   icon: string; // Font Awesome icon class
+  buttonText?: string; // Optional button text
+  buttonUrl?: string; // Optional button URL
   order: number;
   isVisible: boolean;
   createdAt: Date;
