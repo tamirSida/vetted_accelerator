@@ -1,0 +1,31 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://accelerator.thevetted.vc/sitemap.xml
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin
+Disallow: /setup-admin
+
+# Allow important pages for SEO
+Allow: /
+Allow: /program
+Allow: /team
+Allow: /portfolio
+Allow: /curriculum
+Allow: /info-session
+Allow: /service-requirements
+
+# Crawl delay (optional)
+Crawl-delay: 1

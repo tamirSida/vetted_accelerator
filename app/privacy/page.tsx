@@ -43,7 +43,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mb-8">
               <h2 className="text-xl font-bold text-blue-900 mb-2">Quick Summary</h2>
               <p className="text-blue-800 mb-0">
-                We collect only essential information needed to run the Alpha-Bet program effectively. 
+                We collect only essential information needed to run the Vetted Accelerator effectively.
                 We never sell your data, and we protect your information with military-grade security standards.
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function PrivacyPolicyPage() {
             <h2>8. Children's Privacy</h2>
             
             <p>
-              The Alpha-Bet program is designed for military veterans and is not intended for individuals 
+              The Vetted Accelerator is designed for military veterans and is not intended for individuals
               under 18. We do not knowingly collect information from children under 18.
             </p>
 
