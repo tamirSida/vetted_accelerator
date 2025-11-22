@@ -38,7 +38,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           {
             title: 'Check Qualifications',
             description: 'See if you meet the requirements to join our accelerator.',
-            href: '/qualifications',
+            href: '/service-requirements',
             icon: 'fas fa-check-circle',
             primary: false
           }
@@ -49,7 +49,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           {
             title: 'Check If You Qualify',
             description: 'Verify you meet our program requirements.',
-            href: '/qualifications',
+            href: '/service-requirements',
             icon: 'fas fa-check-circle',
             primary: true
           },

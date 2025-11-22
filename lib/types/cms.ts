@@ -374,6 +374,7 @@ export interface PortfolioCompany {
   description: string;
   logo: string; // URL to company logo
   status: 'exited' | 'fundraising' | 'none';
+  website?: string; // Optional company website URL
   order: number;
   isVisible: boolean;
   createdAt: Date;

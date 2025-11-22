@@ -138,6 +138,7 @@ export default function PortfolioPage() {
     { key: 'name', label: 'Company Name', type: 'text' as const, required: true, placeholder: 'e.g., Guild' },
     { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Brief company description...' },
     { key: 'logo', label: 'Logo URL', type: 'text' as const, required: true, placeholder: 'https://example.com/logo.png' },
+    { key: 'website', label: 'Company Website', type: 'text' as const, required: false, placeholder: 'https://company.com (optional)' },
     { key: 'status', label: 'Status', type: 'select' as const, required: true, options: [
       { value: 'none', label: 'No Status' },
       { value: 'fundraising', label: 'Fundraising' },
@@ -277,9 +278,25 @@ export default function PortfolioPage() {
                       <h3 className="text-lg font-bold text-gray-900 mb-2 text-center group-hover:text-blue-600 transition-colors">
                         {company.name}
                       </h3>
-                      <p className="text-gray-600 text-sm text-center leading-relaxed group-hover:text-gray-900 transition-colors">
+                      <p className="text-gray-600 text-sm text-center leading-relaxed group-hover:text-gray-900 transition-colors mb-4">
                         {company.description}
                       </p>
+                      
+                      {/* Website Button */}
+                      {company.website && (
+                        <div className="text-center">
+                          <a
+                            href={company.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <i className="fas fa-external-link-alt"></i>
+                            Company Website
+                          </a>
+                        </div>
+                      )}
                     </div>
 
                     {/* Admin Controls */}
