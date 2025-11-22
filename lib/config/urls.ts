@@ -2,8 +2,8 @@
 // Update these URLs as needed for external links
 
 export const EXTERNAL_URLS = {
-  // Application form - Alpha-Bet application URL
-  APPLY_FORM: 'https://application.alphabet.vbv.vc',
+  // Application form - The Vetted application URL
+  APPLY_FORM: 'https://application.thevetted.org',
   
   // Social media links
   LINKEDIN: 'https://www.linkedin.com/company/thevetted/posts/?feedView=all',

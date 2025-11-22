@@ -8,6 +8,7 @@ import EditableSection from '@/components/admin/editable-section';
 import EditModal from '@/components/admin/edit-modal';
 import DiscreteAdminAccess, { DiscreteAdminDot, useUrlAdminAccess } from '@/components/admin/discrete-access';
 import SimpleAdminToggle from '@/components/admin/simple-admin-toggle';
+import { EXTERNAL_URLS } from '@/lib/config/urls';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -1298,7 +1299,7 @@ export default function ProgramPage() {
           
           <div className="text-center mt-12">
             <a 
-              href="https://application.alphabet.vbv.vc"
+              href={EXTERNAL_URLS.APPLY_FORM}
               className="inline-flex items-center gap-2 bg-white text-gray-900 px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 shadow-xl"
             >
               <i className="fas fa-rocket"></i>
