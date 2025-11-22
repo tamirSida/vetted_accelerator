@@ -57,10 +57,16 @@ export const metadata: Metadata = {
     images: ["https://accelerator.thevetted.vc/twitter-image.png"],
   },
   alternates: {
-    canonical: "https://accelerator.thevetted.vc",
+    canonical: "https://accelerator.thevetted.vc", // Primary canonical domain
   },
   verification: {
     google: "jwFpNC478fhLXbjU5t50WNILIPTgFK2FM3XgS8MCqSs",
+    other: {
+      "google-site-verification": [
+        "jwFpNC478fhLXbjU5t50WNILIPTgFK2FM3XgS8MCqSs", // .vc domain
+        "0nzQVLTmamwv378KMyINOymfNhUfmj-55Np2mOGtQZs" // .org domain
+      ]
+    }
   },
   icons: {
     icon: [
