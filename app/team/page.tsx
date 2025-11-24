@@ -22,6 +22,23 @@ export default function TeamPage() {
   // Enable URL-based admin access
   useUrlAdminAccess();
 
+  // Handle anchor scrolling on page load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#mentors') {
+      const timer = setTimeout(() => {
+        const element = document.getElementById('mentors');
+        if (element) {
+          element.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }
+      }, 500); // Wait for content to load
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
   const loadContent = useCallback(async () => {
     try {
       setLoading(true);

@@ -355,7 +355,7 @@ export default function UnifiedTeamSection({ teamMembers, onEdit, onDelete, onEd
         </div>
 
         {/* Mentors Section */}
-        <div className="mb-16">
+        <div id="mentors" className="mb-16">
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-8 text-center" style={{ fontFamily: "Gunplay, 'Black Ops One', cursive" }}>
             Mentors
           </h2>
