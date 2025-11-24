@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { EXTERNAL_URLS } from '@/lib/config/urls';
+import { formatDateForDisplay, getProgramStartMonth, legacyDateToUTC } from '@/lib/utils/timezone';
 
 interface HeroSectionProps {
   headline: string;
@@ -16,6 +17,7 @@ interface HeroSectionProps {
   applicationWindowCloses?: string;
   programStartDate?: string;
   programEndDate?: string;
+  cohortNumber?: number;
 }
 
 export default function HeroSection({
@@ -28,48 +30,30 @@ export default function HeroSection({
   applicationWindowOpens,
   applicationWindowCloses,
   programStartDate,
-  programEndDate
+  programEndDate,
+  cohortNumber
 }: HeroSectionProps) {
   const [dividerWidth, setDividerWidth] = useState(200);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
 
-  // Format date for display (consistent timezone)
-  const formatDate = (dateString: string) => {
+  // Convert legacy dates to UTC format for consistency
+  const normalizeDate = (dateString: string) => {
     if (!dateString) return '';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      timeZone: 'America/New_York' // Force EST timezone for consistency
-    });
-  };
-
-  // Get program start month name
-  const getProgramStartMonth = (dateString: string) => {
-    if (!dateString) return 'Winter';
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      month: 'long',
-      timeZone: 'America/New_York' // Force EST timezone for consistency
-    });
+    return legacyDateToUTC(dateString);
   };
 
   // Get application status and message
   const getApplicationStatus = () => {
     const now = new Date();
-    const openDate = applicationWindowOpens ? new Date(applicationWindowOpens) : null;
-    const closeDate = applicationWindowCloses ? new Date(applicationWindowCloses) : null;
-    const startDate = programStartDate ? new Date(programStartDate) : null;
+    const openDate = applicationWindowOpens ? new Date(normalizeDate(applicationWindowOpens)) : null;
+    const closeDate = applicationWindowCloses ? new Date(normalizeDate(applicationWindowCloses)) : null;
+    const startDate = programStartDate ? new Date(normalizeDate(programStartDate)) : null;
     
-    const programMonth = startDate ? startDate.toLocaleDateString('en-US', { 
-      month: 'long',
-      timeZone: 'America/New_York' // Force EST timezone for consistency
-    }) : 'Spring';
+    const cohortText = cohortNumber ? `Cohort ${cohortNumber}` : 'Spring Class';
     
     if (!openDate || !closeDate) {
       return {
-        message: `Applications for ${programMonth} Class will be announced soon`,
+        message: `Applications for ${cohortText} will be announced soon`,
         status: 'Pending',
         isActive: false,
         statusColor: 'text-gray-500',
@@ -78,10 +62,10 @@ export default function HeroSection({
     }
     
     if (now < openDate) {
-      const startDateFormatted = programStartDate ? formatDate(programStartDate) : '';
-      const endDateFormatted = programEndDate ? formatDate(programEndDate) : '';
+      const startDateFormatted = programStartDate ? formatDateForDisplay(normalizeDate(programStartDate)) : '';
+      const endDateFormatted = programEndDate ? formatDateForDisplay(normalizeDate(programEndDate)) : '';
       
-      let message = `Applications for ${programMonth} Class open on ${formatDate(applicationWindowOpens || '')}`;
+      let message = `Applications for ${cohortText} open on ${formatDateForDisplay(normalizeDate(applicationWindowOpens || ''))}`;
       if (programStartDate && programEndDate) {
         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
       }
@@ -94,10 +78,10 @@ export default function HeroSection({
         dotColor: 'bg-yellow-500'
       };
     } else if (now >= openDate && now <= closeDate) {
-      const startDateFormatted = programStartDate ? formatDate(programStartDate) : '';
-      const endDateFormatted = programEndDate ? formatDate(programEndDate) : '';
+      const startDateFormatted = programStartDate ? formatDateForDisplay(normalizeDate(programStartDate)) : '';
+      const endDateFormatted = programEndDate ? formatDateForDisplay(normalizeDate(programEndDate)) : '';
       
-      let message = `Applications for ${programMonth} class are open until ${formatDate(applicationWindowCloses || '')}`;
+      let message = `Applications for ${cohortText} are open until ${formatDateForDisplay(normalizeDate(applicationWindowCloses || ''))}`;
       if (startDateFormatted && endDateFormatted) {
         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
       }
@@ -111,7 +95,7 @@ export default function HeroSection({
       };
     } else {
       return {
-        message: `Application window for ${programMonth} Class has closed`,
+        message: `Application window for ${cohortText} has closed`,
         status: 'Unavailable',
         isActive: false,
         statusColor: 'text-red-500',

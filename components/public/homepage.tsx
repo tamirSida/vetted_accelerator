@@ -29,6 +29,7 @@ import {
   EcosystemCard
 } from '@/lib/types/cms';
 import MissionEditModal from '@/components/admin/mission-edit-modal';
+import { formatDateForDisplay, legacyDateToUTC, utcToDateInput, dateInputToUTC } from '@/lib/utils/timezone';
 
 function AlphaBetHomepageContent() {
   const { isAdminMode } = useAdmin();
@@ -454,10 +455,25 @@ function AlphaBetHomepageContent() {
   const handleSave = useCallback(async (data: any) => {
     try {
       if (editingType === 'hero') {
+        // Convert date inputs from ET to UTC for storage
+        const processedData = { ...data };
+        if (processedData.applicationWindowOpens) {
+          processedData.applicationWindowOpens = dateInputToUTC(processedData.applicationWindowOpens);
+        }
+        if (processedData.applicationWindowCloses) {
+          processedData.applicationWindowCloses = dateInputToUTC(processedData.applicationWindowCloses);
+        }
+        if (processedData.programStartDate) {
+          processedData.programStartDate = dateInputToUTC(processedData.programStartDate);
+        }
+        if (processedData.programEndDate) {
+          processedData.programEndDate = dateInputToUTC(processedData.programEndDate);
+        }
+        
         if (editingItem && editingItem.id) {
-          await CMSServiceFactory.getHeroService().update(editingItem.id, data);
+          await CMSServiceFactory.getHeroService().update(editingItem.id, processedData);
         } else {
-          await CMSServiceFactory.getHeroService().create(data);
+          await CMSServiceFactory.getHeroService().create(processedData);
         }
       } else if (editingType === 'content') {
         // Fix the Firebase document not existing issue
@@ -751,9 +767,9 @@ function AlphaBetHomepageContent() {
                   <div className="lg:hidden mb-6">
                     {(() => {
                       const now = new Date();
-                      const openDate = activeHero.applicationWindowOpens ? new Date(activeHero.applicationWindowOpens) : null;
-                      const closeDate = activeHero.applicationWindowCloses ? new Date(activeHero.applicationWindowCloses) : null;
-                      const startDate = activeHero.programStartDate ? new Date(activeHero.programStartDate) : null;
+                      const openDate = activeHero.applicationWindowOpens ? new Date(legacyDateToUTC(activeHero.applicationWindowOpens)) : null;
+                      const closeDate = activeHero.applicationWindowCloses ? new Date(legacyDateToUTC(activeHero.applicationWindowCloses)) : null;
+                      const startDate = activeHero.programStartDate ? new Date(legacyDateToUTC(activeHero.programStartDate)) : null;
                       const cohortNum = activeHero.cohortNumber || 1;
                       
                       let isActive = false;
@@ -768,11 +784,10 @@ function AlphaBetHomepageContent() {
                         statusColor = "text-gray-500";
                         dotColor = "bg-gray-500";
                       } else if (now < openDate) {
-                        const startDateFormatted = startDate ? startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-                        const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
-                        const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+                        const startDateFormatted = activeHero.programStartDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programStartDate)) : '';
+                        const endDateFormatted = activeHero.programEndDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programEndDate)) : '';
                         
-                        message = `Applications for Cohort #${cohortNum} open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                        message = `Applications for Cohort #${cohortNum} open on ${formatDateForDisplay(legacyDateToUTC(activeHero.applicationWindowOpens || ''))}`;
                         if (activeHero.programStartDate && activeHero.programEndDate) {
                           message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                         }
@@ -780,11 +795,10 @@ function AlphaBetHomepageContent() {
                         statusColor = "text-yellow-500";
                         dotColor = "bg-yellow-500";
                       } else if (now >= openDate && now <= closeDate) {
-                        const startDateFormatted = startDate ? startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-                        const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
-                        const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+                        const startDateFormatted = activeHero.programStartDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programStartDate)) : '';
+                        const endDateFormatted = activeHero.programEndDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programEndDate)) : '';
                         
-                        message = `Applications for Cohort #${cohortNum} are open<br>until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                        message = `Applications for Cohort #${cohortNum} are open<br>until ${formatDateForDisplay(legacyDateToUTC(activeHero.applicationWindowCloses || ''))}`;
                         if (startDateFormatted && endDateFormatted) {
                           message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                         }
@@ -841,9 +855,9 @@ function AlphaBetHomepageContent() {
                   <div className="hidden lg:block">
                     {(() => {
                     const now = new Date();
-                    const openDate = activeHero.applicationWindowOpens ? new Date(activeHero.applicationWindowOpens) : null;
-                    const closeDate = activeHero.applicationWindowCloses ? new Date(activeHero.applicationWindowCloses) : null;
-                    const startDate = activeHero.programStartDate ? new Date(activeHero.programStartDate) : null;
+                    const openDate = activeHero.applicationWindowOpens ? new Date(legacyDateToUTC(activeHero.applicationWindowOpens)) : null;
+                    const closeDate = activeHero.applicationWindowCloses ? new Date(legacyDateToUTC(activeHero.applicationWindowCloses)) : null;
+                    const startDate = activeHero.programStartDate ? new Date(legacyDateToUTC(activeHero.programStartDate)) : null;
                     const cohortNum = activeHero.cohortNumber || 1;
                     
                     let isActive = false;
@@ -858,11 +872,10 @@ function AlphaBetHomepageContent() {
                       statusColor = "text-gray-500";
                       dotColor = "bg-gray-500";
                     } else if (now < openDate) {
-                      const startDateFormatted = startDate ? startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-                      const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
-                      const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+                      const startDateFormatted = activeHero.programStartDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programStartDate)) : '';
+                      const endDateFormatted = activeHero.programEndDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programEndDate)) : '';
                       
-                      message = `Applications for Cohort #${cohortNum} open on ${openDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                      message = `Applications for Cohort #${cohortNum} open on ${formatDateForDisplay(legacyDateToUTC(activeHero.applicationWindowOpens || ''))}`;
                       if (activeHero.programStartDate && activeHero.programEndDate) {
                         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                       }
@@ -870,11 +883,10 @@ function AlphaBetHomepageContent() {
                       statusColor = "text-yellow-500";
                       dotColor = "bg-yellow-500";
                     } else if (now >= openDate && now <= closeDate) {
-                      const startDateFormatted = startDate ? startDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-                      const endDate = activeHero.programEndDate ? new Date(activeHero.programEndDate) : null;
-                      const endDateFormatted = endDate ? endDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+                      const startDateFormatted = activeHero.programStartDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programStartDate)) : '';
+                      const endDateFormatted = activeHero.programEndDate ? formatDateForDisplay(legacyDateToUTC(activeHero.programEndDate)) : '';
                       
-                      message = `Applications for Cohort #${cohortNum} are open until ${closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`;
+                      message = `Applications for Cohort #${cohortNum} are open until ${formatDateForDisplay(legacyDateToUTC(activeHero.applicationWindowCloses || ''))}`;
                       if (startDateFormatted && endDateFormatted) {
                         message += `<br>Program Start Date: ${startDateFormatted}<br>Program End Date: ${endDateFormatted}`;
                       }
@@ -1201,7 +1213,14 @@ function AlphaBetHomepageContent() {
         onSave={handleSave}
         title={`Edit ${editingType}`}
         fields={editingType ? getEditFields(editingType) : []}
-        initialData={editingItem}
+        initialData={editingType === 'hero' && editingItem ? {
+          ...editingItem,
+          // Convert UTC dates to ET timezone for editing
+          applicationWindowOpens: editingItem.applicationWindowOpens ? utcToDateInput(legacyDateToUTC(editingItem.applicationWindowOpens)) : '',
+          applicationWindowCloses: editingItem.applicationWindowCloses ? utcToDateInput(legacyDateToUTC(editingItem.applicationWindowCloses)) : '',
+          programStartDate: editingItem.programStartDate ? utcToDateInput(legacyDateToUTC(editingItem.programStartDate)) : '',
+          programEndDate: editingItem.programEndDate ? utcToDateInput(legacyDateToUTC(editingItem.programEndDate)) : ''
+        } : editingItem}
         loading={loading}
       />
 
