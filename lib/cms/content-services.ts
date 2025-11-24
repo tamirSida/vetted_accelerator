@@ -30,7 +30,8 @@ import {
   ProgramBenefit,
   PortfolioCompany,
   AcceleratorImageSection,
-  ProgramHeroSection
+  ProgramHeroSection,
+  ServiceRequirementsContent
 } from '@/lib/types/cms';
 
 export class HeroService extends BaseFirestoreService<HeroSection> {
@@ -439,6 +440,17 @@ export class ProgramHeroSectionService extends BaseFirestoreService<ProgramHeroS
   }
 }
 
+export class ServiceRequirementsService extends BaseFirestoreService<ServiceRequirementsContent> {
+  constructor() {
+    super('service-requirements');
+  }
+
+  async getActiveServiceRequirements(): Promise<ServiceRequirementsContent | null> {
+    const content = await this.getVisible(1);
+    return content.length > 0 ? content[0] : null;
+  }
+}
+
 // Service factory for easy instantiation
 export class CMSServiceFactory {
   private static instances: Map<string, any> = new Map();
@@ -672,5 +684,12 @@ export class CMSServiceFactory {
       this.instances.set('programHeroSection', new ProgramHeroSectionService());
     }
     return this.instances.get('programHeroSection');
+  }
+
+  static getServiceRequirementsService(): ServiceRequirementsService {
+    if (!this.instances.has('serviceRequirements')) {
+      this.instances.set('serviceRequirements', new ServiceRequirementsService());
+    }
+    return this.instances.get('serviceRequirements');
   }
 }
