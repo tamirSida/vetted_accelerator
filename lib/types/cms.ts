@@ -290,6 +290,9 @@ export interface EcosystemCard {
   title: string; // "Alpha-Bet", "Vetted Accelerator + Fund", "Alumni Network"
   description: string; // Card description
   icon: string; // Font Awesome icon class (e.g., "fas fa-graduation-cap")
+  buttonText?: string; // Optional button text (e.g., "Learn More")
+  buttonUrl?: string; // Optional button URL
+  showButton?: boolean; // Whether to show the button
   order: number;
   isVisible: boolean;
   createdAt: Date;

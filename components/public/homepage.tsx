@@ -640,6 +640,9 @@ function AlphaBetHomepageContent() {
           { key: 'title', label: 'Title', type: 'text' as const, required: true, placeholder: 'e.g., Alpha-Bet' },
           { key: 'description', label: 'Description', type: 'textarea' as const, required: true, placeholder: 'Enter the card description...' },
           { key: 'icon', label: 'Icon (Font Awesome class)', type: 'text' as const, required: true, placeholder: 'e.g., fas fa-graduation-cap' },
+          { key: 'showButton', label: 'Show Button', type: 'checkbox' as const, required: false },
+          { key: 'buttonText', label: 'Button Text', type: 'text' as const, required: false, placeholder: 'e.g., Learn More' },
+          { key: 'buttonUrl', label: 'Button URL', type: 'text' as const, required: false, placeholder: '/curriculum or https://example.com' },
           { key: 'order', label: 'Order', type: 'number' as const, required: true, placeholder: '1-10' }
         ];
       default:

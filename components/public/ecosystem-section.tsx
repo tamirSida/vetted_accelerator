@@ -39,6 +39,9 @@ export default function EcosystemSectionComponent({
       title: 'Alpha-Bet',
       description: 'Non-profit school for aspiring founders.',
       icon: 'fas fa-graduation-cap',
+      showButton: true,
+      buttonText: 'Learn More',
+      buttonUrl: '/curriculum',
       order: 1,
       isVisible: true,
       createdAt: new Date(),
@@ -49,6 +52,9 @@ export default function EcosystemSectionComponent({
       title: 'Vetted Accelerator + Fund',
       description: 'Early-stage investment and venture growth.',
       icon: 'fas fa-rocket',
+      showButton: true,
+      buttonText: 'Learn More',
+      buttonUrl: '/program',
       order: 2,
       isVisible: true,
       createdAt: new Date(),
@@ -59,6 +65,7 @@ export default function EcosystemSectionComponent({
       title: 'Alumni Network',
       description: 'Lifelong mentorship, funding, and community.',
       icon: 'fas fa-users',
+      showButton: false,
       order: 3,
       isVisible: true,
       createdAt: new Date(),
@@ -126,7 +133,7 @@ export default function EcosystemSectionComponent({
           <div className="grid md:grid-cols-3 gap-8">
             {displayCards.map((card, index) => (
               <div key={card.id} className="group relative">
-                <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-full border border-gray-200 hover:border-blue-300">
+                <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 h-full border border-gray-200 hover:border-blue-300 flex flex-col">
                   {/* Card Icon */}
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                     <i className={`${card.icon} text-2xl text-white`}></i>
@@ -136,9 +143,22 @@ export default function EcosystemSectionComponent({
                   <h3 className="text-xl sm:text-2xl font-bold text-black mb-4 group-hover:text-blue-600 transition-colors duration-300" style={{ fontFamily: "'Gunplay', 'Black Ops One', cursive" }}>
                     {card.title}
                   </h3>
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-gray-600 leading-relaxed flex-1">
                     {card.description}
                   </p>
+                  
+                  {/* Button */}
+                  {card.showButton && card.buttonText && card.buttonUrl && (
+                    <div className="mt-4">
+                      <a 
+                        href={card.buttonUrl}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                      >
+                        {card.buttonText}
+                        <i className="fas fa-arrow-right text-xs"></i>
+                      </a>
+                    </div>
+                  )}
                   
                   {/* Admin Controls for Cards */}
                   {isAdminMode && (
