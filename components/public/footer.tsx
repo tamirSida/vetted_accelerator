@@ -36,7 +36,7 @@ export default function Footer() {
               </div>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed max-w-md">
-              An entrepreneurship program for US and Israeli combat veterans,
+              An entrepreneurship program for US and Israeli Combat Veterans,
               designed to equip them with the skills, network, and battle-tested mindset 
               to build successful startups.
             </p>
