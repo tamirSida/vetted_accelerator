@@ -218,7 +218,7 @@ export default function InfoSession() {
               Info Sessions
             </h1>
             <p className="text-lg sm:text-xl text-gray-800 max-w-3xl mx-auto leading-relaxed">
-              Join us to learn more about the Alpha-Bet program and ask questions directly to our team.
+              Join us to learn more about The Vetted Accelerator and ask questions directly to our team.
             </p>
           </div>
 
@@ -307,23 +307,24 @@ export default function InfoSession() {
             </section>
           </EditableSection>
 
-          {/* Pre-recorded Session Section */}
-          <EditableSection
-            sectionName="Pre-recorded Session"
-            onEdit={() => handleEdit('pre-recorded', preRecordedSession)}
-          >
-            <section>
-              <div className="text-center mb-8">
-                <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
-                  Pre-recorded Info Session
-                </h2>
-                <p className="text-gray-800 max-w-2xl mx-auto">
-                  Watch our comprehensive overview of the Alpha-Bet program at your convenience.
-                </p>
-              </div>
+          {/* Pre-recorded Session Section - Only show if content exists or in admin mode */}
+          {(preRecordedSession || isAdminMode) && (
+            <EditableSection
+              sectionName="Pre-recorded Session"
+              onEdit={() => handleEdit('pre-recorded', preRecordedSession)}
+            >
+              <section>
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>
+                    Pre-recorded Info Session
+                  </h2>
+                  <p className="text-gray-800 max-w-2xl mx-auto">
+                    Watch our comprehensive overview of the Alpha-Bet program at your convenience.
+                  </p>
+                </div>
 
-              <div className="text-center">
-                {preRecordedSession ? (
+                <div className="text-center">
+                  {preRecordedSession ? (
                   <div className="relative bg-white/10 backdrop-blur-sm rounded-lg border border-gray-300 p-8 hover:bg-white/20 transition-all duration-300">
                     {/* Admin Buttons */}
                     {isAdminMode && (
@@ -391,6 +392,7 @@ export default function InfoSession() {
               </div>
             </section>
           </EditableSection>
+          )}
         </div>
       </div>
 
