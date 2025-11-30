@@ -62,7 +62,7 @@ export default function TermsOfServicePage() {
             <ul>
               <li>Submission of complete application with accurate information</li>
               <li>Participation in screening interviews if selected</li>
-              <li>Acceptance is competitive and at Version Bravo's sole discretion</li>
+              <li>Acceptance is competitive and at The Vetted's sole discretion</li>
               <li>Program capacity is limited to ensure quality mentorship</li>
             </ul>
 

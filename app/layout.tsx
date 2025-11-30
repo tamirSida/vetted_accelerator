@@ -17,12 +17,12 @@ const blackOpsOne = Black_Ops_One({
 });
 
 export const metadata: Metadata = {
-  title: "The Vetted Accelerator | Version Bravo Combat Veteran Startup Program",
-  description: "The Vetted by Version Bravo: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies in Israel and Miami.",
+  title: "The Vetted Accelerator",
+  description: "The Vetted Accelerator: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies in Israel and Miami.",
   keywords: "version bravo, the vetted, vetted accelerator, veteran entrepreneurs, combat veteran startup, military startup accelerator, veteran founded companies, veteran business program, elite veteran founders, startup program veterans, veteran investment fund, military entrepreneur accelerator, combat veteran entrepreneurs, veteran startup fund, israeli veteran startups, us veteran startups, version bravo accelerator",
-  authors: [{ name: "The Vetted - Version Bravo" }],
-  creator: "The Vetted by Version Bravo",
-  publisher: "Version Bravo",
+  authors: [{ name: "The Vetted Accelerator" }],
+  creator: "The Vetted Accelerator",
+  publisher: "Thevetted.vc",
   robots: {
     index: true,
     follow: true,
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "The Vetted Accelerator | Version Bravo Combat Veteran Startup Program",
-    description: "The Vetted by Version Bravo: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies.",
+    title: "The Vetted Accelerator | Combat Veteran Startup Program",
+    description: "The Vetted : Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies.",
     url: "https://accelerator.thevetted.vc",
     siteName: "The Vetted Accelerator",
     type: "website",
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
       url: "https://accelerator.thevetted.vc/og-image.png",
       width: 1200,
       height: 630,
-      alt: "The Vetted Accelerator - Version Bravo"
+      alt: "The Vetted Accelerator"
     }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@thevetted",
     creator: "@versionbravo",
-    title: "The Vetted Accelerator | Version Bravo Combat Veteran Startup Program",
-    description: "The Vetted by Version Bravo: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders.",
+    title: "The Vetted Accelerator",
+    description: "The Vetted Accelerator: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders.",
     images: ["https://accelerator.thevetted.vc/twitter-image.png"],
   },
   alternates: {
@@ -101,17 +101,17 @@ export default function RootLayout({
         <meta name="rating" content="general" />
         
         {/* Additional SEO Keywords for Target Terms */}
-        <meta name="description" content="The Vetted by Version Bravo: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies in Israel and Miami." />
+        <meta name="description" content="The Vetted Accelerator: Elite 10-week startup accelerator for veteran entrepreneurs. Join the global network of combat veteran founders building world-class companies in Israel and Miami." />
         <meta name="keywords" content="version bravo, the vetted, vetted accelerator, veteran entrepreneurs, combat veteran startup, military startup accelerator, veteran founded companies, veteran business program, elite veteran founders, startup program veterans, veteran investment fund, military entrepreneur accelerator, combat veteran entrepreneurs, veteran startup fund, israeli veteran startups, us veteran startups, version bravo accelerator" />
         <meta name="subject" content="Combat Veteran Startup Accelerator Program" />
-        <meta name="copyright" content="The Vetted by Version Bravo" />
+        <meta name="copyright" content="The Vetted by Accelerator" />
         <meta name="abstract" content="The Vetted accelerator program exclusively for elite combat veterans building startups" />
         <meta name="topic" content="Veteran entrepreneurship and startup acceleration" />
         <meta name="summary" content="10-week accelerator program for veteran-founded startups with global network and funding" />
         <meta name="Classification" content="Business" />
         <meta name="designer" content="The Vetted" />
         <meta name="reply-to" content="info@thevetted.vc" />
-        <meta name="owner" content="Version Bravo" />
+        <meta name="owner" content="Thevetted.vc" />
         <meta name="url" content="https://accelerator.thevetted.vc" />
         <meta name="identifier-URL" content="https://accelerator.thevetted.vc" />
         <meta name="directory" content="submission" />
@@ -193,7 +193,7 @@ export default function RootLayout({
               "@type": "Organization",
               "name": "The Vetted Accelerator",
               "alternateName": ["Version Bravo", "The Vetted", "Vetted"],
-              "description": "The Vetted by Version Bravo is an elite 10-week startup accelerator program exclusively for combat veteran entrepreneurs from the US and Israel",
+              "description": "The Vetted by Accelerator is an elite 10-week startup accelerator program exclusively for combat veteran entrepreneurs from the US and Israel",
               "url": "https://accelerator.thevetted.vc",
               "logo": "https://accelerator.thevetted.vc/logo.png",
               "image": "https://accelerator.thevetted.vc/og-image.png",
@@ -203,7 +203,7 @@ export default function RootLayout({
               ],
               "parentOrganization": {
                 "@type": "Organization",
-                "name": "Version Bravo",
+                "name": "Thevetted.vc",
                 "url": "https://versionbravo.vc"
               },
               "hasOfferCatalog": {
@@ -216,7 +216,7 @@ export default function RootLayout({
                     "description": "Elite accelerator program for veteran entrepreneurs with global network, mentorship, and funding opportunities",
                     "provider": {
                       "@type": "Organization",
-                      "name": "The Vetted by Version Bravo"
+                      "name": "The Vetted Accelerator"
                     },
                     "courseMode": "Hybrid",
                     "duration": "P10W",
@@ -278,7 +278,7 @@ export default function RootLayout({
                 "description": "10-week accelerator program for veteran-founded startups",
                 "provider": {
                   "@type": "Organization",
-                  "name": "The Vetted by Version Bravo"
+                  "name": "The Vetted by Accelerator"
                 },
                 "programType": "Accelerator",
                 "timeToComplete": "P10W"
