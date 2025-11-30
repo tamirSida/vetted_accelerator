@@ -268,7 +268,7 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "EducationalOrganization",
               "name": "The Vetted Accelerator",
-              "alternateName": "Version Bravo Accelerator",
+              "alternateName": "The Vetted Accelerator",
               "description": "Elite startup accelerator program for veteran entrepreneurs",
               "url": "https://accelerator.thevetted.vc",
               "logo": "https://accelerator.thevetted.vc/logo.png",

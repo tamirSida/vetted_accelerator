@@ -66,8 +66,8 @@ export default function SEOHead({
       {
         "@type": "Organization",
         "@id": `${siteUrl}/#organization`,
-        "name": "Version Bravo",
-        "alternateName": ["Version Bravo Veterans", "VBV"],
+        "name": "The Vetted Accelerator",
+        "alternateName": ["The Vetted Accelerator", "Thevetted.vc"],
         "url": siteUrl,
         "logo": {
           "@type": "ImageObject",
@@ -75,8 +75,8 @@ export default function SEOHead({
           "width": 200,
           "height": 200
         },
-        "description": "Version Bravo provides entrepreneurship programs and business development for combat veterans",
-        "foundingDate": "2020",
+        "description": "The Vetted Accelerator provides entrepreneurship programs and business development for combat veterans",
+        "foundingDate": "2025",
         "sameAs": [
           "https://www.linkedin.com/company/thevetted/posts/?feedView=all"
         ],
@@ -188,7 +188,7 @@ export default function SEOHead({
       <title>{fullTitle}</title>
       <meta name="description" content={fullDescription} />
       <meta name="keywords" content={allKeywords} />
-      <meta name="author" content="Version Bravo" />
+      <meta name="author" content="The Vetted Accelerator" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
       <meta name="language" content="en" />
@@ -241,7 +241,7 @@ export default function SEOHead({
       <meta name="target" content="combat veterans, military veterans, entrepreneurs, startups" />
       <meta name="audience" content="combat veterans" />
       <meta name="subject" content="entrepreneurship training for veterans" />
-      <meta name="copyright" content="Version Bravo" />
+      <meta name="copyright" content="The Vetted Accelerator" />
       <meta name="distribution" content="global" />
       <meta name="rating" content="general" />
     </Head>

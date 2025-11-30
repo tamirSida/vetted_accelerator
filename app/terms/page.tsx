@@ -87,7 +87,7 @@ export default function TermsOfServicePage() {
             <h3>Intellectual Property</h3>
             <ul>
               <li><strong>Your Ideas:</strong> You retain full ownership of your business ideas and concepts</li>
-              <li><strong>Program Materials:</strong> Course content and materials remain property of Version Bravo</li>
+              <li><strong>Program Materials:</strong> Course content and materials remain property of The Vetted Accelerator</li>
               <li><strong>Collaborative Work:</strong> Group project contributions may be shared among team members</li>
               <li><strong>Confidentiality:</strong> Respect and protect the intellectual property of other participants</li>
             </ul>
@@ -162,7 +162,7 @@ export default function TermsOfServicePage() {
 
             <h3>Media & Publicity</h3>
             <ul>
-              <li>Version Bravo may feature participant success stories (with permission)</li>
+              <li>The Vetted Accelerator may feature participant success stories (with permission)</li>
               <li>Participants may decline media participation at any time</li>
               <li>Group photos and general program footage may be used for promotional purposes</li>
               <li>Specific business details will not be shared without explicit consent</li>
@@ -193,7 +193,7 @@ export default function TermsOfServicePage() {
             <h2>8. Limitation of Liability</h2>
             
             <p>
-              Version Bravo's liability is limited to the extent permitted by law. We are not responsible for:
+              The Vetted Accelerator's liability is limited to the extent permitted by law. We are not responsible for:
             </p>
             <ul>
               <li>Business failures or financial losses resulting from program participation</li>

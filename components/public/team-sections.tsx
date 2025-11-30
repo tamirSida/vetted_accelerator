@@ -364,7 +364,7 @@ export default function TeamSections({ founders, staff, team, onEdit, onDelete, 
         {/* Section 2: Version Bravo Team (including founders) */}
         <div className="mb-16">
           <div className="text-center mb-8">
-            <h3 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>Version Bravo Team</h3>
+            <h3 className="text-2xl sm:text-3xl font-bold text-black mb-4" style={{ fontFamily: "'Black Ops One', cursive" }}>The Vetted Team</h3>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-red-500 mx-auto rounded-full"></div>
           </div>
           

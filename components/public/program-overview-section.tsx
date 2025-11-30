@@ -106,7 +106,7 @@ export default function ProgramOverviewSection({
     description: '',
     highlights: [
       "Those who aren't ready to commit to a process of learning and practicing a new craft",
-      "Experienced startup founders (the Version Bravo Accelerator is a better fit)",
+      "Experienced startup founders (The Vetted Accelerator is a better fit)",
       "Founders who are not Veterans or who did not serve in a combat unit",
       "Those who are using this as a way to figure out what to do next after the military - This program is open to transitioning or recently retired service members, however, you should be honest with yourself about whether you are genuinely interested in entrepreneurship or just looking for something to do after your service."
     ],
