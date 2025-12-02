@@ -23,6 +23,21 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'accelerator.thevetted.org',
+          },
+        ],
+        destination: 'https://accelerator.thevetted.vc/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
